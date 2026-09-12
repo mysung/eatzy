@@ -1,0 +1,6 @@
+{
+  "name": "오늘 뭐 먹지? 3.0",
+  "description": "스마트폰과 PC에서 매콤/담백과 밥/면·빵을 선택하여 맛있는 메뉴와 한 줄 추천 이유를 알려주는 맞춤형 메뉴 추천 웹앱 (v3.0)",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
