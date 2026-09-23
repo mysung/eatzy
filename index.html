@@ -9,6 +9,10 @@
     <meta property="og:description" content="스마트폰과 PC에서 매콤/담백과 밥/면·빵을 선택하여 맛있는 메뉴와 한 줄 추천 이유를 알려주는 맞춤형 메뉴 추천 웹앱" />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
+    <!-- Prevent stale caching in production and deployed links -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
 
     <!-- Leaflet Engine for Guaranteed 100% Map Display -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
@@ -840,6 +844,157 @@
         border-radius: 9999px;
         font-size: 13px;
         margin-left: 4px;
+      }
+
+      /* =========================================================================
+         글로벌 뷰포트 고정 플로팅 타이머 배너 (배포 링크에서도 100% 즉시 표시)
+         ========================================================================= */
+      .global-ai-timer-banner {
+        position: fixed;
+        top: 18px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-90px);
+        opacity: 0;
+        visibility: hidden;
+        z-index: 999999;
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        color: #ffffff;
+        border: 2px solid #818cf8;
+        border-radius: 9999px;
+        padding: 10px 22px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        box-shadow: 0 16px 36px -4px rgba(15, 23, 42, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.15);
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        max-width: 92vw;
+        width: max-content;
+        pointer-events: none;
+      }
+
+      .global-ai-timer-banner.active {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
+
+      .global-ai-spinner {
+        position: relative;
+        width: 32px;
+        height: 32px;
+        background: #312e81;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .global-pulse-ring {
+        position: absolute;
+        inset: -3px;
+        border-radius: 50%;
+        border: 2px solid #a78bfa;
+        animation: ringPulse 1.2s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+      }
+
+      .global-food-emoji {
+        font-size: 18px;
+        line-height: 1;
+      }
+
+      .global-ai-text-box {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+
+      .global-ai-title-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .global-ai-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: #e2e8f0;
+      }
+
+      .global-timer-badge {
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        color: #ffffff;
+        font-weight: 800;
+        font-size: 13px;
+        padding: 2px 10px;
+        border-radius: 9999px;
+        letter-spacing: 0.02em;
+        font-variant-numeric: tabular-nums;
+        box-shadow: 0 2px 6px rgba(79, 70, 229, 0.4);
+      }
+
+      .global-progress-track {
+        width: 100%;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 9999px;
+        overflow: hidden;
+      }
+
+      .global-progress-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #6366f1, #c084fc, #ec4899);
+        border-radius: 9999px;
+        transition: width 0.15s ease-out;
+      }
+
+      /* In-card Inline Reroll Processing Box */
+      .reroll-processing-box {
+        grid-column: span 2;
+        background: linear-gradient(135deg, #f5f3ff 0%, #eff6ff 100%);
+        border: 2px solid #818cf8;
+        border-radius: var(--radius-md);
+        padding: 12px 16px;
+        margin-bottom: 8px;
+        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.15);
+        animation: fadeInSlideUp 0.25s ease-out;
+      }
+
+      .reroll-processing-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 8px;
+        font-size: 13px;
+        color: #312e81;
+        font-weight: 700;
+      }
+
+      .reroll-processing-timer {
+        background: #4338ca;
+        color: #ffffff;
+        padding: 3px 10px;
+        border-radius: 9999px;
+        font-size: 13px;
+        font-weight: 800;
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+
+      /* Inline Initial Processing Box */
+      .initial-processing-box {
+        background: linear-gradient(135deg, #f5f3ff 0%, #eff6ff 100%);
+        border: 2px solid #818cf8;
+        border-radius: var(--radius-md);
+        padding: 12px 16px;
+        margin-top: 10px;
+        box-shadow: 0 4px 14px rgba(99, 102, 241, 0.15);
+        animation: fadeInSlideUp 0.25s ease-out;
       }
 
       /* =========================================================================
@@ -2029,6 +2184,22 @@
     </style>
   </head>
   <body>
+    <!-- Global Floating AI Processing Banner (Fixed to Viewport - 100% visible on all devices and URLs) -->
+    <div class="global-ai-timer-banner" id="global-ai-timer-banner" role="status" aria-live="polite">
+      <div class="global-ai-spinner">
+        <span class="global-pulse-ring"></span>
+        <span class="global-food-emoji" id="global-food-emoji">🥘</span>
+      </div>
+      <div class="global-ai-text-box">
+        <div class="global-ai-title-row">
+          <span class="global-ai-title">Gemini AI 메뉴 큐레이션 분석 중...</span>
+          <span class="global-timer-badge" id="global-timer-badge">⏱️ 0.0초</span>
+        </div>
+        <div class="global-progress-track">
+          <div class="global-progress-bar" id="global-progress-bar"></div>
+        </div>
+      </div>
+    </div>
     <!-- Google Maps Platform Quota Warning Banner -->
     <div id="gmp-quota-banner" style="display:none;" class="gmp-quota-banner">
       <span>
@@ -2192,6 +2363,17 @@
         >
           <span>🎲</span> 고민 없이 AI 즉시 추천 & 맛집 탐색
         </button>
+
+        <!-- Initial Recommendation Processing Box -->
+        <div class="initial-processing-box" id="initial-processing-box" style="display: none;">
+          <div class="reroll-processing-top">
+            <span class="reroll-processing-text" id="initial-processing-msg">✨ Gemini AI 맞춤 메뉴 3가지를 빚어내는 중...</span>
+            <span class="reroll-processing-timer" id="initial-timer-badge">⏱️ 0.0초</span>
+          </div>
+          <div class="ai-progress-track">
+            <div class="ai-progress-bar" id="initial-progress-bar"></div>
+          </div>
+        </div>
       </div>
 
       <!-- Recommendation Result Card -->
@@ -2280,6 +2462,17 @@
 
           <!-- Buttons -->
           <div class="result-actions">
+            <!-- Inline Reroll Processing Box (Right above reroll button) -->
+            <div class="reroll-processing-box" id="reroll-processing-box" style="display: none;">
+              <div class="reroll-processing-top">
+                <span class="reroll-processing-text" id="reroll-processing-msg">🤖 Gemini AI가 새로운 메뉴 3가지를 생성 중입니다...</span>
+                <span class="reroll-processing-timer" id="reroll-timer-badge">⏱️ 0.0초</span>
+              </div>
+              <div class="ai-progress-track">
+                <div class="ai-progress-bar" id="reroll-progress-bar"></div>
+              </div>
+            </div>
+
             <button
               type="button"
               class="btn-primary-action"
@@ -2646,10 +2839,18 @@
           {
             name: '수제 등심 돈카츠 정식',
             emoji: '🍱',
-            image: 'images/gyudon.jpg',
+            image: 'images/tonkatsu.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Tonkatsu_by_cuckoomis.jpg/960px-Tonkatsu_by_cuckoomis.jpg',
             reason: '바삭바삭한 황금빛 튀김옷 속에 두툼하고 육즙 가득한 한돈 등심의 고소한 풍미!',
             tip: '첫 점은 소금과 와사비만 살짝 찍어 고기 본연의 풍미를 느껴보세요.'
+          },
+          {
+            name: '촉촉한 보쌈 정식',
+            emoji: '🥬',
+            image: 'images/bossam.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Bossam.jpg/960px-Bossam.jpg',
+            reason: '잡내 없이 야들야들하게 삶아낸 돼지 수육과 신선한 쌈 채소가 어우러져 한 끼 식사로 매우 훌륭합니다.',
+            tip: '신선한 배추속에 고기와 쌈장, 무김치를 올려 한 입 가득 쌈 싸보세요.'
           },
           {
             name: '맑은 나주 곰탕',
@@ -2662,7 +2863,7 @@
           {
             name: '진하고 뽀얀 설렁탕',
             emoji: '🥣',
-            image: 'images/naju-gomtang.jpg',
+            image: 'images/seolleongtang.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Seolleongtang.jpg/960px-Seolleongtang.jpg',
             reason: '사골을 24시간 푹 고아 뽀얗고 구수한 국물에 소면과 부드러운 양지 수육이 듬뿍!',
             tip: '대파 듬뿍 넣고 소금 후추 살짝 쳐서 밥 한 공기 뚝딱 말아 드세요.'
@@ -2798,6 +2999,22 @@
       const selectedDetailMenuName = document.getElementById('selected-detail-menu-name');
       const btnReroll = document.getElementById('btn-reroll');
 
+      // Global Floating & Inline Processing Elements (배포 환경 100% 가시성 보장)
+      const globalAiTimerBanner = document.getElementById('global-ai-timer-banner');
+      const globalTimerBadge = document.getElementById('global-timer-badge');
+      const globalFoodEmoji = document.getElementById('global-food-emoji');
+      const globalProgressBar = document.getElementById('global-progress-bar');
+
+      const rerollProcessingBox = document.getElementById('reroll-processing-box');
+      const rerollTimerBadge = document.getElementById('reroll-timer-badge');
+      const rerollProgressBar = document.getElementById('reroll-progress-bar');
+      const rerollProcessingMsg = document.getElementById('reroll-processing-msg');
+
+      const initialProcessingBox = document.getElementById('initial-processing-box');
+      const initialTimerBadge = document.getElementById('initial-timer-badge');
+      const initialProgressBar = document.getElementById('initial-progress-bar');
+      const initialProcessingMsg = document.getElementById('initial-processing-msg');
+
       const historySection = document.getElementById('history-section');
       const historyList = document.getElementById('history-list');
       const toast = document.getElementById('toast');
@@ -2902,21 +3119,47 @@
 
       function startAiProcessing(isReroll = false) {
         aiProcessingStartTime = performance.now();
-        if (aiProcessingBox) {
-          aiProcessingBox.style.display = 'block';
+
+        // 1. 글로벌 뷰포트 고정 플로팅 타이머 배너 (배포 링크 및 모바일 100% 가시성 보장)
+        if (globalAiTimerBanner) {
+          globalAiTimerBanner.classList.add('active');
+          if (globalTimerBadge) globalTimerBadge.textContent = '⏱️ 0.0초';
+          if (globalProgressBar) globalProgressBar.style.width = '0%';
         }
 
+        // 2. 다른 메뉴 추천받기 클릭 시 버튼 바로 위 인라인 타이머 박스
+        if (isReroll && rerollProcessingBox) {
+          rerollProcessingBox.style.display = 'block';
+          if (rerollTimerBadge) rerollTimerBadge.textContent = '⏱️ 0.0초';
+          if (rerollProgressBar) rerollProgressBar.style.width = '0%';
+        }
+
+        // 3. 첫 추천 시 메인 버튼 하단 인라인 타이머 박스
+        if (!isReroll && initialProcessingBox) {
+          initialProcessingBox.style.display = 'block';
+          if (initialTimerBadge) initialTimerBadge.textContent = '⏱️ 0.0초';
+          if (initialProgressBar) initialProgressBar.style.width = '0%';
+        }
+
+        // 4. 결과 카드 내부 배너
+        if (aiProcessingBox) {
+          aiProcessingBox.style.display = 'block';
+          if (aiTimerBadge) aiTimerBadge.textContent = '⏱️ 0.0초 경과';
+          if (aiProgressBar) aiProgressBar.style.width = '0%';
+        }
+
+        // 5. 버튼 상태 및 타이머
         if (btnReroll) {
           btnReroll.disabled = true;
           btnReroll.classList.add('ai-loading-active');
-          btnReroll.innerHTML = `<span>⏱️</span> 추천 생성 중... <strong class="btn-timer-num">0.0초</strong>`;
+          btnReroll.innerHTML = `<span>⏳</span> 새 메뉴 추천 생성 중... <strong class="btn-timer-num">0.0초</strong>`;
         }
 
         if (btnRecommend) {
           btnRecommend.disabled = true;
           btnRecommend.classList.add('ai-loading');
           btnRecommendIcon.textContent = '🤖';
-          btnRecommendText.textContent = `Gemini AI 추천 분석 처리 중... (0.0초)`;
+          btnRecommendText.textContent = `Gemini AI 추천 분석 중... (0.0초)`;
         }
 
         const icons = ['🥘', '🍜', '🍚', '🥩', '🍱', '🍲', '🍝', '🥗', '🍗', '🍛'];
@@ -2931,57 +3174,95 @@
         aiProcessingInterval = setInterval(() => {
           const elapsedMs = performance.now() - aiProcessingStartTime;
           const elapsedSec = (elapsedMs / 1000).toFixed(1);
+          const formattedTimer = `⏱️ ${elapsedSec}초`;
 
+          // 글로벌 플로팅 타이머
+          if (globalTimerBadge) {
+            globalTimerBadge.textContent = formattedTimer;
+          }
+          if (globalProgressBar) {
+            const progress = Math.min(94, (elapsedMs / 2500) * 85);
+            globalProgressBar.style.width = `${progress}%`;
+          }
+          if (globalFoodEmoji) {
+            const iconIndex = Math.floor(elapsedMs / 300) % icons.length;
+            globalFoodEmoji.textContent = icons[iconIndex];
+          }
+
+          // 인라인 리롤 타이머
+          if (rerollTimerBadge) {
+            rerollTimerBadge.textContent = formattedTimer;
+          }
+          if (rerollProgressBar) {
+            const progress = Math.min(94, (elapsedMs / 2500) * 85);
+            rerollProgressBar.style.width = `${progress}%`;
+          }
+
+          // 인라인 첫 추천 타이머
+          if (initialTimerBadge) {
+            initialTimerBadge.textContent = formattedTimer;
+          }
+          if (initialProgressBar) {
+            const progress = Math.min(94, (elapsedMs / 2500) * 85);
+            initialProgressBar.style.width = `${progress}%`;
+          }
+
+          // 카드 내부 배너
           if (aiTimerBadge) {
             aiTimerBadge.textContent = `⏱️ ${elapsedSec}초 경과`;
           }
+          if (aiProgressBar) {
+            const progress = Math.min(94, (elapsedMs / 2500) * 85);
+            aiProgressBar.style.width = `${progress}%`;
+          }
 
+          // 버튼 타이머
           if (btnReroll) {
             const timerSpan = btnReroll.querySelector('.btn-timer-num');
             if (timerSpan) timerSpan.textContent = `${elapsedSec}초`;
           }
-
           if (btnRecommend) {
-            btnRecommendText.textContent = `Gemini AI 추천 분석 처리 중... (${elapsedSec}초)`;
+            btnRecommendText.textContent = `Gemini AI 추천 분석 중... (${elapsedSec}초)`;
           }
 
-          if (aiProcessingMsg) {
-            if (elapsedMs < 900) {
-              aiProcessingMsg.textContent = msgs[0];
-            } else if (elapsedMs < 2000) {
-              aiProcessingMsg.textContent = msgs[1];
-            } else if (elapsedMs < 3200) {
-              aiProcessingMsg.textContent = msgs[2];
-            } else {
-              aiProcessingMsg.textContent = msgs[3];
-            }
-          }
+          // 메시지 갱신
+          const currentMsg = (elapsedMs < 800) ? msgs[0] : (elapsedMs < 1800) ? msgs[1] : (elapsedMs < 2800) ? msgs[2] : msgs[3];
+          if (aiProcessingMsg) aiProcessingMsg.textContent = currentMsg;
+          if (rerollProcessingMsg) rerollProcessingMsg.textContent = `🤖 ${currentMsg}`;
+          if (initialProcessingMsg) initialProcessingMsg.textContent = `✨ ${currentMsg}`;
 
           if (processingFoodIcon) {
-            const iconIndex = Math.floor(elapsedMs / 350) % icons.length;
+            const iconIndex = Math.floor(elapsedMs / 300) % icons.length;
             processingFoodIcon.textContent = icons[iconIndex];
           }
-
-          if (aiProgressBar) {
-            const progress = Math.min(94, (elapsedMs / 2800) * 85);
-            aiProgressBar.style.width = `${progress}%`;
-          }
-        }, 80);
+        }, 50);
       }
 
-      function stopAiProcessing(isSuccess = true) {
+      async function stopAiProcessing(isSuccess = true) {
         clearInterval(aiProcessingInterval);
         aiProcessingInterval = null;
+
+        // 최소 600ms 동안은 타이머 애니메이션을 유지하여 초고속 응답 시에도 타이머가 확실히 보이도록 보장
         const elapsedMs = performance.now() - aiProcessingStartTime;
-        const elapsedSec = (elapsedMs / 1000).toFixed(1);
-
-        if (aiProgressBar) {
-          aiProgressBar.style.width = '100%';
+        if (elapsedMs < 600) {
+          await new Promise(resolve => setTimeout(resolve, 600 - elapsedMs));
         }
 
-        if (aiTimerBadge) {
-          aiTimerBadge.textContent = `✅ ${elapsedSec}초 완료`;
-        }
+        const totalElapsedMs = performance.now() - aiProcessingStartTime;
+        const totalElapsedSec = (totalElapsedMs / 1000).toFixed(1);
+        const completionText = `✅ ${totalElapsedSec}초 완료`;
+
+        // 모든 프로그레스 바 100%
+        if (globalProgressBar) globalProgressBar.style.width = '100%';
+        if (rerollProgressBar) rerollProgressBar.style.width = '100%';
+        if (initialProgressBar) initialProgressBar.style.width = '100%';
+        if (aiProgressBar) aiProgressBar.style.width = '100%';
+
+        // 모든 완료 배지 갱신
+        if (globalTimerBadge) globalTimerBadge.textContent = completionText;
+        if (rerollTimerBadge) rerollTimerBadge.textContent = completionText;
+        if (initialTimerBadge) initialTimerBadge.textContent = completionText;
+        if (aiTimerBadge) aiTimerBadge.textContent = `✅ ${totalElapsedSec}초 완료`;
 
         if (aiProcessingMsg) {
           aiProcessingMsg.textContent = `✨ 최적의 맞춤 TOP 3 메뉴 선별이 완료되었습니다!`;
@@ -2999,6 +3280,9 @@
         }
 
         setTimeout(() => {
+          if (globalAiTimerBanner) globalAiTimerBanner.classList.remove('active');
+          if (rerollProcessingBox) rerollProcessingBox.style.display = 'none';
+          if (initialProcessingBox) initialProcessingBox.style.display = 'none';
           if (aiProcessingBox) {
             aiProcessingBox.style.display = 'none';
             if (aiProgressBar) aiProgressBar.style.width = '0%';
@@ -3031,7 +3315,10 @@
           };
 
           const rankClass = `rank-${item.rank || (idx + 1)}`;
-          const initialThumb = item.image || (appState.flavor === 'mild' 
+          const resolved = clientResolveFoodImage(item.name, item.image, item.fallbackImage);
+          const itemImg = resolved.image || item.image;
+          const itemFallback = resolved.fallbackImage || item.fallbackImage;
+          const initialThumb = itemImg || (appState.flavor === 'mild' 
             ? (appState.staple === 'rice' ? 'images/galbi-soup.jpg' : 'images/kalguksu.jpg') 
             : (appState.staple === 'rice' ? 'images/jeyuk.jpg' : 'images/jjambbong.jpg'));
 
@@ -3041,7 +3328,7 @@
               <span class="candidate-category-pill">${item.category || '오늘의 추천'}</span>
             </div>
             <div class="candidate-thumb-wrap">
-              <img class="candidate-thumb" src="${initialThumb}" alt="${item.name} 사진" onerror="this.onerror=null; this.src='${item.fallbackImage || initialThumb}';" />
+              <img class="candidate-thumb" src="${initialThumb}" alt="${item.name} 사진" onerror="this.onerror=null; this.src='${itemFallback || initialThumb}';" />
               <span class="candidate-thumb-emoji">${item.emoji || '🍽️'}</span>
             </div>
             <div class="candidate-info">
@@ -3080,6 +3367,27 @@
         showToast(`"${menu.name}"이(가) 선택되었습니다!`);
       }
 
+      // 음식 이름에 따른 안전한 이미지 맵핑 보정 헬퍼 (보쌈, 설렁탕, 곰탕, 규동, 돈카츠 등의 정확한 사진 일치)
+      function clientResolveFoodImage(name, currentImage, currentFallback) {
+        const n = (name || '').trim();
+        if (n.includes('보쌈') || n.includes('수육') || n.includes('족발')) {
+          return { image: 'images/bossam.jpg', fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Bossam.jpg/960px-Bossam.jpg' };
+        }
+        if (n.includes('설렁탕') || n.includes('사골') || n.includes('도가니')) {
+          return { image: 'images/seolleongtang.jpg', fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Seolleongtang.jpg/960px-Seolleongtang.jpg' };
+        }
+        if (n.includes('나주') || (n.includes('곰탕') && !n.includes('설렁탕'))) {
+          return { image: 'images/naju-gomtang.jpg', fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Gomguk_2.jpg/960px-Gomguk_2.jpg' };
+        }
+        if (n.includes('돈카츠') || n.includes('돈까스') || n.includes('돈가스') || n.includes('가츠동')) {
+          return { image: 'images/tonkatsu.jpg', fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Tonkatsu_by_cuckoomis.jpg/960px-Tonkatsu_by_cuckoomis.jpg' };
+        }
+        if (n.includes('규동') || n.includes('소고기덮밥') || n.includes('우삼겹')) {
+          return { image: 'images/gyudon.jpg', fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Gyudon_with_Shichimi.jpg/960px-Gyudon_with_Shichimi.jpg' };
+        }
+        return { image: currentImage, fallbackImage: currentFallback };
+      }
+
       // 7. 추천 알고리즘 및 결과 표시 (Gemini AI 실시간 API 연동 + 폴백 캐시)
       async function getRecommendation(isReroll = false) {
         if (!appState.flavor || !appState.staple) return;
@@ -3107,12 +3415,23 @@
             const data = await res.json();
             if (data && data.success) {
               if (Array.isArray(data.recommendations) && data.recommendations.length > 0) {
-                receivedList = data.recommendations.map(item => ({
-                  ...item,
-                  isAi: (data.source === 'gemini')
-                }));
+                receivedList = data.recommendations.map(item => {
+                  const resolved = clientResolveFoodImage(item.name, item.image, item.fallbackImage);
+                  return {
+                    ...item,
+                    image: resolved.image || item.image,
+                    fallbackImage: resolved.fallbackImage || item.fallbackImage,
+                    isAi: (data.source === 'gemini')
+                  };
+                });
               } else if (data.menu) {
-                receivedList = [{ ...data.menu, isAi: (data.source === 'gemini') }];
+                const resolved = clientResolveFoodImage(data.menu.name, data.menu.image, data.menu.fallbackImage);
+                receivedList = [{
+                  ...data.menu,
+                  image: resolved.image || data.menu.image,
+                  fallbackImage: resolved.fallbackImage || data.menu.fallbackImage,
+                  isAi: (data.source === 'gemini')
+                }];
               }
             }
           }
@@ -3139,7 +3458,7 @@
           }));
         }
 
-        stopAiProcessing(true);
+        await stopAiProcessing(true);
 
         appState.recommendations = receivedList;
         appState.selectedMenuIndex = 0;
@@ -3187,11 +3506,14 @@
         }
 
         if (resultImage) {
+          const resolved = clientResolveFoodImage(menu.name, menu.image, menu.fallbackImage);
+          const resolvedImg = resolved.image || menu.image;
+          const resolvedFallback = resolved.fallbackImage || menu.fallbackImage;
           let hasTriedFallback = false;
           resultImage.onerror = function () {
-            if (!hasTriedFallback && menu.fallbackImage && this.src !== menu.fallbackImage) {
+            if (!hasTriedFallback && resolvedFallback && this.src !== resolvedFallback) {
               hasTriedFallback = true;
-              this.src = menu.fallbackImage;
+              this.src = resolvedFallback;
               return;
             }
             this.onerror = null;
@@ -3202,7 +3524,7 @@
               this.src = (appState.staple === 'rice') ? 'images/jeyuk.jpg' : 'images/jjambbong.jpg';
             }
           };
-          const initialSrc = menu.image || (appState.flavor === 'mild' 
+          const initialSrc = resolvedImg || (appState.flavor === 'mild' 
             ? (appState.staple === 'rice' ? 'images/galbi-soup.jpg' : 'images/kalguksu.jpg') 
             : (appState.staple === 'rice' ? 'images/jeyuk.jpg' : 'images/jjambbong.jpg'));
           resultImage.src = initialSrc;

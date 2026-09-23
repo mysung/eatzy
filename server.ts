@@ -26,9 +26,15 @@ const FOOD_IMAGE_RULES: FoodImageRule[] = [
     image: "images/galbi-soup.jpg",
     fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Galbitang_%EA%B0%88%EB%B9%84%ED%83%95_beeniru.jpg/960px-Galbitang_%EA%B0%88%EB%B9%84%ED%83%95_beeniru.jpg"
   },
-  // 2. 곰탕, 설렁탕, 도가니탕, 꼬리곰탕
+  // 2-1. 설렁탕, 사골곰탕, 도가니탕 (뽀얗고 진한 우윳빛 사골 육수)
   {
-    keywords: ["곰탕", "나주곰탕", "한우곰탕", "맑은 곰탕", "설렁탕", "도가니탕", "꼬리곰탕", "사골곰탕", "사골"],
+    keywords: ["설렁탕", "사골", "도가니탕", "사골곰탕", "소머리국밥", "진한 뽀얀 설렁탕", "뽀얀 설렁탕", "진하고 뽀얀 설렁탕"],
+    image: "images/seolleongtang.jpg",
+    fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Seolleongtang.jpg/960px-Seolleongtang.jpg"
+  },
+  // 2-2. 나주곰탕, 맑은 곰탕 (맑고 투명한 양지/사태 고기 육수)
+  {
+    keywords: ["나주곰탕", "맑은 곰탕", "한우곰탕", "곰탕", "나주식 맑은 곰탕", "꼬리곰탕", "나주식", "맑은 나주곰탕", "맑은 나주 곰탕"],
     image: "images/naju-gomtang.jpg",
     fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Gomguk_2.jpg/960px-Gomguk_2.jpg"
   },
@@ -112,20 +118,20 @@ const FOOD_IMAGE_RULES: FoodImageRule[] = [
   },
   // 16. 돈카츠, 돈까스, 가츠동
   {
-    keywords: ["돈카츠", "돈까스", "돈가스", "가츠동", "치즈돈까스", "히레카츠", "로스카츠"],
-    image: "images/gyudon.jpg",
+    keywords: ["돈카츠", "돈까스", "돈가스", "가츠동", "치즈돈까스", "히레카츠", "로스카츠", "수제 등심 돈카츠", "등심 돈카츠 정식"],
+    image: "images/tonkatsu.jpg",
     fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Tonkatsu_by_cuckoomis.jpg/960px-Tonkatsu_by_cuckoomis.jpg"
   },
   // 17. 규동, 소고기덮밥, 오야코동
   {
-    keywords: ["규동", "소고기 덮밥", "소고기덮밥", "우삼겹 덮밥", "오야코동", "부타동"],
+    keywords: ["규동", "소고기 덮밥", "소고기덮밥", "우삼겹 덮밥", "오야코동", "부타동", "달콤 짭조름 규동"],
     image: "images/gyudon.jpg",
     fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Gyudon_with_Shichimi.jpg/960px-Gyudon_with_Shichimi.jpg"
   },
   // 18. 보쌈, 수육, 족발
   {
-    keywords: ["보쌈", "수육", "족발", "보쌈정식"],
-    image: "images/gyudon.jpg",
+    keywords: ["보쌈", "수육", "족발", "보쌈정식", "촉촉한 보쌈 정식", "보쌈 정식", "제육 수육"],
+    image: "images/bossam.jpg",
     fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Bossam.jpg/960px-Bossam.jpg"
   },
   // 19. 마파두부
@@ -309,13 +315,13 @@ const FALLBACK_MENUS: Record<string, Array<{ name: string; emoji: string; catego
     { name: "소고기 갈비탕", emoji: "🥩", category: "한식", reason: "맑고 투명하지만 깊은 소고기 육수에 푹 고아 부드러운 왕갈비가 푸짐!", tip: "잘 익은 깍두기 국물을 살짝 넣거나 고기는 겨자소스에 찍어드세요.", image: "images/galbi-soup.jpg", fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Galbitang_%EA%B0%88%EB%B9%84%ED%83%95_beeniru.jpg/960px-Galbitang_%EA%B0%88%EB%B9%84%ED%83%95_beeniru.jpg" },
     { name: "생연어 사케동", emoji: "🍣", category: "일식", reason: "도톰하고 기름진 고소한 생연어와 감칠맛 나는 초밥용 밥, 생와사비의 깔끔함!", tip: "비비지 말고 연어 위에 무순과 와사비를 얹어 밥과 함께 떠드세요.", image: "images/salmon-bowl.jpg", fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/Salmon_don_of_Nakau.jpg/960px-Salmon_don_of_Nakau.jpg" },
     { name: "나주식 맑은 곰탕", emoji: "🥣", category: "한식", reason: "기름기를 걷어내 담백하고 깔끔한 양지 국물에 부드러운 고기가 가득!", tip: "후춧가루 살짝 치고 송송 썬 대파를 듬뿍 넣어 개운하게 즐기세요.", image: "images/naju-gomtang.jpg", fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Gomguk_2.jpg/960px-Gomguk_2.jpg" },
-    { name: "수제 등심 돈카츠 정식", emoji: "🍱", category: "일식", reason: "바삭바삭 살아있는 튀김옷 속에 두툼하고 육즙 가득한 한돈 등심!", tip: "첫 점은 말돈 소금과 생와사비만 찍어 본연의 육향을 음미해보세요.", image: "images/gyudon.jpg", fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Tonkatsu_by_cuckoomis.jpg/960px-Tonkatsu_by_cuckoomis.jpg" },
+    { name: "수제 등심 돈카츠 정식", emoji: "🍱", category: "일식", reason: "바삭바삭 살아있는 튀김옷 속에 두툼하고 육즙 가득한 한돈 등심!", tip: "첫 점은 말돈 소금과 생와사비만 찍어 본연의 육향을 음미해보세요.", image: "images/tonkatsu.jpg", fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Tonkatsu_by_cuckoomis.jpg/960px-Tonkatsu_by_cuckoomis.jpg" },
     { name: "전주 돌솥 비빔밥", emoji: "🍳", category: "한식", reason: "지글지글 누룽지가 눌어붙는 소리와 오색 나물, 고소한 참기름의 건강한 조화!", tip: "돌솥 바닥의 바삭한 누룽지는 숟가락으로 긁어 아껴 드세요.", image: "images/bibimbap.jpg", fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/44/Dolsot-bibimbap.jpg/960px-Dolsot-bibimbap.jpg" },
     { name: "달콤 짭조름 규동", emoji: "🍲", category: "일식", reason: "얇게 저민 부드러운 소고기와 양파가 달달한 쯔유 소스에 졸여져 밥도둑!", tip: "초생강(베니쇼가)과 시치미 가루를 톡톡 곁들이면 끝까지 산뜻합니다.", image: "images/gyudon.jpg", fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Gyudon_with_Shichimi.jpg/960px-Gyudon_with_Shichimi.jpg" },
-    { name: "촉촉한 보쌈 정식", emoji: "🥬", category: "한식", reason: "야들야들하게 삶아낸 돼지 수육과 아삭하고 달큼한 무김치의 정갈한 한상!", tip: "신선한 배추속에 고기와 쌈장, 새우젓을 올려 한 입 가득 쌈 싸보세요.", image: "images/gyudon.jpg", fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Bossam.jpg/960px-Bossam.jpg" },
+    { name: "촉촉한 보쌈 정식", emoji: "🥬", category: "한식", reason: "야들야들하게 삶아낸 돼지 수육과 아삭하고 달큼한 무김치의 정갈한 한상!", tip: "신선한 배추속에 고기와 쌈장, 새우젓을 올려 한 입 가득 쌈 싸보세요.", image: "images/bossam.jpg", fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Bossam.jpg/960px-Bossam.jpg" },
     { name: "구수한 차돌 된장찌개", emoji: "🥘", category: "한식", reason: "고소한 차돌박이 기름과 재래식 된장, 호박과 두부가 어우러진 영혼의 찌개!", tip: "밥 위에 두부와 국물을 듬뿍 얹어 으깨 비벼 드시면 최고입니다.", image: "images/miyeokguk.jpg", fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Doenjang-jjigae_3.jpg/960px-Doenjang-jjigae_3.jpg" },
     { name: "황태 콩나물 국밥", emoji: "🍚", category: "한식", reason: "시원한 황태포 육수와 아삭한 콩나물이 전날의 피로와 속을 편안하게 정리!", tip: "수란에 국물 서너 숟가락과 김가루를 넣어 먼저 애피타이저로 호로록!", image: "images/beef-soup.jpg", fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Kongnamul-gukbap.jpg/960px-Kongnamul-gukbap.jpg" },
-    { name: "진한 뽀얀 설렁탕", emoji: "🍲", category: "한식", reason: "사골을 24시간 우려낸 깊고 구수한 국물에 소면과 얇은 소고기 수육!", tip: "소금 간을 심심하게 맞추고 달큰한 깍두기 국물을 부어 먹어도 별미!", image: "images/naju-gomtang.jpg", fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Seolleongtang.jpg/960px-Seolleongtang.jpg" }
+    { name: "진한 뽀얀 설렁탕", emoji: "🍲", category: "한식", reason: "사골을 24시간 우려낸 깊고 구수한 국물에 소면과 얇은 소고기 수육!", tip: "소금 간을 심심하게 맞추고 달큰한 깍두기 국물을 부어 먹어도 별미!", image: "images/seolleongtang.jpg", fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Seolleongtang.jpg/960px-Seolleongtang.jpg" }
   ],
   "mild-noodle": [
     { name: "바지락 칼국수", emoji: "🍲", category: "한식", reason: "싱싱한 바지락 조개가 듬뿍 들어가 맑고 개운한 천연 감칠맛의 쫄깃한 면발!", tip: "겉절이 김치를 면에 감싸서 한 입에 먹으면 감탄이 절로 나옵니다.", image: "images/kalguksu.jpg", fallbackImage: "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Bajirak-kalguksu.jpg/960px-Bajirak-kalguksu.jpg" },
@@ -555,8 +561,19 @@ app.get("/api/health", (req, res) => {
 });
 
 async function startServer() {
-  // Vite 미들웨어 및 정적 파일 서빙
-  if (process.env.NODE_ENV !== "production") {
+  // Always disable caching for HTML files and SPA routes so client always gets the latest deployed code
+  app.use((req, res, next) => {
+    if (req.path === "/" || req.path.endsWith(".html") || !path.extname(req.path)) {
+      res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+      res.setHeader("Pragma", "no-cache");
+      res.setHeader("Expires", "0");
+      res.setHeader("Surrogate-Control", "no-store");
+    }
+    next();
+  });
+
+  const isDev = process.env.NODE_ENV === "development" && !process.argv.some(a => a.includes("dist"));
+  if (isDev) {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
@@ -564,8 +581,20 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), "dist");
-    app.use(express.static(distPath));
+    app.use(express.static(distPath, {
+      maxAge: "1h",
+      setHeaders: (res, filePath) => {
+        if (filePath.endsWith(".html")) {
+          res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+          res.setHeader("Pragma", "no-cache");
+          res.setHeader("Expires", "0");
+        }
+      }
+    }));
     app.get("*", (req, res) => {
+      res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+      res.setHeader("Pragma", "no-cache");
+      res.setHeader("Expires", "0");
       res.sendFile(path.join(distPath, "index.html"));
     });
   }
