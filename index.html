@@ -701,6 +701,423 @@
         box-shadow: 0 2px 8px rgba(234, 88, 12, 0.3);
       }
 
+      /* =========================================================================
+         AI 실시간 처리 중 & 타이머 인디케이터 스타일
+         ========================================================================= */
+      .ai-processing-box {
+        background: linear-gradient(135deg, #f5f3ff 0%, #eff6ff 100%);
+        border: 2px solid #c7d2fe;
+        border-radius: var(--radius-lg);
+        padding: 18px 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.15);
+        animation: fadeInSlideUp 0.3s ease-out;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .ai-processing-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 12px;
+      }
+
+      .ai-processing-spinner {
+        position: relative;
+        width: 48px;
+        height: 48px;
+        background: #ffffff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);
+        flex-shrink: 0;
+      }
+
+      .pulse-ring {
+        position: absolute;
+        inset: -4px;
+        border-radius: 50%;
+        border: 2px solid #818cf8;
+        animation: ringPulse 1.4s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+      }
+
+      @keyframes ringPulse {
+        0% { transform: scale(0.9); opacity: 1; }
+        100% { transform: scale(1.35); opacity: 0; }
+      }
+
+      .ai-food-icon {
+        font-size: 24px;
+        line-height: 1;
+        transition: transform 0.2s ease;
+      }
+
+      .ai-processing-text-wrap {
+        flex-grow: 1;
+        text-align: left;
+      }
+
+      .ai-processing-title-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 4px;
+      }
+
+      .ai-processing-title {
+        font-size: 16px;
+        font-weight: 800;
+        color: #312e81;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .ai-processing-timer-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: #4338ca;
+        color: #ffffff;
+        padding: 4px 12px;
+        border-radius: 9999px;
+        font-size: 13px;
+        font-weight: 800;
+        font-variant-numeric: tabular-nums;
+        letter-spacing: 0.02em;
+        box-shadow: 0 2px 6px rgba(67, 56, 202, 0.35);
+        animation: pulseBadge 1.2s infinite ease-in-out;
+      }
+
+      @keyframes pulseBadge {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.04); }
+      }
+
+      .ai-processing-msg {
+        font-size: 13px;
+        color: #4338ca;
+        line-height: 1.4;
+        margin: 0;
+        font-weight: 500;
+      }
+
+      .ai-progress-track {
+        width: 100%;
+        height: 6px;
+        background: #e0e7ff;
+        border-radius: 9999px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .ai-progress-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899);
+        border-radius: 9999px;
+        transition: width 0.15s ease-out;
+        box-shadow: 0 0 8px rgba(168, 85, 247, 0.5);
+      }
+
+      /* Reroll Button Active Loading State */
+      .btn-primary-action.ai-loading-active {
+        background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
+        cursor: wait !important;
+        box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.35) !important;
+        animation: pulseShimmer 1.2s infinite ease-in-out;
+      }
+
+      .btn-primary-action .btn-timer-num {
+        font-variant-numeric: tabular-nums;
+        background: rgba(255, 255, 255, 0.25);
+        padding: 2px 7px;
+        border-radius: 9999px;
+        font-size: 13px;
+        margin-left: 4px;
+      }
+
+      /* =========================================================================
+         TOP 3 메뉴 후보군 비교 및 선택 섹션 스타일
+         ========================================================================= */
+      .candidates-selection-section {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: var(--radius-md);
+        padding: 18px 16px;
+        margin-bottom: 22px;
+        text-align: left;
+      }
+
+      .candidates-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .candidates-title-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .candidates-main-title {
+        font-size: 17px;
+        font-weight: 800;
+        color: #0f172a;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .candidates-sub-title {
+        font-size: 13px;
+        color: #64748b;
+        font-weight: 500;
+      }
+
+      .candidates-hint-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: #eff6ff;
+        color: #1d4ed8;
+        border: 1px solid #bfdbfe;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 9999px;
+      }
+
+      .candidates-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+
+      @media (max-width: 680px) {
+        .candidates-grid {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+      }
+
+      .candidate-card {
+        background: #ffffff;
+        border: 2px solid #e2e8f0;
+        border-radius: var(--radius-md);
+        padding: 12px;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        position: relative;
+        text-align: left;
+        user-select: none;
+      }
+
+      .candidate-card:hover {
+        border-color: #93c5fd;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px -2px rgba(15, 23, 42, 0.08);
+      }
+
+      .candidate-card.active {
+        border-color: #2563eb;
+        background: #f0f7ff;
+        box-shadow: 0 8px 24px -4px rgba(37, 99, 235, 0.22);
+        transform: translateY(-3px);
+      }
+
+      .candidate-card-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        gap: 4px;
+      }
+
+      .candidate-rank-badge {
+        font-size: 11px;
+        font-weight: 800;
+        padding: 3px 8px;
+        border-radius: 9999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        white-space: nowrap;
+      }
+
+      .candidate-rank-badge.rank-1 {
+        background: #fef3c7;
+        color: #92400e;
+        border: 1px solid #fde68a;
+      }
+
+      .candidate-rank-badge.rank-2 {
+        background: #f1f5f9;
+        color: #334155;
+        border: 1px solid #cbd5e1;
+      }
+
+      .candidate-rank-badge.rank-3 {
+        background: #f3e8ff;
+        color: #6b21a8;
+        border: 1px solid #e9d5ff;
+      }
+
+      .candidate-category-pill {
+        font-size: 11px;
+        color: #64748b;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        padding: 2px 7px;
+        border-radius: 4px;
+        font-weight: 600;
+      }
+
+      .candidate-thumb-wrap {
+        position: relative;
+        width: 100%;
+        height: 105px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #e2e8f0;
+        margin-bottom: 8px;
+      }
+
+      @media (max-width: 680px) {
+        .candidate-thumb-wrap {
+          height: 130px;
+        }
+      }
+
+      .candidate-thumb {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
+      }
+
+      .candidate-card:hover .candidate-thumb {
+        transform: scale(1.04);
+      }
+
+      .candidate-thumb-emoji {
+        position: absolute;
+        bottom: 6px;
+        right: 6px;
+        font-size: 20px;
+        background: rgba(15, 23, 42, 0.75);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+      }
+
+      .candidate-info {
+        flex-grow: 1;
+        margin-bottom: 10px;
+      }
+
+      .candidate-name {
+        font-size: 15px;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 4px;
+        line-height: 1.3;
+      }
+
+      .candidate-reason-snippet {
+        font-size: 12px;
+        color: #475569;
+        line-height: 1.45;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin: 0;
+      }
+
+      .candidate-select-indicator {
+        font-size: 12px;
+        font-weight: 700;
+        padding: 7px 10px;
+        border-radius: 6px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        transition: all 0.15s ease;
+        background: #f1f5f9;
+        color: #475569;
+        border: 1px solid #e2e8f0;
+      }
+
+      .candidate-card:hover .candidate-select-indicator:not(.active) {
+        background: #e2e8f0;
+        color: #1e293b;
+      }
+
+      .candidate-select-indicator.active {
+        background: #2563eb;
+        color: #ffffff;
+        border-color: #1d4ed8;
+        box-shadow: 0 2px 6px rgba(37, 99, 235, 0.35);
+      }
+
+      /* Selected Menu Indicator Header in Detail View */
+      .selected-detail-divider {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 18px 0 16px;
+        padding-bottom: 12px;
+        border-bottom: 1.5px dashed #e2e8f0;
+        flex-wrap: wrap;
+        gap: 8px;
+        text-align: left;
+      }
+
+      .selected-detail-title-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .selected-badge-tag {
+        background: #2563eb;
+        color: #ffffff;
+        font-size: 12px;
+        font-weight: 800;
+        padding: 4px 10px;
+        border-radius: 9999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .selected-detail-subtext {
+        font-size: 14px;
+        color: #0f172a;
+        font-weight: 800;
+      }
+
       /* Toast notification */
       .toast {
         position: fixed;
@@ -1625,11 +2042,11 @@
       <!-- Header -->
       <header class="app-header">
         <div class="app-badge" id="badge-version">
-          <span>✨</span> 오늘 점심·저녁 고민 해결
+          <span>✨</span> Gemini AI 실시간 무한 메뉴 큐레이터 가동 중
         </div>
         <h1 class="app-title" id="main-title">오늘 뭐 먹지?</h1>
         <p class="app-subtitle" id="main-subtitle">
-          두 가지 질문만 고르면 딱 맞는 메뉴를 찾아드려요!
+          두 가지만 탭하면 Gemini AI가 수천 가지 메뉴 중 최적의 식사와 주변 맛집을 실시간으로 찾아드립니다!
         </p>
       </header>
 
@@ -1735,6 +2152,25 @@
         </div>
       </section>
 
+      <!-- Step 3: 오늘의 상황 & 기분 (선택) -->
+      <section class="white-card" id="step-mood-card">
+        <div class="step-header">
+          <span class="step-number step-number-ai">AI</span>
+          <h2 class="step-title">오늘의 상황이나 기분은 어떤가요? (선택)</h2>
+          <span class="step-description" id="step3-status">선택 안 함 (전체 추천)</span>
+        </div>
+        <p class="step-sub-instruction">선호하는 테마를 탭하시면 Gemini AI가 더욱 정교하고 다채로운 메뉴를 실시간으로 빚어냅니다.</p>
+        <div class="mood-chips-container" id="mood-chips-group" role="group" aria-label="상황 선택">
+          <button type="button" class="mood-chip" onclick="handleMoodSelect(this, '☀️ 오늘 날씨에 딱 어울리는')">☀️ 오늘 날씨 맞춤</button>
+          <button type="button" class="mood-chip" onclick="handleMoodSelect(this, '⚡ 바쁜 일상, 15분 초스피드 식사')">⚡ 초스피드 식사</button>
+          <button type="button" class="mood-chip" onclick="handleMoodSelect(this, '🥘 묵직하고 따끈한 국물 요리')">🥘 뜨끈한 국물</button>
+          <button type="button" class="mood-chip" onclick="handleMoodSelect(this, '🥗 속 편하고 부담 없는 건강식/샐러드')">🥗 가볍고 헬시하게</button>
+          <button type="button" class="mood-chip" onclick="handleMoodSelect(this, '🍖 단백질 가득 고기 듬뿍 든든한 파워 보양식')">🍖 고기 보양식</button>
+          <button type="button" class="mood-chip" onclick="handleMoodSelect(this, '🍣 감성 가득 정갈한 특식')">🍣 감성 특식</button>
+          <button type="button" class="mood-chip" onclick="handleMoodSelect(this, '🔥 스트레스 해소 확 풀리는 화끈한 음식')">🔥 스트레스 해소</button>
+        </div>
+      </section>
+
       <!-- Action Buttons -->
       <div class="action-buttons-group">
         <button
@@ -1754,18 +2190,62 @@
           id="btn-quick-random"
           onclick="quickRandomRecommendation()"
         >
-          <span>🎲</span> 고민 없이 바로 추천받기 & 맛집 탐색
+          <span>🎲</span> 고민 없이 AI 즉시 추천 & 맛집 탐색
         </button>
       </div>
 
       <!-- Recommendation Result Card -->
       <section class="result-wrapper" id="result-wrapper">
+        <!-- Real-time AI Processing Banner & Live Stopwatch Timer -->
+        <div class="ai-processing-box" id="ai-processing-box" style="display: none;">
+          <div class="ai-processing-header">
+            <div class="ai-processing-spinner">
+              <span class="pulse-ring"></span>
+              <span class="ai-food-icon" id="processing-food-icon">🥘</span>
+            </div>
+            <div class="ai-processing-text-wrap">
+              <div class="ai-processing-title-row">
+                <span class="ai-processing-title"><span>✨</span> Gemini AI 맞춤 메뉴 큐레이션 처리 중...</span>
+                <span class="ai-processing-timer-badge" id="ai-timer-badge">⏱️ 0.0초 경과</span>
+              </div>
+              <p class="ai-processing-msg" id="ai-processing-msg">선호하신 맛과 식사 스타일에 어울리는 최적 후보군을 탐색하는 중입니다...</p>
+            </div>
+          </div>
+          <div class="ai-progress-track">
+            <div class="ai-progress-bar" id="ai-progress-bar"></div>
+          </div>
+        </div>
+
         <div class="white-card result-card" id="result-card">
+          <!-- Top 3 Comparison & Selection Section -->
+          <div class="candidates-selection-section" id="candidates-selection-section">
+            <div class="candidates-header">
+              <div class="candidates-title-wrap">
+                <span class="candidates-main-title">🎯 AI 엄선 TOP 3 추천 메뉴</span>
+                <span class="candidates-sub-title">가장 끌리는 메뉴를 탭하여 선택하세요 (3가지 모두 비교 가능)</span>
+              </div>
+              <span class="candidates-hint-pill">👉 마음에 드는 메뉴를 탭하면 상세 정보와 맛집이 연동됩니다</span>
+            </div>
+            <div class="candidates-grid" id="candidates-grid">
+              <!-- Dynamically populated candidate cards -->
+            </div>
+          </div>
+
+          <!-- Selected Menu Divider -->
+          <div class="selected-detail-divider">
+            <div class="selected-detail-title-group">
+              <span class="selected-badge-tag"><span>✔️</span> 현재 선택된 메뉴</span>
+              <span class="selected-detail-subtext" id="selected-detail-menu-name">제육볶음 덮밥</span>
+            </div>
+            <span class="tag-pill tag-ai" id="tag-ai-badge">✨ Gemini AI 실시간 큐레이션</span>
+          </div>
+
           <!-- Category Tags -->
           <div class="result-header-tags" id="result-tags">
             <span class="tag-pill tag-flavor" id="tag-flavor-display">🌶️ 매콤</span>
             <span class="tag-pill tag-staple" id="tag-staple-display">🍚 밥</span>
             <span class="tag-pill" style="background-color: #f1f5f9; color: #475569;" id="tag-category-display">오늘의 추천</span>
+            <span class="tag-pill" style="background-color: #fef3c7; color: #92400e;" id="tag-rank-display">🥇 1순위 추천</span>
           </div>
 
           <!-- Real Mouthwatering Food Photo -->
@@ -1806,7 +2286,7 @@
               id="btn-reroll"
               onclick="reRollRecommendation()"
             >
-              <span>🎲</span> 다른 메뉴 보기
+              <span>✨</span> 다른 AI 메뉴 추천받기
             </button>
             <button
               type="button"
@@ -2040,6 +2520,22 @@
             tip: '날치알이나 참기름을 살짝 두르면 고소함이 폭발해요.'
           },
           {
+            name: '얼큰 해물 순두부찌개',
+            emoji: '🌶️',
+            image: 'images/beef-soup.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Sundubu-jjigae_3.jpg/960px-Sundubu-jjigae_3.jpg',
+            reason: '몽글몽글 부드러운 순두부와 시원한 해물이 칼칼한 고추기름 국물에 퐁당 빠진 든든한 찌개!',
+            tip: '뚝배기가 보글보글 끓을 때 계란 노른자를 톡 터뜨려보세요.'
+          },
+          {
+            name: '의정부식 부대찌개',
+            emoji: '🥘',
+            image: 'images/kimchi-stew.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Budae-jjigae.jpg/960px-Budae-jjigae.jpg',
+            reason: '풍성한 햄과 소시지, 치즈와 김치가 진하게 우러난 칼칼하고 진한 육수의 국민 밥도둑!',
+            tip: '라면 사리를 먼저 건져먹고 진국 국물에 밥을 슥슥 비벼 드세요.'
+          },
+          {
             name: '마파두부 덮밥',
             emoji: '🍛',
             image: 'images/mapo-tofu.jpg',
@@ -2048,12 +2544,12 @@
             tip: '자극적이지 않으면서도 은근한 화자오 향이 일품이에요.'
           },
           {
-            name: '얼큰 소고기 국밥',
-            emoji: '🥘',
+            name: '얼큰 소고기 육개장',
+            emoji: '🥩',
             image: 'images/beef-soup.jpg',
-            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Korean.cuisine-Yukgaejang-02.jpg/960px-Korean.cuisine-Yukgaejang-02.jpg',
-            reason: '진하게 우려낸 소고기 육수에 칼칼한 고추기름과 우거지가 푸짐하게 들어간 속 풀리는 한 뚝배기!',
-            tip: '깍두기 국물을 살짝 넣어 말아먹으면 국물이 더욱 시원해져요.'
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Yukgaejang_2.jpg/960px-Yukgaejang_2.jpg',
+            reason: '결대로 찢은 양지 소고기와 대파, 토란대가 푹 우러나 얼큰하고 시원한 보양 한 그릇!',
+            tip: '따끈한 밥을 뚝배기에 반 공기씩 말아 깍두기를 얹어 드세요.'
           },
           {
             name: '닭볶음탕 & 볶음밥',
@@ -2074,6 +2570,14 @@
             tip: '단무지 한 점과 함께 국물까지 들이키면 묵은 스트레스가 싹 풀려요.'
           },
           {
+            name: '진한 차돌박이 짬뽕',
+            emoji: '🥩',
+            image: 'images/jjambbong.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/Jjamppong_4.jpg/960px-Jjamppong_4.jpg',
+            reason: '고소한 차돌박이의 육즙이 진한 불맛 짬뽕 국물에 녹아들어 극강의 묵직하고 칼칼한 풍미!',
+            tip: '면을 다 먹고 남은 진한 국물에 밥을 살짝 말아도 꿀맛이에요.'
+          },
+          {
             name: '신라면 투움바 파스타',
             emoji: '🍝',
             image: 'images/toowoomba.jpg',
@@ -2090,6 +2594,14 @@
             tip: '삶은 달걀 반 쪽으로 매운맛을 달래며 즐겨보세요.'
           },
           {
+            name: '고소한 사천 탄탄멘',
+            emoji: '🥜',
+            image: 'images/ramen.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/Dandan_mian.jpg/960px-Dandan_mian.jpg',
+            reason: '진한 참깨 페이스트의 고소함과 고추기름의 칼칼함, 볶은 다진 고기의 감칠맛이 폭발!',
+            tip: '국물에 수란이나 온천계란을 풀어 면을 적셔 드셔보세요.'
+          },
+          {
             name: '스파이시 핫치킨 버거',
             emoji: '🍔',
             image: 'images/spicy-burger.jpg',
@@ -2104,17 +2616,17 @@
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8f/Malatang_from_Hope_Tree_%2820220226172344%29.jpg/960px-Malatang_from_Hope_Tree_%2820220226172344%29.jpg',
             reason: '얼얼한 마라 소스에 옥수수면과 푸주, 청경채가 듬뿍 들어가 지루할 틈 없는 강렬한 한 그릇!',
             tip: '땅콩소스(즈마장)를 곁들여 고소함을 한층 끌어올려 보세요.'
-          },
-          {
-            name: '국물 떡볶이 & 튀김·빵',
-            emoji: '🥖',
-            image: 'images/tteokbokki.jpg',
-            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Korean.snacks-Tteokbokki-08.jpg/960px-Korean.snacks-Tteokbokki-08.jpg',
-            reason: '매콤달콤 걸쭉한 떡볶이 국물에 바게트나 바삭한 튀김을 푹 찍어 먹는 멈출 수 없는 유혹!',
-            tip: '모차렐라 치즈를 듬뿍 얹으면 매운맛이 부드러워져요.'
           }
         ],
         'mild-rice': [
+          {
+            name: '소고기 왕갈비탕',
+            emoji: '🥩',
+            image: 'images/galbi-soup.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Galbitang_%EA%B0%88%EB%B9%84%ED%83%95_beeniru.jpg/960px-Galbitang_%EA%B0%88%EB%B9%84%ED%83%95_beeniru.jpg',
+            reason: '맑고 투명하지만 깊은 소고기 육수에 푹 고아 부드러운 왕갈비가 푸짐한 든든한 보양식!',
+            tip: '고기는 겨자 간장 소스에 콕 찍어 드시고, 깍두기 국물을 살짝 부어 드셔도 별미입니다.'
+          },
           {
             name: '소고기 미역국 정식',
             emoji: '🍲',
@@ -2132,12 +2644,12 @@
             tip: '무순과 생와사비를 조금씩 얹어 비비지 않고 떠먹는 것이 꿀팁이에요.'
           },
           {
-            name: '영양 소고기 야채죽',
-            emoji: '🥣',
-            image: 'images/beef-porridge.jpg',
-            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Korean_cuisine-Juk-01.jpg/960px-Korean_cuisine-Juk-01.jpg',
-            reason: '정성껏 다진 채소와 고소한 소고기가 부드러운 쌀알과 어우러져 지친 위장을 달래주는 편안한 밥상!',
-            tip: '깨소금과 참기름을 톡 떨어뜨려 고소한 풍미를 즐겨보세요.'
+            name: '수제 등심 돈카츠 정식',
+            emoji: '🍱',
+            image: 'images/gyudon.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Tonkatsu_by_cuckoomis.jpg/960px-Tonkatsu_by_cuckoomis.jpg',
+            reason: '바삭바삭한 황금빛 튀김옷 속에 두툼하고 육즙 가득한 한돈 등심의 고소한 풍미!',
+            tip: '첫 점은 소금과 와사비만 살짝 찍어 고기 본연의 풍미를 느껴보세요.'
           },
           {
             name: '맑은 나주 곰탕',
@@ -2146,6 +2658,14 @@
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/Gomtang.jpg/960px-Gomtang.jpg',
             reason: '기름기를 걷어내고 맑고 담백하게 우려낸 고기 육수에 푸짐한 양지살과 당면이 든든한 명품 한 그릇!',
             tip: '송송 썬 대파를 듬뿍 넣고 깍두기를 곁들이면 깔끔함의 극치예요.'
+          },
+          {
+            name: '진하고 뽀얀 설렁탕',
+            emoji: '🥣',
+            image: 'images/naju-gomtang.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Seolleongtang.jpg/960px-Seolleongtang.jpg',
+            reason: '사골을 24시간 푹 고아 뽀얗고 구수한 국물에 소면과 부드러운 양지 수육이 듬뿍!',
+            tip: '대파 듬뿍 넣고 소금 후추 살짝 쳐서 밥 한 공기 뚝딱 말아 드세요.'
           },
           {
             name: '달콤 짭조름한 규동',
@@ -2182,12 +2702,36 @@
             tip: '통후추를 즉석에서 살짝 갈아 넣으면 풍미가 한층 살아나요.'
           },
           {
+            name: '하카타 돈코츠 라멘',
+            emoji: '🍜',
+            image: 'images/tonkotsu-ramen.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Tonkotsu_Ramen_Special%2C_Hakata_Choten%2C_Paris_001.jpg/960px-Tonkotsu_Ramen_Special%2C_Hakata_Choten%2C_Paris_001.jpg',
+            reason: '돼지 사골을 푹 고아 뽀얗고 크리미한 육수에 불향 머금은 두툼한 차슈와 반숙란!',
+            tip: '아지타마고(반숙 계란)를 국물에 푹 적셔 면과 함께 호로록 드세요.'
+          },
+          {
+            name: '베트남 양지 쌀국수',
+            emoji: '🥢',
+            image: 'images/pho.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Pho-Beef-Noodles-2008.jpg/960px-Pho-Beef-Noodles-2008.jpg',
+            reason: '맑고 깊은 소고기 육수에 부드러운 양지와 쌀국수 면, 아삭한 숙주가 주는 편안하고 맑은 감칠맛!',
+            tip: '레몬즙을 살짝 짜 넣고 절인 양파를 곁들이면 한층 산뜻합니다.'
+          },
+          {
             name: '시원한 바지락 칼국수',
             emoji: '🍜',
             image: 'images/kalguksu.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Bajirak-kalguksu.jpg/960px-Bajirak-kalguksu.jpg',
             reason: '싱싱한 바지락 조개에서 우러난 맑고 시원한 국물에 쫄깃탱글한 손칼국수 면발의 순수하고 담백한 맛!',
             tip: '맑은 조개 국물을 먼저 한 모금 들이켠 후 면을 즐겨보세요.'
+          },
+          {
+            name: '시원한 살얼음 평양냉면 & 판모밀',
+            emoji: '🧊',
+            image: 'images/janchi-guksu.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Zaru_soba_by_hirotomo_in_Tokyo.jpg/960px-Zaru_soba_by_hirotomo_in_Tokyo.jpg',
+            reason: '살얼음 띄운 맑고 시원한 쯔유/육수에 메밀면을 퐁당 적셔 먹는 가슴 속까지 개운한 힐링!',
+            tip: '간 무와 와사비, 송송 썬 파를 듬뿍 넣어 시원하게 즐기세요.'
           },
           {
             name: '따뜻한 잔치국수',
@@ -2204,14 +2748,6 @@
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Tonkotsu_Ramen_Special%2C_Hakata_Choten%2C_Paris_001.jpg/960px-Tonkotsu_Ramen_Special%2C_Hakata_Choten%2C_Paris_001.jpg',
             reason: '잡내 없이 진하고 구수하게 우려낸 사골 육수에 부드러운 차슈와 쫄깃한 생면이 일품인 힐링 라멘!',
             tip: '반숙 맛달걀(아지타마고)을 국물에 적셔 먹으면 더욱 맛있어요.'
-          },
-          {
-            name: '촉촉한 에그마요 모닝롤',
-            emoji: '🥐',
-            image: 'images/egg-mayo.jpg',
-            fallbackImage: 'https://upload.wikimedia.org/wikipedia/commons/f/ff/Egg_Sandwich.jpg',
-            reason: '부드러운 빵 사이에 삶은 달걀과 고소한 마요네즈가 촉촉하게 가득 차서 언제 먹어도 편안한 꿀조합!',
-            tip: '우유 한 잔이나 오렌지 주스와 함께하면 부담 없는 훌륭한 식사예요.'
           }
         ]
       };
@@ -2220,6 +2756,9 @@
       const appState = {
         flavor: null, // 'spicy' | 'mild'
         staple: null, // 'rice' | 'noodle'
+        situation: null, // AI 힌트
+        recommendations: [], // TOP 3 후보 목록
+        selectedMenuIndex: 0, // 현재 선택된 추천 인덱스 (0, 1, 2)
         currentMenu: null,
         history: []
       };
@@ -2235,6 +2774,7 @@
 
       const step1Status = document.getElementById('step1-status');
       const step2Status = document.getElementById('step2-status');
+      const step3Status = document.getElementById('step3-status');
 
       const resultWrapper = document.getElementById('result-wrapper');
       const resultCard = document.getElementById('result-card');
@@ -2245,6 +2785,18 @@
       const resultTipText = document.getElementById('result-tip-text');
       const tagFlavorDisplay = document.getElementById('tag-flavor-display');
       const tagStapleDisplay = document.getElementById('tag-staple-display');
+      const tagCategoryDisplay = document.getElementById('tag-category-display');
+      const tagRankDisplay = document.getElementById('tag-rank-display');
+      const tagAiBadge = document.getElementById('tag-ai-badge');
+
+      const aiProcessingBox = document.getElementById('ai-processing-box');
+      const aiTimerBadge = document.getElementById('ai-timer-badge');
+      const aiProcessingMsg = document.getElementById('ai-processing-msg');
+      const processingFoodIcon = document.getElementById('processing-food-icon');
+      const aiProgressBar = document.getElementById('ai-progress-bar');
+      const candidatesGrid = document.getElementById('candidates-grid');
+      const selectedDetailMenuName = document.getElementById('selected-detail-menu-name');
+      const btnReroll = document.getElementById('btn-reroll');
 
       const historySection = document.getElementById('history-section');
       const historyList = document.getElementById('history-list');
@@ -2273,6 +2825,7 @@
 
         checkReadyToRecommend();
       }
+      const selectFlavor = handleFlavorSelect;
 
       // 4. 기능: 주식 선택
       function handleStapleSelect(type) {
@@ -2297,6 +2850,27 @@
 
         checkReadyToRecommend();
       }
+      const selectStaple = handleStapleSelect;
+
+      // 4.1 기능: AI 상황/기분 선택 (선택 사항)
+      function handleMoodSelect(el, situationText) {
+        const isSelected = el.classList.contains('active');
+        document.querySelectorAll('.mood-chip').forEach(btn => btn.classList.remove('active'));
+        if (isSelected) {
+          appState.situation = null;
+          if (step3Status) {
+            step3Status.textContent = '선택 안 함 (전체 추천)';
+            step3Status.style.color = 'var(--text-muted)';
+          }
+        } else {
+          el.classList.add('active');
+          appState.situation = situationText;
+          if (step3Status) {
+            step3Status.textContent = `적용: ${el.textContent.trim()}`;
+            step3Status.style.color = '#7c3aed';
+          }
+        }
+      }
 
       // 5. 추천 가능 상태 점검
       function checkReadyToRecommend() {
@@ -2306,7 +2880,7 @@
           const flavorLabel = appState.flavor === 'spicy' ? '매콤한' : '담백한';
           const stapleLabel = appState.staple === 'rice' ? '밥' : '면·빵';
           btnRecommendIcon.textContent = '✨';
-          btnRecommendText.textContent = `${flavorLabel} ${stapleLabel} 메뉴 추천받기!`;
+          btnRecommendText.textContent = `Gemini AI 실시간 맞춤 ${flavorLabel} ${stapleLabel} 추천받기!`;
         } else if (appState.flavor) {
           btnRecommend.disabled = true;
           btnRecommendIcon.textContent = '👇';
@@ -2322,64 +2896,319 @@
         }
       }
 
-      // 6. 추천 알고리즘 및 결과 표시
-      function getRecommendation() {
-        if (!appState.flavor || !appState.staple) return;
+      // 6. 실시간 처리 중 및 타이머 제어 함수 (지연 시간 동안 실시간 타이머 및 애니메이션 표시)
+      let aiProcessingInterval = null;
+      let aiProcessingStartTime = 0;
 
-        const key = `${appState.flavor}-${appState.staple}`;
-        const candidateList = MENU_DATABASE[key];
-        if (!candidateList || candidateList.length === 0) return;
+      function startAiProcessing(isReroll = false) {
+        aiProcessingStartTime = performance.now();
+        if (aiProcessingBox) {
+          aiProcessingBox.style.display = 'block';
+        }
 
-        // 버튼 클릭 피드백 효과
-        btnRecommend.disabled = true;
-        btnRecommend.innerHTML = '<span>🎲</span> <span>맛있는 메뉴 찾는 중...</span>';
+        if (btnReroll) {
+          btnReroll.disabled = true;
+          btnReroll.classList.add('ai-loading-active');
+          btnReroll.innerHTML = `<span>⏱️</span> 추천 생성 중... <strong class="btn-timer-num">0.0초</strong>`;
+        }
 
-        // 짧은 애니메이션 연출 후 결과 표시 (자연스러운 체감)
-        setTimeout(() => {
-          let chosenMenu;
-          // 직전 추천과 연속 중복 방지
-          if (candidateList.length > 1 && appState.currentMenu) {
-            const filtered = candidateList.filter(item => item.name !== appState.currentMenu.name);
-            const randomIndex = Math.floor(Math.random() * filtered.length);
-            chosenMenu = filtered[randomIndex];
-          } else {
-            const randomIndex = Math.floor(Math.random() * candidateList.length);
-            chosenMenu = candidateList[randomIndex];
+        if (btnRecommend) {
+          btnRecommend.disabled = true;
+          btnRecommend.classList.add('ai-loading');
+          btnRecommendIcon.textContent = '🤖';
+          btnRecommendText.textContent = `Gemini AI 추천 분석 처리 중... (0.0초)`;
+        }
+
+        const icons = ['🥘', '🍜', '🍚', '🥩', '🍱', '🍲', '🍝', '🥗', '🍗', '🍛'];
+        const msgs = [
+          '선호하신 맛과 식사 스타일에 어울리는 최적 후보군을 탐색하는 중입니다...',
+          'Gemini AI가 가장 만족할 만한 TOP 3 메뉴를 엄선하고 있습니다...',
+          '각 메뉴별 침샘을 자극하는 추천 이유와 꿀팁을 작성하고 있습니다...',
+          '최적의 맛집 키워드와 고화질 이미지를 매칭하는 중입니다...'
+        ];
+
+        clearInterval(aiProcessingInterval);
+        aiProcessingInterval = setInterval(() => {
+          const elapsedMs = performance.now() - aiProcessingStartTime;
+          const elapsedSec = (elapsedMs / 1000).toFixed(1);
+
+          if (aiTimerBadge) {
+            aiTimerBadge.textContent = `⏱️ ${elapsedSec}초 경과`;
           }
 
-          appState.currentMenu = chosenMenu;
-
-          // 히스토리 추가 (중복 방지)
-          if (!appState.history.includes(chosenMenu.name)) {
-            appState.history.unshift(chosenMenu.name);
-            if (appState.history.length > 5) appState.history.pop();
-            renderHistory();
+          if (btnReroll) {
+            const timerSpan = btnReroll.querySelector('.btn-timer-num');
+            if (timerSpan) timerSpan.textContent = `${elapsedSec}초`;
           }
 
-          displayResult(chosenMenu);
+          if (btnRecommend) {
+            btnRecommendText.textContent = `Gemini AI 추천 분석 처리 중... (${elapsedSec}초)`;
+          }
 
-          // 버튼 원상 복구
-          checkReadyToRecommend();
+          if (aiProcessingMsg) {
+            if (elapsedMs < 900) {
+              aiProcessingMsg.textContent = msgs[0];
+            } else if (elapsedMs < 2000) {
+              aiProcessingMsg.textContent = msgs[1];
+            } else if (elapsedMs < 3200) {
+              aiProcessingMsg.textContent = msgs[2];
+            } else {
+              aiProcessingMsg.textContent = msgs[3];
+            }
+          }
 
-          // 결과 카드로 부드러운 스크롤 이동
-          resultWrapper.classList.add('active');
-          resultWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 300);
+          if (processingFoodIcon) {
+            const iconIndex = Math.floor(elapsedMs / 350) % icons.length;
+            processingFoodIcon.textContent = icons[iconIndex];
+          }
+
+          if (aiProgressBar) {
+            const progress = Math.min(94, (elapsedMs / 2800) * 85);
+            aiProgressBar.style.width = `${progress}%`;
+          }
+        }, 80);
       }
 
-      // 7. 결과 렌더링
-      function displayResult(menu) {
-        if (menu.image && resultImage) {
-          resultImage.onerror = function () {
-            this.onerror = null;
-            if (menu.fallbackImage) {
-              this.src = menu.fallbackImage;
+      function stopAiProcessing(isSuccess = true) {
+        clearInterval(aiProcessingInterval);
+        aiProcessingInterval = null;
+        const elapsedMs = performance.now() - aiProcessingStartTime;
+        const elapsedSec = (elapsedMs / 1000).toFixed(1);
+
+        if (aiProgressBar) {
+          aiProgressBar.style.width = '100%';
+        }
+
+        if (aiTimerBadge) {
+          aiTimerBadge.textContent = `✅ ${elapsedSec}초 완료`;
+        }
+
+        if (aiProcessingMsg) {
+          aiProcessingMsg.textContent = `✨ 최적의 맞춤 TOP 3 메뉴 선별이 완료되었습니다!`;
+        }
+
+        if (btnReroll) {
+          btnReroll.disabled = false;
+          btnReroll.classList.remove('ai-loading-active');
+          btnReroll.innerHTML = `<span>✨</span> 다른 AI 메뉴 추천받기`;
+        }
+
+        if (btnRecommend) {
+          btnRecommend.classList.remove('ai-loading');
+          checkReadyToRecommend();
+        }
+
+        setTimeout(() => {
+          if (aiProcessingBox) {
+            aiProcessingBox.style.display = 'none';
+            if (aiProgressBar) aiProgressBar.style.width = '0%';
+          }
+        }, 500);
+      }
+
+      // TOP 3 후보 카드 렌더링 (동시 3개 메뉴 비교 & 선택)
+      function renderCandidatesGrid() {
+        if (!candidatesGrid) return;
+        candidatesGrid.innerHTML = '';
+
+        if (!Array.isArray(appState.recommendations) || appState.recommendations.length === 0) {
+          return;
+        }
+
+        appState.recommendations.forEach((item, idx) => {
+          const isSelected = (idx === appState.selectedMenuIndex);
+          const card = document.createElement('div');
+          card.className = `candidate-card ${isSelected ? 'active' : ''}`;
+          card.setAttribute('role', 'button');
+          card.setAttribute('tabindex', '0');
+          card.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+          card.onclick = () => selectCandidate(idx);
+          card.onkeydown = (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              selectCandidate(idx);
             }
           };
-          resultImage.src = menu.image;
+
+          const rankClass = `rank-${item.rank || (idx + 1)}`;
+          const initialThumb = item.image || (appState.flavor === 'mild' 
+            ? (appState.staple === 'rice' ? 'images/galbi-soup.jpg' : 'images/kalguksu.jpg') 
+            : (appState.staple === 'rice' ? 'images/jeyuk.jpg' : 'images/jjambbong.jpg'));
+
+          card.innerHTML = `
+            <div class="candidate-card-top">
+              <span class="candidate-rank-badge ${rankClass}">${item.badge || `${idx + 1}위 추천`}</span>
+              <span class="candidate-category-pill">${item.category || '오늘의 추천'}</span>
+            </div>
+            <div class="candidate-thumb-wrap">
+              <img class="candidate-thumb" src="${initialThumb}" alt="${item.name} 사진" onerror="this.onerror=null; this.src='${item.fallbackImage || initialThumb}';" />
+              <span class="candidate-thumb-emoji">${item.emoji || '🍽️'}</span>
+            </div>
+            <div class="candidate-info">
+              <h4 class="candidate-name">${item.name}</h4>
+              <p class="candidate-reason-snippet">${item.reason || ''}</p>
+            </div>
+            <div class="candidate-select-indicator ${isSelected ? 'active' : ''}">
+              ${isSelected ? '<span>✔️</span> 선택됨' : '<span>👆</span> 이 메뉴 선택'}
+            </div>
+          `;
+
+          candidatesGrid.appendChild(card);
+        });
+      }
+
+      // 후보 메뉴 선택 처리 (클릭 시 상세 정보 및 맛집 연동)
+      function selectCandidate(idx) {
+        if (!appState.recommendations || !appState.recommendations[idx]) return;
+        appState.selectedMenuIndex = idx;
+        const menu = appState.recommendations[idx];
+        appState.currentMenu = menu;
+
+        // 후보 카드 액티브 상태 갱신
+        renderCandidatesGrid();
+
+        // 선택된 메뉴 상세 정보 표시
+        displayResult(menu);
+
+        // 히스토리 추가
+        if (!appState.history.includes(menu.name)) {
+          appState.history.unshift(menu.name);
+          if (appState.history.length > 8) appState.history.pop();
+          renderHistory();
+        }
+
+        showToast(`"${menu.name}"이(가) 선택되었습니다!`);
+      }
+
+      // 7. 추천 알고리즘 및 결과 표시 (Gemini AI 실시간 API 연동 + 폴백 캐시)
+      async function getRecommendation(isReroll = false) {
+        if (!appState.flavor || !appState.staple) return;
+
+        // 실시간 처리 중 및 타이머 시작 (지연시간 동안 사용자에게 처리 중 표시)
+        startAiProcessing(isReroll);
+
+        let receivedList = null;
+
+        try {
+          const payload = {
+            flavor: appState.flavor,
+            staple: appState.staple,
+            recentHistory: appState.history,
+            situation: appState.situation || ''
+          };
+
+          const res = await fetch('/api/recommend', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.success) {
+              if (Array.isArray(data.recommendations) && data.recommendations.length > 0) {
+                receivedList = data.recommendations.map(item => ({
+                  ...item,
+                  isAi: (data.source === 'gemini')
+                }));
+              } else if (data.menu) {
+                receivedList = [{ ...data.menu, isAi: (data.source === 'gemini') }];
+              }
+            }
+          }
+        } catch (err) {
+          console.warn('API 추천 지연/실패, 내장 큐레이션 데이터로 즉시 전환:', err);
+        }
+
+        // AI 응답이 없거나 불완전할 때 로컬 데이터베이스 폴백 (3가지 메뉴 보장)
+        if (!receivedList || receivedList.length < 3) {
+          const key = `${appState.flavor}-${appState.staple}`;
+          const candidatePool = (MENU_DATABASE[key] || MENU_DATABASE['spicy-rice']).slice();
+          // 무작위 셔플
+          for (let i = candidatePool.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [candidatePool[i], candidatePool[j]] = [candidatePool[j], candidatePool[i]];
+          }
+          const defaultBadges = ['🥇 강력 추천', '🥈 실속 만족', '🥉 별미 선택'];
+          receivedList = candidatePool.slice(0, 3).map((item, idx) => ({
+            ...item,
+            rank: idx + 1,
+            badge: defaultBadges[idx] || `${idx + 1}위 추천`,
+            isAi: false,
+            searchKeyword: item.name.replace(/덮밥|정식|세트|찌개|볶음탕/g, '').trim() || item.name
+          }));
+        }
+
+        stopAiProcessing(true);
+
+        appState.recommendations = receivedList;
+        appState.selectedMenuIndex = 0;
+        const chosenMenu = receivedList[0];
+        appState.currentMenu = chosenMenu;
+
+        // 히스토리 추가 (중복 방지)
+        if (!appState.history.includes(chosenMenu.name)) {
+          appState.history.unshift(chosenMenu.name);
+          if (appState.history.length > 8) appState.history.pop();
+          renderHistory();
+        }
+
+        // TOP 3 후보 카드 렌더링
+        renderCandidatesGrid();
+
+        // 선택된 메뉴 상세 렌더링
+        displayResult(chosenMenu);
+
+        // 결과 카드로 부드러운 스크롤 이동
+        resultWrapper.classList.add('active');
+        if (isReroll) {
+          const candSec = document.getElementById('candidates-selection-section');
+          if (candSec) {
+            candSec.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+        } else {
+          resultWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+
+      // 8. 결과 렌더링
+      function displayResult(menu) {
+        if (selectedDetailMenuName) {
+          selectedDetailMenuName.textContent = menu.name;
+        }
+
+        if (tagRankDisplay) {
+          tagRankDisplay.textContent = menu.badge || (menu.rank ? `${menu.rank}순위 추천` : '추천 메뉴');
+        }
+
+        const btnFindPlacesLabel = document.getElementById('btn-find-places-label');
+        if (btnFindPlacesLabel) {
+          btnFindPlacesLabel.textContent = `근처 ${menu.name} 맛집 지도 & 식당 보기`;
+        }
+
+        if (resultImage) {
+          let hasTriedFallback = false;
+          resultImage.onerror = function () {
+            if (!hasTriedFallback && menu.fallbackImage && this.src !== menu.fallbackImage) {
+              hasTriedFallback = true;
+              this.src = menu.fallbackImage;
+              return;
+            }
+            this.onerror = null;
+            // 사용자 선택 조건(담백 vs 매콤, 밥 vs 면)에 정확히 부합하는 안전 로컬 이미지
+            if (appState.flavor === 'mild') {
+              this.src = (appState.staple === 'rice') ? 'images/galbi-soup.jpg' : 'images/kalguksu.jpg';
+            } else {
+              this.src = (appState.staple === 'rice') ? 'images/jeyuk.jpg' : 'images/jjambbong.jpg';
+            }
+          };
+          const initialSrc = menu.image || (appState.flavor === 'mild' 
+            ? (appState.staple === 'rice' ? 'images/galbi-soup.jpg' : 'images/kalguksu.jpg') 
+            : (appState.staple === 'rice' ? 'images/jeyuk.jpg' : 'images/jjambbong.jpg'));
+          resultImage.src = initialSrc;
           resultImage.alt = `${menu.name} 실제 사진`;
         }
-        resultEmoji.textContent = menu.emoji;
+        resultEmoji.textContent = menu.emoji || '🍽️';
         resultName.textContent = menu.name;
         resultReason.textContent = menu.reason;
         resultTipText.textContent = menu.tip;
@@ -2401,6 +3230,24 @@
           tagStapleDisplay.className = 'tag-pill tag-staple noodle';
         }
 
+        if (tagCategoryDisplay) {
+          tagCategoryDisplay.textContent = menu.category || '오늘의 추천';
+        }
+
+        if (tagAiBadge) {
+          if (menu.isAi) {
+            tagAiBadge.textContent = '✨ Gemini AI 실시간 무한 큐레이션';
+            tagAiBadge.style.background = '#f5f3ff';
+            tagAiBadge.style.color = '#7c3aed';
+            tagAiBadge.style.borderColor = '#ddd6fe';
+          } else {
+            tagAiBadge.textContent = '🍽️ 엄선 마스터 큐레이션';
+            tagAiBadge.style.background = '#f1f5f9';
+            tagAiBadge.style.color = '#475569';
+            tagAiBadge.style.borderColor = '#e2e8f0';
+          }
+        }
+
         // 결과 카드 반짝임 효과
         resultCard.classList.remove('shuffling');
         void resultCard.offsetWidth; // 트리거
@@ -2409,14 +3256,15 @@
           resultCard.classList.remove('shuffling');
         }, 150);
 
-        // 추천 메뉴 맛집 탐색 연동
-        loadNearbyRestaurantsForMenu(menu.name, menu.emoji);
+        // 추천 메뉴 맛집 탐색 연동 (최적화 검색 키워드 사용)
+        const searchKeyword = menu.searchKeyword || menu.name;
+        loadNearbyRestaurantsForMenu(searchKeyword, menu.emoji);
       }
 
-      // 8. 다른 메뉴 추천받기 (같은 조건으로 재추천)
+      // 9. 다른 메뉴 추천받기 (같은 조건으로 재추천, 지연시간 동안 실시간 타이머 작동)
       function reRollRecommendation() {
         if (!appState.flavor || !appState.staple) return;
-        getRecommendation();
+        getRecommendation(true);
       }
 
       // 빠른 랜덤 즉시 추천 & 맛집 탐색
@@ -2426,18 +3274,22 @@
         const chosenFlavor = flavors[Math.floor(Math.random() * flavors.length)];
         const chosenStaple = staples[Math.floor(Math.random() * staples.length)];
 
-        selectFlavor(chosenFlavor);
-        selectStaple(chosenStaple);
-        getRecommendation();
+        handleFlavorSelect(chosenFlavor);
+        handleStapleSelect(chosenStaple);
+        getRecommendation(false);
 
-        showToast('🎲 맞춤 메뉴와 맛집을 바로 찾았습니다!');
+        showToast('🎲 Gemini AI가 새로운 메뉴와 맛집을 바로 찾았습니다!');
       }
 
-      // 9. 전체 다시 고르기 (초기화)
+      // 10. 전체 다시 고르기 (초기화)
       function resetAll() {
         appState.flavor = null;
         appState.staple = null;
+        appState.situation = null;
+        appState.recommendations = [];
+        appState.selectedMenuIndex = 0;
         appState.currentMenu = null;
+        if (candidatesGrid) candidatesGrid.innerHTML = '';
 
         // 선택 해제
         btnFlavorSpicy.classList.remove('selected-spicy');
@@ -2449,6 +3301,12 @@
         btnStapleRice.setAttribute('aria-pressed', 'false');
         btnStapleNoodle.classList.remove('selected-noodle');
         btnStapleNoodle.setAttribute('aria-pressed', 'false');
+
+        document.querySelectorAll('.mood-chip').forEach(btn => btn.classList.remove('active'));
+        if (step3Status) {
+          step3Status.textContent = '선택 안 함 (전체 추천)';
+          step3Status.style.color = 'var(--text-muted)';
+        }
 
         step1Status.textContent = '필수 선택';
         step1Status.style.color = 'var(--text-muted)';
@@ -3108,7 +3966,7 @@
           <a href="https://map.naver.com/p/search/${encodedQuery}" target="_blank" rel="noopener noreferrer" class="btn-external-link btn-ext-naver">
             🟢 네이버 지도에서 검색
           </a>
-          <a href="https://map.kakao.com/?q=${encodedQuery}" target="_blank" rel="noopener noreferrer" class="btn-external-link btn-ext-kakao">
+          <a href="https://map.kakao.com/link/search/${encodedQuery}" target="_blank" rel="noopener noreferrer" class="btn-external-link btn-ext-kakao">
             🟡 카카오맵에서 검색
           </a>
           <a href="https://www.google.com/maps/search/?api=1&query=${encodedQuery}" target="_blank" rel="noopener noreferrer" class="btn-external-link btn-ext-google">
@@ -3353,7 +4211,13 @@
 
         if (modalLinkGoogle) modalLinkGoogle.href = place.googleMapsUri || `https://www.google.com/maps/search/?api=1&query=${encodedPlace}`;
         if (modalLinkNaver) modalLinkNaver.href = `https://map.naver.com/p/search/${encodedPlace}`;
-        if (modalLinkKakao) modalLinkKakao.href = `https://map.kakao.com/?q=${encodedPlace}`;
+        if (modalLinkKakao) {
+          if (place.lat && place.lng) {
+            modalLinkKakao.href = `https://map.kakao.com/link/map/${encodeURIComponent(safePlaceName)},${place.lat},${place.lng}`;
+          } else {
+            modalLinkKakao.href = `https://map.kakao.com/link/search/${encodeURIComponent(safePlaceName || queryPlace)}`;
+          }
+        }
 
         if (placeModalOverlay) {
           placeModalOverlay.classList.add('active');
