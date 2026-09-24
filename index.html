@@ -21,7 +21,7 @@
     <!-- Google Maps Platform Dynamic Bootstrap Loader -->
     <script>
       (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
-      ({key: (window.__GOOGLE_MAPS_API_KEY__ || 'AIzaSyDJ1qpQ5KlesQVZcv6BJRJh1L_bcNJoBQ4'), v: "weekly", language: "ko", region: "KR"});
+      ({key: (window.__GOOGLE_MAPS_API_KEY__ || 'AIzaSyCJxLbuyGJKyBfTLCLA-MMmmGwSzQrfQ6E'), v: "weekly", language: "ko", region: "KR"});
     </script>
     <style>
       :root {
@@ -153,6 +153,149 @@
         box-shadow: var(--shadow-md);
         margin-bottom: 20px;
         transition: all 0.2s ease;
+      }
+
+      /* Keyword Menu Search Card */
+      .keyword-search-card {
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        border: 1.5px solid #e2e8f0;
+        margin-bottom: 20px;
+        padding: 20px 24px;
+      }
+      .search-card-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+      .search-card-icon {
+        font-size: 22px;
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        border-radius: 12px;
+        width: 40px;
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .search-card-title {
+        font-size: 17px;
+        font-weight: 800;
+        color: var(--text-primary);
+        line-height: 1.3;
+      }
+      .search-card-subtitle {
+        font-size: 13px;
+        color: var(--text-muted);
+      }
+      .keyword-search-bar {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+      .keyword-input-wrapper {
+        position: relative;
+        flex: 1;
+        display: flex;
+        align-items: center;
+      }
+      .keyword-input-icon {
+        position: absolute;
+        left: 14px;
+        font-size: 16px;
+        color: #94a3b8;
+        pointer-events: none;
+      }
+      .keyword-input {
+        width: 100%;
+        padding: 12px 38px 12px 40px;
+        font-size: 15px;
+        border: 1.5px solid #cbd5e1;
+        border-radius: var(--radius-md);
+        outline: none;
+        transition: all 0.2s ease;
+        background: #ffffff;
+        font-family: inherit;
+        color: var(--text-primary);
+      }
+      .keyword-input:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      }
+      .btn-clear-search {
+        position: absolute;
+        right: 12px;
+        background: #e2e8f0;
+        border: none;
+        color: #64748b;
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+        font-size: 12px;
+        font-weight: 800;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .btn-clear-search:hover {
+        background: #cbd5e1;
+        color: var(--text-primary);
+      }
+      .btn-menu-search {
+        background-color: var(--primary-color);
+        color: #ffffff;
+        border: none;
+        border-radius: var(--radius-md);
+        padding: 0 22px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        flex-shrink: 0;
+        transition: all 0.2s ease;
+      }
+      .btn-menu-search:hover {
+        background-color: var(--primary-hover);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.25);
+      }
+      .btn-menu-search:active {
+        transform: translateY(0);
+      }
+      .search-quick-chips {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 6px;
+      }
+      .chips-label {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--text-muted);
+        margin-right: 2px;
+      }
+      .quick-chip {
+        background-color: #f1f5f9;
+        color: #334155;
+        border: 1px solid #e2e8f0;
+        border-radius: 9999px;
+        padding: 4px 10px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .quick-chip:hover {
+        background-color: #e2e8f0;
+        border-color: #cbd5e1;
+        color: var(--primary-color);
+        transform: translateY(-1px);
       }
 
       .step-header {
@@ -306,6 +449,66 @@
       }
       .option-btn.selected-noodle .option-label {
         color: var(--accent-noodle);
+      }
+
+      /* Cuisine Grid Styles (한식/중식/일식/양식/분식&기타) */
+      .cuisine-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 14px;
+      }
+      @media (min-width: 640px) {
+        .cuisine-grid {
+          grid-template-columns: repeat(6, 1fr);
+          gap: 12px;
+        }
+      }
+      .cuisine-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        padding: 12px 6px;
+        border: 2px solid var(--border-color);
+        background: #ffffff;
+        border-radius: var(--radius-md);
+        cursor: pointer;
+        transition: all var(--transition-fast);
+        text-align: center;
+        user-select: none;
+      }
+      .cuisine-btn:hover {
+        border-color: #94a3b8;
+        background-color: #f8fafc;
+        transform: translateY(-2px);
+      }
+      .cuisine-btn .cuisine-emoji {
+        font-size: 26px;
+        line-height: 1.1;
+      }
+      .cuisine-btn .cuisine-label {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text-main);
+      }
+      .cuisine-btn .cuisine-sub {
+        font-size: 11px;
+        color: var(--text-muted);
+        white-space: nowrap;
+      }
+      .cuisine-btn.selected-cuisine {
+        border-color: #2563eb;
+        background-color: #eff6ff;
+        box-shadow: 0 0 0 2px #2563eb;
+      }
+      .cuisine-btn.selected-cuisine .cuisine-label {
+        color: #1d4ed8;
+      }
+      .cuisine-btn.selected-cuisine .cuisine-sub {
+        color: #3b82f6;
+        font-weight: 600;
       }
 
       /* Primary Action Button */
@@ -489,76 +692,299 @@
         color: #6d28d9;
       }
 
-      /* Result Food Image */
+      /* Result Food Image - Removed in favor of candidate list double-click modal */
       .result-image-container {
-        position: relative;
-        width: 100%;
-        height: 240px;
-        border-radius: var(--radius-md);
-        overflow: hidden;
-        margin-bottom: 16px;
-        background-color: #f1f5f9;
-        border: 1px solid var(--border-color);
-        box-shadow: var(--shadow-sm);
-      }
-
-      @media (min-width: 480px) {
-        .result-image-container {
-          height: 270px;
-        }
+        display: none !important;
       }
 
       .result-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        transition: transform 0.4s ease;
+        display: none !important;
       }
 
-      .result-card:hover .result-image {
-        transform: scale(1.02);
-      }
-
-      .result-image-overlay {
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
-        left: 10px;
+      .result-title-row {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        pointer-events: none;
+        gap: 12px;
+        margin-top: 14px;
+        margin-bottom: 12px;
       }
 
-      .result-image-badge {
-        background-color: rgba(15, 23, 42, 0.8);
-        backdrop-filter: blur(4px);
-        -webkit-backdrop-filter: blur(4px);
-        color: #ffffff;
-        font-size: 12px;
-        font-weight: 700;
-        padding: 4px 10px;
-        border-radius: 9999px;
-        letter-spacing: 0.02em;
+      .result-title-emoji {
+        font-size: 32px;
+        line-height: 1;
         display: inline-flex;
         align-items: center;
-        gap: 4px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
-      }
-
-      .result-badge-emoji {
-        font-size: 26px;
-        line-height: 1;
-        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+        justify-content: center;
+        flex-shrink: 0;
       }
 
       .result-title {
         font-size: 26px;
         font-weight: 800;
         color: var(--text-primary);
-        margin-bottom: 12px;
         letter-spacing: -0.01em;
+        margin-bottom: 0;
+      }
+
+      /* Candidate Zoom Hint in Menu List */
+      .candidate-zoom-hint {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        background: rgba(15, 23, 42, 0.76);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        color: #ffffff;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 9999px;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        opacity: 0.9;
+        transition: all 0.2s ease;
+        cursor: pointer;
+        z-index: 5;
+      }
+
+      .candidate-card:hover .candidate-zoom-hint {
+        opacity: 1;
+        background: rgba(37, 99, 235, 0.92);
+        border-color: rgba(255, 255, 255, 0.5);
+        transform: scale(1.05);
+      }
+
+      /* Food Image Lightbox Modal (메뉴 리스트 더블클릭 시 확대 팝업) */
+      .food-lightbox-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(15, 23, 42, 0.78);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .food-lightbox-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .food-lightbox-card {
+        background: #ffffff;
+        width: 100%;
+        max-width: 540px;
+        max-height: 90vh;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        transform: scale(0.92) translateY(12px);
+        transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .food-lightbox-overlay.active .food-lightbox-card {
+        transform: scale(1) translateY(0);
+      }
+
+      .food-lightbox-close-btn {
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: rgba(15, 23, 42, 0.7);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        color: #ffffff;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 20;
+        transition: all 0.2s ease;
+      }
+
+      .food-lightbox-close-btn:hover {
+        background: rgba(239, 68, 68, 0.9);
+        transform: scale(1.08);
+      }
+
+      .food-lightbox-img-wrap {
+        width: 100%;
+        height: 320px;
+        background: #0f172a;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      @media (min-width: 640px) {
+        .food-lightbox-img-wrap {
+          height: 360px;
+        }
+      }
+
+      .food-lightbox-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .food-lightbox-badge-row {
+        position: absolute;
+        bottom: 12px;
+        left: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        z-index: 10;
+      }
+
+      .food-lightbox-badge {
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        color: #fbbf24;
+        font-size: 12px;
+        font-weight: 800;
+        padding: 4px 10px;
+        border-radius: 9999px;
+        border: 1px solid rgba(251, 191, 36, 0.3);
+      }
+
+      .food-lightbox-cat {
+        background: rgba(255, 255, 255, 0.9);
+        color: #1e293b;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 4px 10px;
+        border-radius: 9999px;
+      }
+
+      .food-lightbox-body {
+        padding: 20px 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        background: #ffffff;
+      }
+
+      .food-lightbox-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .food-lightbox-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .food-lightbox-emoji {
+        font-size: 28px;
+        line-height: 1;
+      }
+
+      .food-lightbox-title {
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--text-primary);
+        margin: 0;
+        line-height: 1.3;
+      }
+
+      .food-lightbox-hint {
+        font-size: 12px;
+        color: #64748b;
+        background: #f1f5f9;
+        padding: 3px 8px;
+        border-radius: 6px;
+      }
+
+      .food-lightbox-reason {
+        font-size: 14px;
+        color: #334155;
+        line-height: 1.6;
+        background: #f8fafc;
+        padding: 12px 14px;
+        border-radius: var(--radius-sm);
+        border-left: 3px solid #3b82f6;
+        margin: 0;
+      }
+
+      .food-lightbox-footer {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 4px;
+      }
+
+      .btn-lightbox-select {
+        flex: 1;
+        background: #2563eb;
+        color: #ffffff;
+        border: none;
+        border-radius: var(--radius-sm);
+        padding: 11px 16px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        transition: all 0.2s ease;
+      }
+
+      .btn-lightbox-select:hover {
+        background: #1d4ed8;
+        transform: translateY(-1px);
+      }
+
+      .btn-lightbox-places {
+        flex: 1;
+        background: #0f172a;
+        color: #ffffff;
+        border: none;
+        border-radius: var(--radius-sm);
+        padding: 11px 16px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        transition: all 0.2s ease;
+      }
+
+      .btn-lightbox-places:hover {
+        background: #1e293b;
+        transform: translateY(-1px);
       }
 
       .result-reason-box {
@@ -1052,10 +1478,153 @@
         border-radius: 9999px;
       }
 
+      .candidates-body-row {
+        display: flex;
+        align-items: stretch;
+        gap: 12px;
+        position: relative;
+      }
+
+      .candidates-body-row .candidates-grid {
+        flex: 1;
+        min-width: 0;
+      }
+
       .candidates-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 12px;
+      }
+
+      /* 메뉴목록 이전/다음 화살표 버튼 */
+      .btn-candidates-nav-arrow {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border-radius: var(--radius-md);
+        padding: 12px 14px;
+        min-width: 82px;
+        cursor: pointer;
+        transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+        user-select: none;
+      }
+
+      .btn-candidates-nav-arrow.btn-prev-arrow {
+        background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #eff6ff 100%);
+        border: 2px solid #cbd5e1;
+        color: #475569;
+        box-shadow: 0 4px 14px -2px rgba(100, 116, 139, 0.12);
+      }
+
+      .btn-candidates-nav-arrow.btn-prev-arrow:hover {
+        background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+        border-color: #94a3b8;
+        color: #0f172a;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px -2px rgba(100, 116, 139, 0.22);
+      }
+
+      .btn-candidates-nav-arrow.btn-next-arrow {
+        background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 50%, #eff6ff 100%);
+        border: 2px solid #93c5fd;
+        color: #1d4ed8;
+        box-shadow: 0 4px 14px -2px rgba(37, 99, 235, 0.14);
+      }
+
+      .btn-candidates-nav-arrow.btn-next-arrow:hover {
+        background: linear-gradient(135deg, #e0f2fe 0%, #bfdbfe 100%);
+        border-color: #2563eb;
+        color: #1e40af;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px -2px rgba(37, 99, 235, 0.25);
+      }
+
+      .btn-candidates-nav-arrow:active {
+        transform: translateY(0) scale(0.97);
+      }
+
+      .arrow-icon-circle {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background 0.2s, color 0.2s;
+      }
+
+      .btn-candidates-nav-arrow.btn-prev-arrow .arrow-icon-circle {
+        color: #475569;
+      }
+
+      .btn-candidates-nav-arrow.btn-prev-arrow:hover .arrow-icon-circle {
+        transform: scale(1.12);
+        background: #475569;
+        color: #ffffff;
+      }
+
+      .btn-candidates-nav-arrow.btn-next-arrow .arrow-icon-circle {
+        color: #2563eb;
+      }
+
+      .btn-candidates-nav-arrow.btn-next-arrow:hover .arrow-icon-circle {
+        transform: scale(1.12);
+        background: #2563eb;
+        color: #ffffff;
+      }
+
+      .arrow-btn-text {
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: -0.3px;
+        white-space: nowrap;
+      }
+
+      .arrow-btn-sub {
+        font-size: 11px;
+        font-weight: 700;
+        background: #ffffff;
+        padding: 2px 8px;
+        border-radius: 9999px;
+        line-height: 1.2;
+      }
+
+      .btn-prev-arrow .arrow-btn-sub {
+        color: #475569;
+        border: 1px solid #cbd5e1;
+      }
+
+      .btn-next-arrow .arrow-btn-sub {
+        color: #1d4ed8;
+        border: 1px solid #bfdbfe;
+      }
+
+      @media (max-width: 768px) {
+        .candidates-body-row {
+          flex-direction: row;
+          flex-wrap: wrap;
+        }
+        .candidates-body-row .candidates-grid {
+          order: 1;
+          width: 100%;
+        }
+        .btn-candidates-nav-arrow {
+          order: 2;
+          flex: 1;
+          min-width: calc(50% - 6px);
+          flex-direction: row;
+          padding: 11px 14px;
+          justify-content: center;
+          gap: 10px;
+        }
+        .arrow-icon-circle {
+          width: 36px;
+          height: 36px;
+        }
       }
 
       @media (max-width: 680px) {
@@ -2221,6 +2790,45 @@
         </p>
       </header>
 
+      <!-- Keyword Menu Search Section (메뉴 키워드 직접 검색) -->
+      <section class="white-card keyword-search-card" id="keyword-search-card">
+        <div class="search-card-header">
+          <span class="search-card-icon">🔍</span>
+          <div>
+            <h3 class="search-card-title">원하는 메뉴 키워드로 즉시 검색</h3>
+            <p class="search-card-subtitle">먹고 싶은 특정 메뉴가 있다면 직접 검색해 보세요!</p>
+          </div>
+        </div>
+        <div class="keyword-search-bar">
+          <div class="keyword-input-wrapper">
+            <span class="keyword-input-icon">🔍</span>
+            <input
+              type="text"
+              id="input-menu-search"
+              class="keyword-input"
+              placeholder="예: 초밥, 삼겹살, 마라탕, 김치볶음밥, 간장계란밥..."
+              oninput="handleMenuSearchInput(this)"
+              onkeydown="if(event.key==='Enter') executeMenuSearch()"
+            />
+            <button type="button" class="btn-clear-search" id="btn-clear-search" onclick="clearMenuSearch()" style="display:none;" title="검색어 지우기">✕</button>
+          </div>
+          <button type="button" class="btn-menu-search" id="btn-menu-search" onclick="executeMenuSearch()">
+            <span>검색</span>
+          </button>
+        </div>
+        <!-- Popular Keyword Quick Chips -->
+        <div class="search-quick-chips">
+          <span class="chips-label">인기 추천:</span>
+          <button type="button" class="quick-chip" onclick="quickSearchKeyword('제육볶음')">#제육볶음</button>
+          <button type="button" class="quick-chip" onclick="quickSearchKeyword('초밥')">#초밥</button>
+          <button type="button" class="quick-chip" onclick="quickSearchKeyword('마라탕')">#마라탕</button>
+          <button type="button" class="quick-chip" onclick="quickSearchKeyword('돈카츠')">#돈카츠</button>
+          <button type="button" class="quick-chip" onclick="quickSearchKeyword('김치볶음밥')">#김치볶음밥</button>
+          <button type="button" class="quick-chip" onclick="quickSearchKeyword('간장계란밥')">#간장계란밥</button>
+          <button type="button" class="quick-chip" onclick="quickSearchKeyword('파스타')">#파스타</button>
+        </div>
+      </section>
+
       <!-- Step 1: Flavor Selection (매콤 vs 담백) -->
       <section class="white-card" id="step-flavor-card">
         <div class="step-header">
@@ -2323,12 +2931,90 @@
         </div>
       </section>
 
-      <!-- Step 3: 오늘의 상황 & 기분 (선택) -->
+      <!-- Step 3: 요리 종류 선택 (한식/중식/일식/양식/분식&기타) -->
+      <section class="white-card" id="step-cuisine-card">
+        <div class="step-header">
+          <span class="step-number">3</span>
+          <h2 class="step-title">어떤 요리 종류가 당기시나요?</h2>
+          <span class="step-description" id="step3-status">전체 (모든 요리)</span>
+        </div>
+        <p class="step-sub-instruction">원하시는 요리 카테고리를 선택하시면 해당 종류의 최적 메뉴만 콕 집어 추천해 드립니다.</p>
+        <div class="cuisine-grid" role="group" aria-label="요리 종류 선택">
+          <button
+            type="button"
+            class="cuisine-btn selected-cuisine"
+            id="btn-cuisine-all"
+            onclick="handleCuisineSelect('all')"
+            aria-pressed="true"
+          >
+            <span class="cuisine-emoji">🍽️</span>
+            <span class="cuisine-label">전체</span>
+            <span class="cuisine-sub">모든 요리</span>
+          </button>
+          <button
+            type="button"
+            class="cuisine-btn"
+            id="btn-cuisine-korean"
+            onclick="handleCuisineSelect('korean')"
+            aria-pressed="false"
+          >
+            <span class="cuisine-emoji">🇰🇷</span>
+            <span class="cuisine-label">한식</span>
+            <span class="cuisine-sub">찌개·덮밥·탕</span>
+          </button>
+          <button
+            type="button"
+            class="cuisine-btn"
+            id="btn-cuisine-chinese"
+            onclick="handleCuisineSelect('chinese')"
+            aria-pressed="false"
+          >
+            <span class="cuisine-emoji">🥟</span>
+            <span class="cuisine-label">중식</span>
+            <span class="cuisine-sub">짬뽕·마파·볶음</span>
+          </button>
+          <button
+            type="button"
+            class="cuisine-btn"
+            id="btn-cuisine-japanese"
+            onclick="handleCuisineSelect('japanese')"
+            aria-pressed="false"
+          >
+            <span class="cuisine-emoji">🍱</span>
+            <span class="cuisine-label">일식</span>
+            <span class="cuisine-sub">돈카츠·라멘·동</span>
+          </button>
+          <button
+            type="button"
+            class="cuisine-btn"
+            id="btn-cuisine-western"
+            onclick="handleCuisineSelect('western')"
+            aria-pressed="false"
+          >
+            <span class="cuisine-emoji">🍝</span>
+            <span class="cuisine-label">양식</span>
+            <span class="cuisine-sub">파스타·리조또·버거</span>
+          </button>
+          <button
+            type="button"
+            class="cuisine-btn"
+            id="btn-cuisine-snack"
+            onclick="handleCuisineSelect('snack')"
+            aria-pressed="false"
+          >
+            <span class="cuisine-emoji">🍢</span>
+            <span class="cuisine-label">분식&기타</span>
+            <span class="cuisine-sub">떡볶이·김밥·면</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Step 4: 오늘의 상황 & 기분 (선택) -->
       <section class="white-card" id="step-mood-card">
         <div class="step-header">
           <span class="step-number step-number-ai">AI</span>
           <h2 class="step-title">오늘의 상황이나 기분은 어떤가요? (선택)</h2>
-          <span class="step-description" id="step3-status">선택 안 함 (전체 추천)</span>
+          <span class="step-description" id="step4-status">선택 안 함 (전체 추천)</span>
         </div>
         <p class="step-sub-instruction">선호하는 테마를 탭하시면 Gemini AI가 더욱 정교하고 다채로운 메뉴를 실시간으로 빚어냅니다.</p>
         <div class="mood-chips-container" id="mood-chips-group" role="group" aria-label="상황 선택">
@@ -2404,12 +3090,36 @@
             <div class="candidates-header">
               <div class="candidates-title-wrap">
                 <span class="candidates-main-title">🎯 AI 엄선 TOP 3 추천 메뉴</span>
-                <span class="candidates-sub-title">가장 끌리는 메뉴를 탭하여 선택하세요 (3가지 모두 비교 가능)</span>
+                <span class="candidates-sub-title">메뉴 탭 시 선택 · <strong style="color: #2563eb;">더블클릭 시 사진 확대</strong> (좌/우 화살표로 연속 탐색)</span>
               </div>
-              <span class="candidates-hint-pill">👉 마음에 드는 메뉴를 탭하면 상세 정보와 맛집이 연동됩니다</span>
+              <span class="candidates-hint-pill">🔍 더블클릭: 사진 크게 보기 · 👈 이전 / 다음 👉</span>
             </div>
-            <div class="candidates-grid" id="candidates-grid">
-              <!-- Dynamically populated candidate cards -->
+            <div class="candidates-body-row">
+              <button type="button" class="btn-candidates-nav-arrow btn-prev-arrow" id="btn-prev-menu-arrow" onclick="showPrevMenuSequence()" title="이전 추천 메뉴 보기 (단축키: 왼쪽 화살표 ←)" aria-label="이전 추천 메뉴 보기">
+                <div class="arrow-icon-circle">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5"></path>
+                    <path d="m12 19-7-7 7-7"></path>
+                  </svg>
+                </div>
+                <span class="arrow-btn-text">이전 메뉴</span>
+                <span class="arrow-btn-sub" id="arrow-prev-counter">◀ 이전</span>
+              </button>
+
+              <div class="candidates-grid" id="candidates-grid">
+                <!-- Dynamically populated candidate cards -->
+              </div>
+
+              <button type="button" class="btn-candidates-nav-arrow btn-next-arrow" id="btn-next-menu-arrow" onclick="showNextMenuSequence()" title="다음 추천 메뉴 보기 (단축키: 오른쪽 화살표 →)" aria-label="다음 추천 메뉴 계속 보기">
+                <div class="arrow-icon-circle">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                  </svg>
+                </div>
+                <span class="arrow-btn-text">다음 메뉴</span>
+                <span class="arrow-btn-sub" id="arrow-next-counter">1/3</span>
+              </button>
             </div>
           </div>
 
@@ -2430,23 +3140,11 @@
             <span class="tag-pill" style="background-color: #fef3c7; color: #92400e;" id="tag-rank-display">🥇 1순위 추천</span>
           </div>
 
-          <!-- Real Mouthwatering Food Photo -->
-          <div class="result-image-container" id="result-image-container">
-            <img
-              id="result-image"
-              class="result-image"
-              src="images/jeyuk.jpg"
-              onerror="this.onerror=null; this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/Jeyuk-bokkeum_2.jpg/960px-Jeyuk-bokkeum_2.jpg';"
-              alt="추천 메뉴 사진"
-              referrerpolicy="no-referrer"
-            />
-            <div class="result-image-overlay">
-              <span class="result-image-badge">📸 실제 메뉴 사진</span>
-              <span id="result-emoji" class="result-badge-emoji">🥘</span>
-            </div>
+          <!-- Selected Menu Title & Emoji (큰 사진 영역 삭제 및 타이틀 표시) -->
+          <div class="result-title-row">
+            <span id="result-emoji" class="result-title-emoji">🥘</span>
+            <h3 class="result-title" id="result-name">제육볶음 덮밥</h3>
           </div>
-
-          <h3 class="result-title" id="result-name">제육볶음 덮밥</h3>
 
           <!-- One Line Reason Box -->
           <div class="result-reason-box" id="result-reason-box">
@@ -2626,6 +3324,38 @@
       클립보드에 복사되었습니다!
     </div>
 
+    <!-- Food Image Lightbox Modal (메뉴 리스트 더블 클릭 시 고화질 확대 팝업) -->
+    <div class="food-lightbox-overlay" id="food-lightbox-overlay" onclick="handleFoodLightboxOverlayClick(event)" role="dialog" aria-modal="true" aria-labelledby="lightbox-food-name">
+      <div class="food-lightbox-card">
+        <button type="button" class="food-lightbox-close-btn" onclick="closeFoodImageLightbox()" aria-label="사진 확대창 닫기">✕</button>
+        <div class="food-lightbox-img-wrap">
+          <img id="lightbox-food-image" class="food-lightbox-img" src="" alt="확대된 메뉴 사진" />
+          <div class="food-lightbox-badge-row">
+            <span id="lightbox-food-badge" class="food-lightbox-badge">🥇 1순위 추천</span>
+            <span id="lightbox-food-category" class="food-lightbox-cat">한식</span>
+          </div>
+        </div>
+        <div class="food-lightbox-body">
+          <div class="food-lightbox-header">
+            <div class="food-lightbox-title-wrap">
+              <span id="lightbox-food-emoji" class="food-lightbox-emoji">🥘</span>
+              <h3 id="lightbox-food-name" class="food-lightbox-title">메뉴 이름</h3>
+            </div>
+            <span class="food-lightbox-hint">💡 ESC 또는 바깥을 누르면 닫힙니다</span>
+          </div>
+          <p id="lightbox-food-reason" class="food-lightbox-reason">추천 이유 설명</p>
+          <div class="food-lightbox-footer">
+            <button type="button" class="btn-lightbox-select" id="btn-lightbox-select" onclick="selectFromLightbox()">
+              <span>✔️</span> 이 메뉴 선택하기
+            </button>
+            <button type="button" class="btn-lightbox-places" id="btn-lightbox-places" onclick="findPlacesFromLightbox()">
+              <span>📍</span> 근처 맛집 바로 찾기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Place Detail Modal -->
     <div class="modal-overlay" id="place-modal-overlay" onclick="handleModalOverlayClick(event)">
       <div class="place-detail-modal" id="place-detail-modal" role="dialog" aria-modal="true" aria-labelledby="modal-place-name">
@@ -2688,9 +3418,11 @@
       // 로컬 상대경로(images/...)를 기본으로 사용하고, ZIP 다운로드 후 단독 실행 시에도 CDN 폴백 지원
       const MENU_DATABASE = {
         'spicy-rice': [
+          // 한식
           {
             name: '제육볶음 덮밥',
             emoji: '🥩',
+            category: '한식',
             image: 'images/jeyuk.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/Jeyuk-bokkeum_2.jpg/960px-Jeyuk-bokkeum_2.jpg',
             reason: '불향 가득 매콤달콤한 양념과 부드러운 돼지고기가 밥과 어우러져 실패 없는 보증된 든든함!',
@@ -2699,6 +3431,7 @@
           {
             name: '김치찌개 & 흑미밥',
             emoji: '🍲',
+            category: '한식',
             image: 'images/kimchi-stew.jpg',
             fallbackImage: 'https://upload.wikimedia.org/wikipedia/commons/d/d6/Korean.cuisine-Kimchi_jjigae-01.jpg',
             reason: '잘 익은 묵은지와 돼지고기가 푹 끓여져 칼칼하고 깊은 국물로 속을 꽉 채워주는 소울푸드!',
@@ -2707,6 +3440,7 @@
           {
             name: '매콤 낙지볶음밥',
             emoji: '🐙',
+            category: '한식',
             image: 'images/spicy-octopus.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Nakji-bokkeum%2C_Stir-Fried_Octopus.jpg/960px-Nakji-bokkeum%2C_Stir-Fried_Octopus.jpg',
             reason: '쫄깃한 낙지와 매콤한 특제 양념에 김가루를 솔솔 뿌려 쓱쓱 비벼 먹는 입맛 돋우는 별미!',
@@ -2715,7 +3449,8 @@
           {
             name: '얼큰 해물 순두부찌개',
             emoji: '🌶️',
-            image: 'images/beef-soup.jpg',
+            category: '한식',
+            image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Sundubu-jjigae_3.jpg/960px-Sundubu-jjigae_3.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Sundubu-jjigae_3.jpg/960px-Sundubu-jjigae_3.jpg',
             reason: '몽글몽글 부드러운 순두부와 시원한 해물이 칼칼한 고추기름 국물에 퐁당 빠진 든든한 찌개!',
             tip: '뚝배기가 보글보글 끓을 때 계란 노른자를 톡 터뜨려보세요.'
@@ -2723,22 +3458,16 @@
           {
             name: '의정부식 부대찌개',
             emoji: '🥘',
-            image: 'images/kimchi-stew.jpg',
+            category: '한식',
+            image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Budae-jjigae.jpg/960px-Budae-jjigae.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Budae-jjigae.jpg/960px-Budae-jjigae.jpg',
             reason: '풍성한 햄과 소시지, 치즈와 김치가 진하게 우러난 칼칼하고 진한 육수의 국민 밥도둑!',
             tip: '라면 사리를 먼저 건져먹고 진국 국물에 밥을 슥슥 비벼 드세요.'
           },
           {
-            name: '마파두부 덮밥',
-            emoji: '🍛',
-            image: 'images/mapo-tofu.jpg',
-            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/9/99/Mapo_doufu_by_kina3.jpg/960px-Mapo_doufu_by_kina3.jpg',
-            reason: '부드럽고 몽글몽글한 두부와 알싸하고 매콤한 두반장 소스가 밥알 사이사이 스며드는 중독적인 맛!',
-            tip: '자극적이지 않으면서도 은근한 화자오 향이 일품이에요.'
-          },
-          {
             name: '얼큰 소고기 육개장',
             emoji: '🥩',
+            category: '한식',
             image: 'images/beef-soup.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Yukgaejang_2.jpg/960px-Yukgaejang_2.jpg',
             reason: '결대로 찢은 양지 소고기와 대파, 토란대가 푹 우러나 얼큰하고 시원한 보양 한 그릇!',
@@ -2747,16 +3476,96 @@
           {
             name: '닭볶음탕 & 볶음밥',
             emoji: '🍗',
+            category: '한식',
             image: 'images/spicy-chicken.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1b/Korean.food-Dakbokemtang-01.jpg/960px-Korean.food-Dakbokemtang-01.jpg',
             reason: '매콤달콤 진한 닭볶음탕 국물에 밥과 감자를 으깨 비벼 먹는 행복한 점심 식사!',
             tip: '남은 국물에 참기름과 김가루를 볶아 먹는 것은 필수 코스!'
+          },
+          // 중식
+          {
+            name: '마파두부 덮밥',
+            emoji: '🍛',
+            category: '중식',
+            image: 'images/mapo-tofu.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/9/99/Mapo_doufu_by_kina3.jpg/960px-Mapo_doufu_by_kina3.jpg',
+            reason: '부드럽고 몽글몽글한 두부와 알싸하고 매콤한 두반장 소스가 밥알 사이사이 스며드는 중독적인 맛!',
+            tip: '자극적이지 않으면서도 은근한 화자오 향이 일품이에요.'
+          },
+          {
+            name: '매콤 중화 잡채밥',
+            emoji: '🥢',
+            category: '중식',
+            image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Japchaebap.jpg/960px-Japchaebap.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Japchaebap.jpg/960px-Japchaebap.jpg',
+            reason: '탱글한 당면과 각종 채소, 돼지고기를 고추기름에 센 불로 볶아낸 불향 가득한 감칠맛!',
+            tip: '짜장 소스를 곁들여 슥슥 비벼 드세요.'
+          },
+          // 일식
+          {
+            name: '매운 가츠동',
+            emoji: '🍱',
+            category: '일식',
+            image: 'images/tonkatsu.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Tonkatsu_by_cuckoomis.jpg/960px-Tonkatsu_by_cuckoomis.jpg',
+            reason: '바삭한 돈카츠에 매콤달콤한 특제 소스와 부드러운 계란이 얹어진 별미 덮밥!',
+            tip: '바삭한 돈카츠와 촉촉한 밥을 함께 떠서 드세요.'
+          },
+          {
+            name: '매콤 비프 카레라이스',
+            emoji: '🍛',
+            category: '일식',
+            image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Japanese_curry_rice_by_jetalone_in_Tokyo.jpg/960px-Japanese_curry_rice_by_jetalone_in_Tokyo.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Japanese_curry_rice_by_jetalone_in_Tokyo.jpg/960px-Japanese_curry_rice_by_jetalone_in_Tokyo.jpg',
+            reason: '오랜 시간 푹 끓여 깊고 진한 일본식 카레에 매콤한 풍미와 부드러운 소고기의 조화!',
+            tip: '마늘 후레이크나 대파를 듬뿍 얹어 즐기세요.'
+          },
+          // 양식
+          {
+            name: '매콤 토마토 해산물 리조또',
+            emoji: '🥘',
+            category: '양식',
+            image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/Risotto_ai_frutti_di_mare_01.jpg/960px-Risotto_ai_frutti_di_mare_01.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/Risotto_ai_frutti_di_mare_01.jpg/960px-Risotto_ai_frutti_di_mare_01.jpg',
+            reason: '신선한 조개와 새우, 오징어가 매콤한 토마토 소스와 어우러진 촉촉하고 든든한 리조또!',
+            tip: '파마산 치즈 가루를 살짝 뿌려 감칠맛을 더하세요.'
+          },
+          // 분식 & 기타
+          {
+            name: '매콤 스팸 김치볶음밥',
+            emoji: '🍳',
+            category: '분식',
+            image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Kimchi_bokkeumbap.jpg/960px-Kimchi_bokkeumbap.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Kimchi_bokkeumbap.jpg/960px-Kimchi_bokkeumbap.jpg',
+            reason: '잘 익은 김치와 짭조름한 스팸을 고슬고슬 볶아 반숙 계란후라이를 얹은 국민 밥도둑!',
+            tip: '김가루를 듬뿍 뿌리고 치즈를 얹어 드세요.'
           }
         ],
         'spicy-noodle': [
+          // 한식
+          {
+            name: '새콤매콤 비빔국수',
+            emoji: '🥢',
+            category: '한식',
+            image: 'images/bibim-noodle.jpg',
+            fallbackImage: 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Korean_noodle-Bibim_guksu-02.jpg',
+            reason: '매콤달콤한 비빔 양념장에 탱글쫄깃한 소면과 아삭한 오이가 더해져 나른한 입맛을 확 깨우는 맛!',
+            tip: '삶은 달걀 반 쪽으로 매운맛을 달래며 즐겨보세요.'
+          },
+          {
+            name: '매콤 명태 회냉면',
+            emoji: '🍜',
+            category: '한식',
+            image: 'images/bibim-noodle.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a2/Bibim-guksu.jpg/960px-Bibim-guksu.jpg',
+            reason: '쫄깃한 함흥 면발 위에 숙성된 새콤달콤 매콤한 명태회가 푸짐하게 얹어진 명품 냉면!',
+            tip: '따뜻한 온육수를 곁들여 속을 달래며 즐기세요.'
+          },
+          // 중식
           {
             name: '얼큰 해물 짬뽕',
             emoji: '🍜',
+            category: '중식',
             image: 'images/jjambbong.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/Jjamppong_4.jpg/960px-Jjamppong_4.jpg',
             reason: '센 불에 볶아낸 불맛 채소와 신선한 오징어·홍합이 어우러져 칼칼하고 시원한 국물의 진수!',
@@ -2765,56 +3574,85 @@
           {
             name: '진한 차돌박이 짬뽕',
             emoji: '🥩',
-            image: 'images/jjambbong.jpg',
-            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/Jjamppong_4.jpg/960px-Jjamppong_4.jpg',
+            category: '중식',
+            image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Jjamppong_by_stu_spivack.jpg/960px-Jjamppong_by_stu_spivack.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Jjamppong_by_stu_spivack.jpg/960px-Jjamppong_by_stu_spivack.jpg',
             reason: '고소한 차돌박이의 육즙이 진한 불맛 짬뽕 국물에 녹아들어 극강의 묵직하고 칼칼한 풍미!',
             tip: '면을 다 먹고 남은 진한 국물에 밥을 살짝 말아도 꿀맛이에요.'
           },
           {
-            name: '신라면 투움바 파스타',
+            name: '얼얼한 마라탕면',
+            emoji: '🍲',
+            category: '중식',
+            image: 'images/malatang.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8f/Malatang_from_Hope_Tree_%2820220226172344%29.jpg/960px-Malatang_from_Hope_Tree_%2820220226172344%29.jpg',
+            reason: '얼얼한 마라 소스에 옥수수면과 푸주, 청경채가 듬뿍 들어가 지루할 틈 없는 강렬한 한 그릇!',
+            tip: '땅콩소스(즈마장)를 곁들여 고소함을 한층 끌어올려 보세요.'
+          },
+          {
+            name: '사천 탄탄멘',
+            emoji: '🥜',
+            category: '중식',
+            image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/Dandan_mian.jpg/960px-Dandan_mian.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/Dandan_mian.jpg/960px-Dandan_mian.jpg',
+            reason: '진한 참깨 페이스트의 고소함과 고추기름의 칼칼함, 볶은 다진 고기의 감칠맛이 폭발!',
+            tip: '국물에 수란이나 온천계란을 풀어 면을 적셔 드셔보세요.'
+          },
+          // 일식
+          {
+            name: '카라이 돈코츠 라멘',
+            emoji: '🍜',
+            category: '일식',
+            image: 'images/tonkotsu-ramen.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Tonkotsu_Ramen_Special%2C_Hakata_Choten%2C_Paris_001.jpg/960px-Tonkotsu_Ramen_Special%2C_Hakata_Choten%2C_Paris_001.jpg',
+            reason: '진한 사골 육수에 매콤한 특제 고추기름 소스를 더해 얼큰하고 깊은 맛의 라멘!',
+            tip: '차슈와 반숙란을 국물에 적셔 면과 함께 호로록 드세요.'
+          },
+          // 양식
+          {
+            name: '매콤 투움바 파스타',
             emoji: '🍝',
+            category: '양식',
             image: 'images/toowoomba.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/af/Liat_Portal_for_Foodie_Disorder_-_Creamy_Tomato_Seafood_Pasta.jpg/960px-Liat_Portal_for_Foodie_Disorder_-_Creamy_Tomato_Seafood_Pasta.jpg',
             reason: '칼칼한 매운맛 스프와 고소하고 부드러운 우유·치즈 크림이 만나 꾸덕하고 중독적인 신세계!',
             tip: '통통한 새우나 베이컨을 듬뿍 넣으면 레스토랑 못지않은 풍미예요.'
           },
           {
-            name: '새콤매콤 비빔국수',
-            emoji: '🥢',
-            image: 'images/bibim-noodle.jpg',
-            fallbackImage: 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Korean_noodle-Bibim_guksu-02.jpg',
-            reason: '매콤달콤한 비빔 양념장에 탱글쫄깃한 소면과 아삭한 오이가 더해져 나른한 입맛을 확 깨우는 맛!',
-            tip: '삶은 달걀 반 쪽으로 매운맛을 달래며 즐겨보세요.'
-          },
-          {
-            name: '고소한 사천 탄탄멘',
-            emoji: '🥜',
-            image: 'images/ramen.jpg',
-            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/Dandan_mian.jpg/960px-Dandan_mian.jpg',
-            reason: '진한 참깨 페이스트의 고소함과 고추기름의 칼칼함, 볶은 다진 고기의 감칠맛이 폭발!',
-            tip: '국물에 수란이나 온천계란을 풀어 면을 적셔 드셔보세요.'
-          },
-          {
             name: '스파이시 핫치킨 버거',
             emoji: '🍔',
+            category: '양식',
             image: 'images/spicy-burger.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Fried_chicken_burger_.jpg/960px-Fried_chicken_burger_.jpg',
             reason: '바삭하고 육즙 가득한 매콤 닭다리살 패티에 매콤마요 소스와 양상추가 어우러진 든든한 빵 메뉴!',
             tip: '바삭한 감자튀김과 탄산음료와 곁들이면 완벽한 조합!'
           },
+          // 분식 & 기타
           {
-            name: '얼얼한 마라탕면',
-            emoji: '🍲',
-            image: 'images/malatang.jpg',
-            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8f/Malatang_from_Hope_Tree_%2820220226172344%29.jpg/960px-Malatang_from_Hope_Tree_%2820220226172344%29.jpg',
-            reason: '얼얼한 마라 소스에 옥수수면과 푸주, 청경채가 듬뿍 들어가 지루할 틈 없는 강렬한 한 그릇!',
-            tip: '땅콩소스(즈마장)를 곁들여 고소함을 한층 끌어올려 보세요.'
+            name: '새콤달콤 쫄면',
+            emoji: '🥗',
+            category: '분식',
+            image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Jjolmyeon.jpg/960px-Jjolmyeon.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Jjolmyeon.jpg/960px-Jjolmyeon.jpg',
+            reason: '아삭한 콩나물, 양배추와 쫄깃탱탱 면발, 새콤달콤 매운 특제 초장의 만남!',
+            tip: '군만두나 김밥을 곁들여 환상의 분식 세트로 즐기세요.'
+          },
+          {
+            name: '매콤 떡볶이 & 라면사리',
+            emoji: '🍢',
+            category: '분식',
+            image: 'images/tteokbokki.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Korean.snacks-Tteokbokki-08.jpg/960px-Korean.snacks-Tteokbokki-08.jpg',
+            reason: '매콤달콤 걸쭉한 국물에 쫄깃한 밀떡과 꼬들꼬들 라면사리의 절대 궁합!',
+            tip: '바삭한 튀김을 국물에 찍어 드시면 행복감이 2배!'
           }
         ],
         'mild-rice': [
+          // 한식
           {
             name: '소고기 왕갈비탕',
             emoji: '🥩',
+            category: '한식',
             image: 'images/galbi-soup.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Galbitang_%EA%B0%88%EB%B9%84%ED%83%95_beeniru.jpg/960px-Galbitang_%EA%B0%88%EB%B9%84%ED%83%95_beeniru.jpg',
             reason: '맑고 투명하지만 깊은 소고기 육수에 푹 고아 부드러운 왕갈비가 푸짐한 든든한 보양식!',
@@ -2823,30 +3661,16 @@
           {
             name: '소고기 미역국 정식',
             emoji: '🍲',
+            category: '한식',
             image: 'images/miyeokguk.jpg',
             fallbackImage: 'https://upload.wikimedia.org/wikipedia/commons/0/09/Korea.food-Miyeok.guk-01.jpg',
             reason: '참기름에 달달 볶은 소고기와 푹 끓인 미역이 맑고 깊은 감칠맛을 내어 속을 편안하게 감싸주는 한 끼!',
             tip: '따뜻한 밥을 국에 말아 김치나 장아찌를 얹어 먹으면 보약이 따로 없어요.'
           },
           {
-            name: '연어 아보카도 덮밥',
-            emoji: '🥑',
-            image: 'images/salmon-bowl.jpg',
-            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/Salmon_don_of_Nakau.jpg/960px-Salmon_don_of_Nakau.jpg',
-            reason: '신선하고 고소한 생연어와 부드러운 아보카도가 와사비 간장과 만나 깔끔하고 고급스러운 담백함!',
-            tip: '무순과 생와사비를 조금씩 얹어 비비지 않고 떠먹는 것이 꿀팁이에요.'
-          },
-          {
-            name: '수제 등심 돈카츠 정식',
-            emoji: '🍱',
-            image: 'images/tonkatsu.jpg',
-            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Tonkatsu_by_cuckoomis.jpg/960px-Tonkatsu_by_cuckoomis.jpg',
-            reason: '바삭바삭한 황금빛 튀김옷 속에 두툼하고 육즙 가득한 한돈 등심의 고소한 풍미!',
-            tip: '첫 점은 소금과 와사비만 살짝 찍어 고기 본연의 풍미를 느껴보세요.'
-          },
-          {
             name: '촉촉한 보쌈 정식',
             emoji: '🥬',
+            category: '한식',
             image: 'images/bossam.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Bossam.jpg/960px-Bossam.jpg',
             reason: '잡내 없이 야들야들하게 삶아낸 돼지 수육과 신선한 쌈 채소가 어우러져 한 끼 식사로 매우 훌륭합니다.',
@@ -2855,30 +3679,101 @@
           {
             name: '맑은 나주 곰탕',
             emoji: '🥩',
+            category: '한식',
             image: 'images/naju-gomtang.jpg',
-            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/Gomtang.jpg/960px-Gomtang.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Gomguk_2.jpg/960px-Gomguk_2.jpg',
             reason: '기름기를 걷어내고 맑고 담백하게 우려낸 고기 육수에 푸짐한 양지살과 당면이 든든한 명품 한 그릇!',
             tip: '송송 썬 대파를 듬뿍 넣고 깍두기를 곁들이면 깔끔함의 극치예요.'
           },
           {
             name: '진하고 뽀얀 설렁탕',
             emoji: '🥣',
+            category: '한식',
             image: 'images/seolleongtang.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Seolleongtang.jpg/960px-Seolleongtang.jpg',
             reason: '사골을 24시간 푹 고아 뽀얗고 구수한 국물에 소면과 부드러운 양지 수육이 듬뿍!',
             tip: '대파 듬뿍 넣고 소금 후추 살짝 쳐서 밥 한 공기 뚝딱 말아 드세요.'
           },
+          // 중식
+          {
+            name: '고슬고슬 삼선 볶음밥',
+            emoji: '🍚',
+            category: '중식',
+            image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Fried_Rice_in_Hong_Kong.jpg/960px-Fried_Rice_in_Hong_Kong.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/5/52/Fried_Rice_in_Hong_Kong.jpg/960px-Fried_Rice_in_Hong_Kong.jpg',
+            reason: '새우, 해삼, 오징어와 고소한 계란이 센 불에 흩날리듯 볶아진 중화 볶음밥의 정석!',
+            tip: '짜장 소스를 살짝 비벼 먹고 맑은 계란국을 곁들여보세요.'
+          },
+          {
+            name: '담백한 유산슬 덮밥',
+            emoji: '🥢',
+            category: '중식',
+            image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8c/Yusanseul.jpg/960px-Yusanseul.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8c/Yusanseul.jpg/960px-Yusanseul.jpg',
+            reason: '채 썬 해삼, 돼지고기, 죽순, 버섯을 부드럽고 걸쭉하게 볶아낸 고급스러운 덮밥!',
+            tip: '고추기름을 서너 방울 떨어뜨려 풍미를 살려보세요.'
+          },
+          // 일식
+          {
+            name: '연어 아보카도 덮밥',
+            emoji: '🥑',
+            category: '일식',
+            image: 'images/salmon-bowl.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/Salmon_don_of_Nakau.jpg/960px-Salmon_don_of_Nakau.jpg',
+            reason: '신선하고 고소한 생연어와 부드러운 아보카도가 와사비 간장과 만나 깔끔하고 고급스러운 담백함!',
+            tip: '무순과 생와사비를 조금씩 얹어 비비지 않고 떠먹는 것이 꿀팁이에요.'
+          },
+          {
+            name: '수제 등심 돈카츠 정식',
+            emoji: '🍱',
+            category: '일식',
+            image: 'images/tonkatsu.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Tonkatsu_by_cuckoomis.jpg/960px-Tonkatsu_by_cuckoomis.jpg',
+            reason: '바삭바삭한 황금빛 튀김옷 속에 두툼하고 육즙 가득한 한돈 등심의 고소한 풍미!',
+            tip: '첫 점은 소금과 와사비만 살짝 찍어 고기 본연의 풍미를 느껴보세요.'
+          },
           {
             name: '달콤 짭조름한 규동',
-            emoji: '🍱',
+            emoji: '🍲',
+            category: '일식',
             image: 'images/gyudon.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Gyudon_with_Shichimi.jpg/960px-Gyudon_with_Shichimi.jpg',
             reason: '부드러운 얇은 소고기와 달큼하게 졸여진 양파가 밥 위에 얹혀져 온 가족이 좋아하는 담백한 맛!',
             tip: '온천계란(수란)을 톡 터뜨려 노른자에 쓱 비벼 드셔보세요.'
           },
+          // 양식
+          {
+            name: '부드러운 버섯 크림 리조또',
+            emoji: '🍄',
+            category: '양식',
+            image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/Mushroom_risotto_%28Unsplash%29.jpg/960px-Mushroom_risotto_%28Unsplash%29.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/6/66/Mushroom_risotto_%28Unsplash%29.jpg/960px-Mushroom_risotto_%28Unsplash%29.jpg',
+            reason: '표고버섯과 양송이버섯의 진한 향에 고소한 생크림과 파마산 치즈가 녹아든 힐링 식사!',
+            tip: '트러플 오일을 살짝 둘러 풍미의 깊이를 더해보세요.'
+          },
+          {
+            name: '촉촉한 오므라이스',
+            emoji: '🍳',
+            category: '양식',
+            image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Omurice_by_katorisi.jpg/960px-Omurice_by_katorisi.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Omurice_by_katorisi.jpg/960px-Omurice_by_katorisi.jpg',
+            reason: '몽글몽글 부드러운 반숙 계란 이불 아래 고소한 볶음밥과 달콤새콤 데미글라스 소스!',
+            tip: '나이프로 계란 가운데를 갈라 부드럽게 펼쳐 드세요.'
+          },
+          // 분식 & 기타
+          {
+            name: '고소한 참치마요 김밥',
+            emoji: '🍙',
+            category: '분식',
+            image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Gimbap_%28Korean_food%29.jpg/960px-Gimbap_%28Korean_food%29.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Gimbap_%28Korean_food%29.jpg/960px-Gimbap_%28Korean_food%29.jpg',
+            reason: '꽉 찬 참치마요와 깻잎의 향긋함, 아삭한 단무지가 입안 가득 채우는 든든함!',
+            tip: '따끈한 어묵 국물과 함께 드시면 목넘김이 최고입니다.'
+          },
           {
             name: '버터 간장계란밥 & 배추된장국',
             emoji: '🍳',
+            category: '분식',
             image: 'images/egg-rice.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/Tamago_kake_gohan_by_rhosoi_in_Kyoto_Station_building.jpg/960px-Tamago_kake_gohan_by_rhosoi_in_Kyoto_Station_building.jpg',
             reason: '고소한 버터 한 조각과 반숙 계란후라이, 짭조름한 간장에 맑은 된장국이 어우러진 가장 확실한 행복!',
@@ -2886,41 +3781,11 @@
           }
         ],
         'mild-noodle': [
-          {
-            name: '바질 토마토 샌드위치',
-            emoji: '🥪',
-            image: 'images/sandwich.jpg',
-            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Caprese_Sandwich%2C_Jolly_Holiday_Bakery_Cafe_2013.jpg/960px-Caprese_Sandwich%2C_Jolly_Holiday_Bakery_Cafe_2013.jpg',
-            reason: '겉바속촉 치아바타 빵에 향긋한 바질 페스토, 신선한 토마토와 생모차렐라가 어우러진 산뜻한 미식!',
-            tip: '따뜻한 아메리카노나 가벼운 차와 곁들이면 브런치 카페 기분을 낼 수 있어요.'
-          },
-          {
-            name: '베이컨 크림 까르보나라',
-            emoji: '🍝',
-            image: 'images/carbonara.jpg',
-            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Spaghetti_alla_Carbonara_%28Madrid%29.JPG/960px-Spaghetti_alla_Carbonara_%28Madrid%29.JPG',
-            reason: '고소한 생크림과 파마산 치즈, 바삭한 베이컨이 쫄깃한 파스타 면을 포근하게 감싸는 부드러운 풍미!',
-            tip: '통후추를 즉석에서 살짝 갈아 넣으면 풍미가 한층 살아나요.'
-          },
-          {
-            name: '하카타 돈코츠 라멘',
-            emoji: '🍜',
-            image: 'images/tonkotsu-ramen.jpg',
-            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Tonkotsu_Ramen_Special%2C_Hakata_Choten%2C_Paris_001.jpg/960px-Tonkotsu_Ramen_Special%2C_Hakata_Choten%2C_Paris_001.jpg',
-            reason: '돼지 사골을 푹 고아 뽀얗고 크리미한 육수에 불향 머금은 두툼한 차슈와 반숙란!',
-            tip: '아지타마고(반숙 계란)를 국물에 푹 적셔 면과 함께 호로록 드세요.'
-          },
-          {
-            name: '베트남 양지 쌀국수',
-            emoji: '🥢',
-            image: 'images/pho.jpg',
-            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Pho-Beef-Noodles-2008.jpg/960px-Pho-Beef-Noodles-2008.jpg',
-            reason: '맑고 깊은 소고기 육수에 부드러운 양지와 쌀국수 면, 아삭한 숙주가 주는 편안하고 맑은 감칠맛!',
-            tip: '레몬즙을 살짝 짜 넣고 절인 양파를 곁들이면 한층 산뜻합니다.'
-          },
+          // 한식
           {
             name: '시원한 바지락 칼국수',
-            emoji: '🍜',
+            emoji: '🍲',
+            category: '한식',
             image: 'images/kalguksu.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Bajirak-kalguksu.jpg/960px-Bajirak-kalguksu.jpg',
             reason: '싱싱한 바지락 조개에서 우러난 맑고 시원한 국물에 쫄깃탱글한 손칼국수 면발의 순수하고 담백한 맛!',
@@ -2929,7 +3794,8 @@
           {
             name: '시원한 살얼음 평양냉면 & 판모밀',
             emoji: '🧊',
-            image: 'images/janchi-guksu.jpg',
+            category: '한식',
+            image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Zaru_soba_by_hirotomo_in_Tokyo.jpg/960px-Zaru_soba_by_hirotomo_in_Tokyo.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Zaru_soba_by_hirotomo_in_Tokyo.jpg/960px-Zaru_soba_by_hirotomo_in_Tokyo.jpg',
             reason: '살얼음 띄운 맑고 시원한 쯔유/육수에 메밀면을 퐁당 적셔 먹는 가슴 속까지 개운한 힐링!',
             tip: '간 무와 와사비, 송송 썬 파를 듬뿍 넣어 시원하게 즐기세요.'
@@ -2937,18 +3803,78 @@
           {
             name: '따뜻한 잔치국수',
             emoji: '🥢',
+            category: '한식',
             image: 'images/janchi-guksu.jpg',
             fallbackImage: 'https://upload.wikimedia.org/wikipedia/commons/4/42/Janchi-guksu.jpg',
             reason: '시원한 멸치 다시마 육수에 호로록 넘어가는 소면과 고소한 계란 지단, 애호박이 얹어진 정겨운 한 그릇!',
             tip: '짜지 않은 양념장을 살짝만 둘러 육수 본연의 깔끔함을 느껴보세요.'
           },
+          // 중식
           {
-            name: '구수한 돈코츠 라멘',
-            emoji: '🍥',
+            name: '담백한 백짬뽕',
+            emoji: '🍜',
+            category: '중식',
+            image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Nagasaki_champon_002.jpg/960px-Nagasaki_champon_002.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Nagasaki_champon_002.jpg/960px-Nagasaki_champon_002.jpg',
+            reason: '빨간 양념 없이 조개와 해산물 본연의 깊고 뽀얀 육수로 시원하게 끓여낸 중화 백짬뽕!',
+            tip: '아삭한 숙주와 해산물을 겨자장에 살짝 찍어드세요.'
+          },
+          {
+            name: '맑은 우육탕면',
+            emoji: '🥢',
+            category: '중식',
+            image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/Taiwanese_beef_noodle_soup_in_Taipei.jpg/960px-Taiwanese_beef_noodle_soup_in_Taipei.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/Taiwanese_beef_noodle_soup_in_Taipei.jpg/960px-Taiwanese_beef_noodle_soup_in_Taipei.jpg',
+            reason: '부드럽게 삶은 소고기 아롱사태와 향긋한 청경채, 맑고 깊은 고기 육수가 어우러진 맛!',
+            tip: '갓절임(쏸차이)을 곁들여 산뜻하게 즐겨보세요.'
+          },
+          // 일식
+          {
+            name: '하카타 돈코츠 라멘',
+            emoji: '🍜',
+            category: '일식',
             image: 'images/tonkotsu-ramen.jpg',
             fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fd/Tonkotsu_Ramen_Special%2C_Hakata_Choten%2C_Paris_001.jpg/960px-Tonkotsu_Ramen_Special%2C_Hakata_Choten%2C_Paris_001.jpg',
-            reason: '잡내 없이 진하고 구수하게 우려낸 사골 육수에 부드러운 차슈와 쫄깃한 생면이 일품인 힐링 라멘!',
-            tip: '반숙 맛달걀(아지타마고)을 국물에 적셔 먹으면 더욱 맛있어요.'
+            reason: '돼지 사골을 푹 고아 뽀얗고 크리미한 육수에 불향 머금은 두툼한 차슈와 반숙란!',
+            tip: '아지타마고(반숙 계란)를 국물에 푹 적셔 면과 함께 호로록 드세요.'
+          },
+          {
+            name: '새우튀김 유부 우동',
+            emoji: '🍥',
+            category: '일식',
+            image: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/Tempura_udon_by_jetalone_in_Tokyo.jpg/960px-Tempura_udon_by_jetalone_in_Tokyo.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e0/Tempura_udon_by_jetalone_in_Tokyo.jpg/960px-Tempura_udon_by_jetalone_in_Tokyo.jpg',
+            reason: '통통하고 쫄깃탱글한 사누끼 면발에 따뜻하고 맑은 가쓰오부시 육수의 담백한 힐링!',
+            tip: '바삭한 튀김 부스러기와 시치미를 넣어 풍부한 식감을 즐기세요.'
+          },
+          // 양식
+          {
+            name: '바질 토마토 샌드위치',
+            emoji: '🥪',
+            category: '양식',
+            image: 'images/sandwich.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Caprese_Sandwich%2C_Jolly_Holiday_Bakery_Cafe_2013.jpg/960px-Caprese_Sandwich%2C_Jolly_Holiday_Bakery_Cafe_2013.jpg',
+            reason: '겉바속촉 치아바타 빵에 향긋한 바질 페스토, 신선한 토마토와 생모차렐라가 어우러진 산뜻한 미식!',
+            tip: '따뜻한 아메리카노나 가벼운 차와 곁들이면 브런치 카페 기분을 낼 수 있어요.'
+          },
+          {
+            name: '베이컨 크림 까르보나라',
+            emoji: '🍝',
+            category: '양식',
+            image: 'images/carbonara.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Spaghetti_alla_Carbonara_%28Madrid%29.JPG/960px-Spaghetti_alla_Carbonara_%28Madrid%29.JPG',
+            reason: '고소한 생크림과 파마산 치즈, 바삭한 베이컨이 쫄깃한 파스타 면을 포근하게 감싸는 부드러운 풍미!',
+            tip: '통후추를 즉석에서 살짝 갈아 넣으면 풍미가 한층 살아나요.'
+          },
+          // 분식 & 기타
+          {
+            name: '베트남 양지 쌀국수',
+            emoji: '🥢',
+            category: '분식',
+            image: 'images/pho.jpg',
+            fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Pho-Beef-Noodles-2008.jpg/960px-Pho-Beef-Noodles-2008.jpg',
+            reason: '맑고 깊은 소고기 육수에 부드러운 양지와 쌀국수 면, 아삭한 숙주가 주는 편안하고 맑은 감칠맛!',
+            tip: '레몬즙을 살짝 짜 넣고 절인 양파를 곁들이면 한층 산뜻합니다.'
           }
         ]
       };
@@ -2957,11 +3883,16 @@
       const appState = {
         flavor: null, // 'spicy' | 'mild'
         staple: null, // 'rice' | 'noodle'
+        cuisine: 'all', // 'all' | 'korean' | 'chinese' | 'japanese' | 'western' | 'snack'
         situation: null, // AI 힌트
         recommendations: [], // TOP 3 후보 목록
         selectedMenuIndex: 0, // 현재 선택된 추천 인덱스 (0, 1, 2)
+        recommendationBatchesHistory: [], // 이전 추천 3종 세트 복원용 히스토리 스택
         currentMenu: null,
-        history: []
+        history: [],
+        isSearchMode: false,
+        lastSearchKeyword: '',
+        searchExcludedMenus: []
       };
 
       // DOM 요소 캐싱
@@ -2976,6 +3907,7 @@
       const step1Status = document.getElementById('step1-status');
       const step2Status = document.getElementById('step2-status');
       const step3Status = document.getElementById('step3-status');
+      const step4Status = document.getElementById('step4-status');
 
       const resultWrapper = document.getElementById('result-wrapper');
       const resultCard = document.getElementById('result-card');
@@ -3069,22 +4001,63 @@
       }
       const selectStaple = handleStapleSelect;
 
-      // 4.1 기능: AI 상황/기분 선택 (선택 사항)
+      // 4.1 기능: 요리 종류 선택 (한식, 중식, 일식, 양식, 분식 & 기타)
+      function handleCuisineSelect(type) {
+        appState.cuisine = type;
+        const cuisineBtns = {
+          all: document.getElementById('btn-cuisine-all'),
+          korean: document.getElementById('btn-cuisine-korean'),
+          chinese: document.getElementById('btn-cuisine-chinese'),
+          japanese: document.getElementById('btn-cuisine-japanese'),
+          western: document.getElementById('btn-cuisine-western'),
+          snack: document.getElementById('btn-cuisine-snack')
+        };
+        const cuisineLabels = {
+          all: { label: '전체 (모든 요리)', color: 'var(--text-main)' },
+          korean: { label: '한식 🇰🇷', color: '#dc2626' },
+          chinese: { label: '중식 🥟', color: '#ea580c' },
+          japanese: { label: '일식 🍱', color: '#0284c7' },
+          western: { label: '양식 🍝', color: '#16a34a' },
+          snack: { label: '분식&기타 🍢', color: '#d97706' }
+        };
+
+        Object.keys(cuisineBtns).forEach(key => {
+          const btn = cuisineBtns[key];
+          if (!btn) return;
+          if (key === type) {
+            btn.classList.add('selected-cuisine');
+            btn.setAttribute('aria-pressed', 'true');
+          } else {
+            btn.classList.remove('selected-cuisine');
+            btn.setAttribute('aria-pressed', 'false');
+          }
+        });
+
+        if (step3Status && cuisineLabels[type]) {
+          step3Status.textContent = `선택됨: ${cuisineLabels[type].label}`;
+          step3Status.style.color = cuisineLabels[type].color;
+        }
+
+        checkReadyToRecommend();
+      }
+      const selectCuisine = handleCuisineSelect;
+
+      // 4.2 기능: AI 상황/기분 선택 (선택 사항)
       function handleMoodSelect(el, situationText) {
         const isSelected = el.classList.contains('active');
         document.querySelectorAll('.mood-chip').forEach(btn => btn.classList.remove('active'));
         if (isSelected) {
           appState.situation = null;
-          if (step3Status) {
-            step3Status.textContent = '선택 안 함 (전체 추천)';
-            step3Status.style.color = 'var(--text-muted)';
+          if (step4Status) {
+            step4Status.textContent = '선택 안 함 (전체 추천)';
+            step4Status.style.color = 'var(--text-muted)';
           }
         } else {
           el.classList.add('active');
           appState.situation = situationText;
-          if (step3Status) {
-            step3Status.textContent = `적용: ${el.textContent.trim()}`;
-            step3Status.style.color = '#7c3aed';
+          if (step4Status) {
+            step4Status.textContent = `적용: ${el.textContent.trim()}`;
+            step4Status.style.color = '#7c3aed';
           }
         }
       }
@@ -3096,8 +4069,17 @@
           btnRecommend.style.cursor = 'pointer';
           const flavorLabel = appState.flavor === 'spicy' ? '매콤한' : '담백한';
           const stapleLabel = appState.staple === 'rice' ? '밥' : '면·빵';
+          const cuisineLabelMap = {
+            all: '',
+            korean: '한식 ',
+            chinese: '중식 ',
+            japanese: '일식 ',
+            western: '양식 ',
+            snack: '분식 '
+          };
+          const cuisinePrefix = cuisineLabelMap[appState.cuisine] || '';
           btnRecommendIcon.textContent = '✨';
-          btnRecommendText.textContent = `Gemini AI 실시간 맞춤 ${flavorLabel} ${stapleLabel} 추천받기!`;
+          btnRecommendText.textContent = `Gemini AI 실시간 맞춤 ${cuisinePrefix}${flavorLabel} ${stapleLabel} 추천받기!`;
         } else if (appState.flavor) {
           btnRecommend.disabled = true;
           btnRecommendIcon.textContent = '👇';
@@ -3290,15 +4272,101 @@
         }, 500);
       }
 
-      // TOP 3 후보 카드 렌더링 (동시 3개 메뉴 비교 & 선택)
+      // -------------------------------------------------------------------------
+      // 메뉴 리스트 고화질 사진 확대 팝업 (더블클릭 라이트박스)
+      // -------------------------------------------------------------------------
+      let currentLightboxItem = null;
+
+      function openFoodImageLightbox(item) {
+        if (!item) return;
+        currentLightboxItem = item;
+        const overlay = document.getElementById('food-lightbox-overlay');
+        const imgEl = document.getElementById('lightbox-food-image');
+        const nameEl = document.getElementById('lightbox-food-name');
+        const emojiEl = document.getElementById('lightbox-food-emoji');
+        const badgeEl = document.getElementById('lightbox-food-badge');
+        const catEl = document.getElementById('lightbox-food-category');
+        const reasonEl = document.getElementById('lightbox-food-reason');
+
+        if (nameEl) nameEl.textContent = item.name;
+        if (emojiEl) emojiEl.textContent = item.emoji || '🍽️';
+        if (badgeEl) badgeEl.textContent = item.badge || (item.rank ? `${item.rank}순위 추천` : 'AI 추천');
+        if (catEl) catEl.textContent = item.category || '오늘의 추천';
+        if (reasonEl) reasonEl.textContent = item.reason || 'AI가 엄선한 균형 잡힌 맛있는 한 끼 메뉴입니다.';
+
+        if (imgEl) {
+          const resolved = clientResolveFoodImage(item.name, item.image, item.fallbackImage);
+          const finalSrc = resolved.image || item.image || item.fallbackImage || 'images/bibimbap.jpg';
+          const fallbackSrc = resolved.fallbackImage || item.fallbackImage || 'images/bibimbap.jpg';
+          let triedFallback = false;
+          imgEl.onerror = function() {
+            if (!triedFallback && fallbackSrc && this.src !== fallbackSrc) {
+              triedFallback = true;
+              this.src = fallbackSrc;
+              return;
+            }
+            this.onerror = null;
+            this.src = 'images/bibimbap.jpg';
+          };
+          imgEl.src = finalSrc;
+          imgEl.alt = `${item.name} 확대 사진`;
+        }
+
+        if (overlay) {
+          overlay.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function closeFoodImageLightbox() {
+        const overlay = document.getElementById('food-lightbox-overlay');
+        if (overlay) {
+          overlay.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      }
+
+      function handleFoodLightboxOverlayClick(e) {
+        if (e.target && e.target.id === 'food-lightbox-overlay') {
+          closeFoodImageLightbox();
+        }
+      }
+
+      function selectFromLightbox() {
+        if (!currentLightboxItem) return;
+        const targetName = currentLightboxItem.name;
+        if (Array.isArray(appState.recommendations)) {
+          const foundIdx = appState.recommendations.findIndex(r => r.name === targetName);
+          if (foundIdx >= 0) {
+            selectCandidate(foundIdx);
+          } else {
+            displayResult(currentLightboxItem);
+          }
+        }
+        closeFoodImageLightbox();
+        showToast(`"${targetName}" 메뉴가 선택되었습니다!`);
+      }
+
+      function findPlacesFromLightbox() {
+        if (!currentLightboxItem) return;
+        selectFromLightbox();
+        const placesSection = document.getElementById('places-section');
+        if (placesSection) {
+          placesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+
+      // TOP 3 후보 카드 렌더링 (동시 3개 메뉴 비교 & 선택, 더블클릭 시 확대)
       function renderCandidatesGrid() {
         if (!candidatesGrid) return;
         candidatesGrid.innerHTML = '';
 
         if (!Array.isArray(appState.recommendations) || appState.recommendations.length === 0) {
+          updateNavArrowButtonsState();
           return;
         }
 
+        const gridUsedImages = new Set();
         appState.recommendations.forEach((item, idx) => {
           const isSelected = (idx === appState.selectedMenuIndex);
           const card = document.createElement('div');
@@ -3307,6 +4375,11 @@
           card.setAttribute('tabindex', '0');
           card.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
           card.onclick = () => selectCandidate(idx);
+          card.ondblclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            openFoodImageLightbox(item);
+          };
           card.onkeydown = (e) => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
@@ -3315,21 +4388,20 @@
           };
 
           const rankClass = `rank-${item.rank || (idx + 1)}`;
-          const resolved = clientResolveFoodImage(item.name, item.image, item.fallbackImage);
-          const itemImg = resolved.image || item.image;
-          const itemFallback = resolved.fallbackImage || item.fallbackImage;
-          const initialThumb = itemImg || (appState.flavor === 'mild' 
-            ? (appState.staple === 'rice' ? 'images/galbi-soup.jpg' : 'images/kalguksu.jpg') 
-            : (appState.staple === 'rice' ? 'images/jeyuk.jpg' : 'images/jjambbong.jpg'));
+          const resolved = clientResolveFoodImage(item.name, item.image, item.fallbackImage, idx, gridUsedImages);
+          item.image = resolved.image || item.image;
+          item.fallbackImage = resolved.fallbackImage || item.fallbackImage;
+          const initialThumb = item.image || item.fallbackImage || "images/bibimbap.jpg";
 
           card.innerHTML = `
             <div class="candidate-card-top">
               <span class="candidate-rank-badge ${rankClass}">${item.badge || `${idx + 1}위 추천`}</span>
               <span class="candidate-category-pill">${item.category || '오늘의 추천'}</span>
             </div>
-            <div class="candidate-thumb-wrap">
-              <img class="candidate-thumb" src="${initialThumb}" alt="${item.name} 사진" onerror="this.onerror=null; this.src='${itemFallback || initialThumb}';" />
+            <div class="candidate-thumb-wrap" title="더블클릭 시 사진 확대">
+              <img class="candidate-thumb" src="${initialThumb}" alt="${item.name} 사진" onerror="this.onerror=null; this.src='${item.fallbackImage || 'images/bibimbap.jpg'}';" />
               <span class="candidate-thumb-emoji">${item.emoji || '🍽️'}</span>
+              <span class="candidate-zoom-hint" onclick="event.stopPropagation(); openFoodImageLightbox(appState.recommendations[${idx}]);" title="더블클릭 시 사진 확대">🔍 더블클릭 확대</span>
             </div>
             <div class="candidate-info">
               <h4 class="candidate-name">${item.name}</h4>
@@ -3342,6 +4414,8 @@
 
           candidatesGrid.appendChild(card);
         });
+
+        updateNavArrowButtonsState();
       }
 
       // 후보 메뉴 선택 처리 (클릭 시 상세 정보 및 맛집 연동)
@@ -3364,44 +4438,777 @@
           renderHistory();
         }
 
+        updateNavArrowButtonsState();
         showToast(`"${menu.name}"이(가) 선택되었습니다!`);
       }
 
-      // 음식 이름에 따른 안전한 이미지 맵핑 보정 헬퍼 (보쌈, 설렁탕, 곰탕, 규동, 돈카츠 등의 정확한 사진 일치)
-      function clientResolveFoodImage(name, currentImage, currentFallback) {
-        const n = (name || '').trim();
-        if (n.includes('보쌈') || n.includes('수육') || n.includes('족발')) {
-          return { image: 'images/bossam.jpg', fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Bossam.jpg/960px-Bossam.jpg' };
+      // 메뉴목록 좌/우 화살표 버튼 카운터 및 뱃지 상태 갱신
+      function updateNavArrowButtonsState() {
+        const nextCounterEl = document.getElementById('arrow-next-counter');
+        const prevCounterEl = document.getElementById('arrow-prev-counter');
+        const nextArrowBtn = document.getElementById('btn-next-menu-arrow');
+        const prevArrowBtn = document.getElementById('btn-prev-menu-arrow');
+
+        const total = (appState.recommendations && appState.recommendations.length) || 0;
+        const curr = (appState.selectedMenuIndex || 0) + 1;
+        const hasPrevBatches = Array.isArray(appState.recommendationBatchesHistory) && appState.recommendationBatchesHistory.length > 0;
+
+        if (total === 0) {
+          if (nextCounterEl) nextCounterEl.textContent = '1/3';
+          if (prevCounterEl) prevCounterEl.textContent = '◀ 이전';
+          if (nextArrowBtn) nextArrowBtn.style.opacity = '0.7';
+          if (prevArrowBtn) prevArrowBtn.style.opacity = '0.7';
+          return;
         }
-        if (n.includes('설렁탕') || n.includes('사골') || n.includes('도가니')) {
-          return { image: 'images/seolleongtang.jpg', fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Seolleongtang.jpg/960px-Seolleongtang.jpg' };
+
+        if (nextArrowBtn) nextArrowBtn.style.opacity = '1';
+        if (prevArrowBtn) prevArrowBtn.style.opacity = '1';
+
+        // 오른쪽 (다음 메뉴) 버튼 라벨
+        if (nextCounterEl) {
+          if (curr < total) {
+            nextCounterEl.textContent = `${curr + 1}/${total}`;
+          } else {
+            nextCounterEl.textContent = '새 메뉴 ➔';
+          }
         }
-        if (n.includes('나주') || (n.includes('곰탕') && !n.includes('설렁탕'))) {
-          return { image: 'images/naju-gomtang.jpg', fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Gomguk_2.jpg/960px-Gomguk_2.jpg' };
+
+        // 왼쪽 (이전 메뉴) 버튼 라벨
+        if (prevCounterEl) {
+          if (curr > 1) {
+            prevCounterEl.textContent = `${curr - 1}/${total}`;
+          } else if (hasPrevBatches) {
+            prevCounterEl.textContent = '이전 세트 ◀';
+          } else {
+            prevCounterEl.textContent = `${total}/${total} 순환`;
+          }
         }
-        if (n.includes('돈카츠') || n.includes('돈까스') || n.includes('돈가스') || n.includes('가츠동')) {
-          return { image: 'images/tonkatsu.jpg', fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Tonkatsu_by_cuckoomis.jpg/960px-Tonkatsu_by_cuckoomis.jpg' };
-        }
-        if (n.includes('규동') || n.includes('소고기덮밥') || n.includes('우삼겹')) {
-          return { image: 'images/gyudon.jpg', fallbackImage: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Gyudon_with_Shichimi.jpg/960px-Gyudon_with_Shichimi.jpg' };
-        }
-        return { image: currentImage, fallbackImage: currentFallback };
       }
 
-      // 7. 추천 알고리즘 및 결과 표시 (Gemini AI 실시간 API 연동 + 폴백 캐시)
+      // 메뉴목록 왼쪽 화살표 버튼 클릭 핸들러 (이전 메뉴 탐색 및 이전 추천 세트 복원)
+      async function showPrevMenuSequence() {
+        const prevBtn = document.getElementById('btn-prev-menu-arrow');
+        if (prevBtn) {
+          prevBtn.style.pointerEvents = 'none';
+          setTimeout(() => { if (prevBtn) prevBtn.style.pointerEvents = 'auto'; }, 300);
+        }
+
+        if (!Array.isArray(appState.recommendations) || appState.recommendations.length === 0) {
+          return;
+        }
+
+        const currentIdx = appState.selectedMenuIndex;
+        const total = appState.recommendations.length;
+
+        // 1. 현재 추천된 3개 목록 내에서 이전 메뉴로 이동
+        if (currentIdx > 0) {
+          const prevIdx = currentIdx - 1;
+          selectCandidate(prevIdx);
+          const prevMenu = appState.recommendations[prevIdx];
+          showToast(`👈 [${prevMenu.badge || `${prevIdx + 1}위`}] ${prevMenu.name}(으)로 이동했습니다.`);
+          
+          if (candidatesGrid && candidatesGrid.children && candidatesGrid.children[prevIdx]) {
+            candidatesGrid.children[prevIdx].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+          return;
+        }
+
+        // 2. 1번째 메뉴에서 이전 화살표를 눌렀을 때: 직전에 본 이전 추천 세트가 있으면 복원
+        if (Array.isArray(appState.recommendationBatchesHistory) && appState.recommendationBatchesHistory.length > 0) {
+          const prevBatch = appState.recommendationBatchesHistory.pop();
+          if (prevBatch && Array.isArray(prevBatch.recommendations) && prevBatch.recommendations.length > 0) {
+            appState.recommendations = prevBatch.recommendations;
+            appState.isSearchMode = !!prevBatch.isSearchMode;
+            if (prevBatch.sourceKeyword) {
+              appState.lastSearchKeyword = prevBatch.sourceKeyword;
+              const searchInput = document.getElementById('input-menu-search');
+              if (searchInput) searchInput.value = prevBatch.sourceKeyword;
+            }
+            const targetIdx = prevBatch.recommendations.length - 1;
+            renderCandidatesGrid();
+            selectCandidate(targetIdx);
+            showToast('👈 이전 추천 메뉴 목록으로 돌아왔습니다!');
+            return;
+          }
+        }
+
+        // 3. 이전 세트가 없으면 3번째 메뉴로 순환 이동
+        const targetIdx = total - 1;
+        selectCandidate(targetIdx);
+        const targetMenu = appState.recommendations[targetIdx];
+        showToast(`👈 [${targetMenu.badge || `${targetIdx + 1}위`}] ${targetMenu.name}(으)로 순환 이동했습니다.`);
+        if (candidatesGrid && candidatesGrid.children && candidatesGrid.children[targetIdx]) {
+          candidatesGrid.children[targetIdx].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+
+      // 메뉴목록 오른쪽 화살표 버튼 클릭 핸들러 (다음 메뉴 연속 탐색)
+      async function showNextMenuSequence() {
+        const nextBtn = document.getElementById('btn-next-menu-arrow');
+        if (nextBtn) {
+          nextBtn.style.pointerEvents = 'none';
+          setTimeout(() => { if (nextBtn) nextBtn.style.pointerEvents = 'auto'; }, 350);
+        }
+
+        if (!Array.isArray(appState.recommendations) || appState.recommendations.length === 0) {
+          const searchInput = document.getElementById('input-menu-search');
+          const hasSearch = searchInput && searchInput.value.trim();
+          if (hasSearch) {
+            executeMenuSearch(false);
+          } else if (appState.flavor && appState.staple) {
+            getRecommendation(false);
+          } else {
+            quickRandomRecommendation();
+          }
+          return;
+        }
+
+        const currentIdx = appState.selectedMenuIndex;
+        const total = appState.recommendations.length;
+
+        // 1. 현재 추천된 3개 목록 내에서 다음 메뉴로 이동
+        if (currentIdx < total - 1) {
+          const nextIdx = currentIdx + 1;
+          selectCandidate(nextIdx);
+          const nextMenu = appState.recommendations[nextIdx];
+          showToast(`👉 [${nextMenu.badge || `${nextIdx + 1}위`}] ${nextMenu.name}(으)로 전환되었습니다.`);
+          
+          if (candidatesGrid && candidatesGrid.children && candidatesGrid.children[nextIdx]) {
+            candidatesGrid.children[nextIdx].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+          return;
+        }
+
+        // 2. 마지막 3번째 메뉴까지 모두 탐색한 경우 -> 현재 세트를 히스토리에 백업 후 새로운 세트 로딩
+        const searchInput = document.getElementById('input-menu-search');
+        const activeKeyword = (searchInput ? searchInput.value.trim() : '') || (appState.lastSearchKeyword || '');
+
+        if (Array.isArray(appState.recommendations) && appState.recommendations.length > 0) {
+          if (!appState.recommendationBatchesHistory) appState.recommendationBatchesHistory = [];
+          appState.recommendationBatchesHistory.push({
+            recommendations: JSON.parse(JSON.stringify(appState.recommendations)),
+            selectedMenuIndex: appState.selectedMenuIndex,
+            sourceKeyword: activeKeyword,
+            isSearchMode: appState.isSearchMode
+          });
+          if (appState.recommendationBatchesHistory.length > 10) {
+            appState.recommendationBatchesHistory.shift();
+          }
+        }
+
+        if (appState.isSearchMode && activeKeyword) {
+          showToast(`🔄 "${activeKeyword}" 연관 다음 추천 메뉴 3가지를 탐색 중입니다...`);
+          await executeMenuSearch(true);
+        } else if (appState.flavor && appState.staple) {
+          showToast('🔄 새로운 다음 추천 메뉴 3가지를 생성합니다...');
+          await getRecommendation(true);
+        } else {
+          showToast('🎲 새로운 추천 메뉴 3가지를 생성합니다...');
+          quickRandomRecommendation();
+        }
+      }
+
+      // 음식 이름에 따른 완벽하고 고유한 1:1 이미지 매칭 헬퍼 (동일 사진 중복 방지, 50개 세부 카테고리 & 형태소 분석)
+      function clientResolveFoodImage(name, currentImage, currentFallback, itemIndex = 0, usedImages = null) {
+        const n = (name || "").toLowerCase().trim();
+
+        const pickUnique = (img, fallback) => {
+          let chosen = img;
+          let chosenFb = fallback;
+          if (usedImages && usedImages.has(chosen)) {
+            if (chosenFb && !usedImages.has(chosenFb)) {
+              chosen = chosenFb;
+            } else {
+              const altPool = [
+                "images/gyukatsu.jpg",
+                "images/naengmomi.jpg",
+                "images/cheese-tonkatsu.jpg",
+                "images/beef-bbq.jpg",
+                "images/samgyeopsal.jpg",
+                "images/yukhoe.jpg",
+                "images/bossam.jpg",
+                "images/jeyuk.jpg",
+                "images/salmon-bowl.jpg",
+                "images/tonkotsu-ramen.jpg",
+                "images/kalguksu.jpg",
+                "images/bibim-naeng.jpg",
+                "images/seolleongtang.jpg",
+                "images/bibimbap.jpg",
+                "images/carbonara.jpg"
+              ];
+              for (const alt of altPool) {
+                if (!usedImages.has(alt)) {
+                  chosen = alt;
+                  break;
+                }
+              }
+            }
+          }
+          if (usedImages) {
+            usedImages.add(chosen);
+          }
+          return { image: chosen, fallbackImage: chosenFb };
+        };
+
+        // 1. 육회, 육회비빔밥, 한우육회 (일반 구이 소고기보다 먼저 매칭!)
+        if (/(육회|육사시미|한우육회)/.test(n)) {
+          return pickUnique("images/yukhoe.jpg", "images/beef-bbq.jpg");
+        }
+
+        // 2. 규카츠, 비프카츠, 화로구이 규카츠 (정통 소고기 카츠)
+        if (/(규카츠|비프카츠|소고기카츠)/.test(n)) {
+          return pickUnique("images/gyukatsu.jpg", "images/beef-bbq.jpg");
+        }
+
+        // 3. 냉모밀, 메밀소바, 냉소바, 자루소바, 판모밀, 냉모밀 돈카츠 세트 (일반 돈카츠보다 먼저 매칭하여 소바 이미지 우선!)
+        if (/(냉모밀|모밀|소바|판모밀|자루소바|냉소바|모밀국수|메밀소바|메밀국수|모밀정식|냉모밀정식|모밀세트|냉모밀세트|냉모밀 돈카츠|모밀 돈카츠)/.test(n)) {
+          return pickUnique("images/naengmomi.jpg", "images/bibim-naeng.jpg");
+        }
+
+        // 4. 치즈돈까스, 치즈카츠, 치즈돈카츠
+        if (/(치즈돈까스|치즈돈카츠|치즈카츠|치즈 돈카츠|치즈 돈까스)/.test(n)) {
+          return pickUnique("images/cheese-tonkatsu.jpg", "images/tonkatsu.jpg");
+        }
+
+        // 5. 소고기 덮밥, 규동, 우삼겹덮밥, 스테키동
+        if (/(규동|소고기덮밥|소고기 덮밥|우삼겹덮밥|차돌덮밥|스테키동|스테이크덮밥|스테이크 덮밥)/.test(n)) {
+          return pickUnique("images/gyudon.jpg", "images/beef-bbq.jpg");
+        }
+
+        // 6. 소고기 보양탕, 갈비탕, 곰탕, 설렁탕, 도가니탕, 사골, 소고기국밥
+        if (/(갈비탕|왕갈비탕|소갈비탕|곰탕|꼬리곰탕|설렁탕|도가니탕|사골|우족탕|소고기국밥|소고기 국밥|소고기국|소고기무국|나주곰탕|우거지탕|소머리국밥|한우곰탕|보양탕)/.test(n)) {
+          return pickUnique("images/seolleongtang.jpg", "images/beef-soup.jpg");
+        }
+
+        // 7. 소갈비찜, 갈비찜
+        if (/(소갈비찜|갈비찜|매운갈비찜|궁중갈비찜|돼지갈비찜)/.test(n)) {
+          return pickUnique("images/beef-soup.jpg", "images/seolleongtang.jpg");
+        }
+
+        // 8. 소불고기, 뚝배기불고기
+        if (/(뚝배기불고기|뚝불|소불고기|한우불고기|간장불고기|불고기)/.test(n)) {
+          return pickUnique("images/gyudon.jpg", "images/beef-bbq.jpg");
+        }
+
+        // 9. 샤브샤브, 스키야키, 훠궈, 밀푀유나베, 전골
+        if (/(샤브|스키야키|훠궈|밀푀유|편백찜|전골|나베)/.test(n)) {
+          return pickUnique("https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=900&q=80", "images/seolleongtang.jpg");
+        }
+
+        // 10. 순수 소고기 구이, 스테이크, 등심, 안심, 살치살, 차돌박이, 와규구이 (정확한 구이 단어만 매칭!)
+        if (/(스테이크|소고기구이|소고기 구이|한우구이|등심구이|안심구이|살치살|채끝|부채살|토시살|치마살|차돌구이|소갈비구이|갈비살구이|갈비살|꽃등심|la갈비|와규구이|숯불갈비|소구이)/.test(n)) {
+          return pickUnique("images/beef-bbq.jpg", "images/samgyeopsal.jpg");
+        }
+
+        // 11. 삼겹살, 오겹살, 목살구이, 돼지갈비
+        if (/(삼겹살|오겹살|목살구이|삼겹살구이|항정살|가브리살|돼지갈비구이|대패삼겹|숯불삼겹살|돼지고기구이)/.test(n)) {
+          return pickUnique("images/samgyeopsal.jpg", "images/bossam.jpg");
+        }
+
+        // 12. 보쌈, 수육, 족발
+        if (/(보쌈|수육|족발|보쌈정식|마늘보쌈)/.test(n)) {
+          return pickUnique("images/bossam.jpg", "images/jeyuk.jpg");
+        }
+
+        // 13. 곱창, 막창, 대창, 양대창
+        if (/(곱창|막창|대창|양대창)/.test(n)) {
+          return pickUnique("images/samgyeopsal.jpg", "images/beef-bbq.jpg");
+        }
+
+        // 14. 치킨, 닭강정, 가라아게
+        if (/(치킨|닭강정|가라아게|후라이드|양념치킨|통닭)/.test(n)) {
+          return pickUnique("https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=900&q=80", "images/spicy-chicken.jpg");
+        }
+
+        // 15. 닭갈비, 찜닭, 닭볶음탕
+        if (/(닭갈비|찜닭|닭볶음탕|닭도리탕|안동찜닭)/.test(n)) {
+          return pickUnique("images/spicy-chicken.jpg", "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 16. 삼계탕, 백숙, 닭곰탕
+        if (/(삼계탕|백숙|닭백숙|닭곰탕|한방삼계탕)/.test(n)) {
+          return pickUnique("images/seolleongtang.jpg", "images/beef-soup.jpg");
+        }
+
+        // 17. 돈카츠, 돈까스, 카츠, 히레카츠, 로스카츠, 상로스카츠, 특등심
+        if (/(돈카츠|돈까스|돈가스|히레카츠|로스카츠|상로스카츠|특등심|가츠동|카츠|돈가츠)/.test(n)) {
+          return pickUnique("images/tonkatsu.jpg", "images/cheese-tonkatsu.jpg");
+        }
+
+        // 15. 초밥, 스시, 모둠초밥, 후토마키
+        if (/(초밥|스시|모둠초밥|특선초밥|후토마키|마키)/.test(n)) {
+          return pickUnique("https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=900&q=80", "images/salmon-bowl.jpg");
+        }
+
+        // 16. 회, 사시미, 숙성회, 카이센동, 회덮밥
+        if (/(사시미|숙성회|활어회|모둠회|회덮밥|카이센동|물회|오마카세)/.test(n)) {
+          return pickUnique("https://images.unsplash.com/photo-1534482421-64566f976cfa?auto=format&fit=crop&w=900&q=80", "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 17. 연어덮밥, 사케동
+        if (/(연어덮밥|사케동|생연어|연어)/.test(n)) {
+          return pickUnique("images/salmon-bowl.jpg", "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 18. 장어구이, 장어덮밥, 히츠마부시
+        if (/(장어|장어구이|장어덮밥|히츠마부시|우나기)/.test(n)) {
+          return pickUnique("https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=80", "https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 19. 생선구이, 조림
+        if (/(생선구이|고등어구이|갈치구이|삼치구이|갈치조림|고등어조림|생선조림|보리굴비)/.test(n)) {
+          return pickUnique("https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=900&q=80", "https://images.unsplash.com/photo-1534482421-64566f976cfa?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 20. 해물탕, 매운탕, 아구찜, 해물찜
+        if (/(해물탕|매운탕|아구찜|해물찜|꽃게탕|조개구이|조개찜|연포탕|동태탕|알탕)/.test(n)) {
+          return pickUnique("https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=900&q=80", "images/spicy-octopus.jpg");
+        }
+
+        // 21. 제육볶음, 두루치기
+        if (/(제육|두루치기|고추장불고기|돼지불백)/.test(n)) {
+          return pickUnique("images/jeyuk.jpg", "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 22. 낙지, 오징어, 주꾸미
+        if (/(낙지|오징어|주꾸미|쭈꾸미|오삼불고기)/.test(n)) {
+          return pickUnique("images/spicy-octopus.jpg", "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 23. 보쌈, 수육, 족발
+        if (/(보쌈|수육|족발)/.test(n)) {
+          return pickUnique("images/bossam.jpg", "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 24. 김치찌개, 김치찜
+        if (/(김치찌개|김치찜)/.test(n)) {
+          return pickUnique("images/kimchi-stew.jpg", "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 25. 된장찌개, 청국장
+        if (/(된장찌개|청국장|된장국|우렁된장)/.test(n)) {
+          return pickUnique("images/seolleongtang.jpg", "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 26. 순두부찌개
+        if (/순두부/.test(n)) {
+          return pickUnique("images/kimchi-stew.jpg", "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 27. 부대찌개
+        if (/부대찌개/.test(n)) {
+          return pickUnique("images/kimchi-stew.jpg", "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 28. 감자탕, 뼈해장국
+        if (/(감자탕|뼈해장국|뼈다귀)/.test(n)) {
+          return pickUnique("images/beef-soup.jpg", "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 29. 육개장, 소고기국밥, 순대국, 해장국
+        if (/(육개장|소고기국밥|순대국|순댓국|장터국밥|해장국|황태국|콩나물국밥)/.test(n)) {
+          return pickUnique("images/beef-soup.jpg", "https://images.unsplash.com/photo-1547496502-affa22d38842?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 30. 미역국
+        if (/미역국/.test(n)) {
+          return pickUnique("images/miyeokguk.jpg", "images/seolleongtang.jpg");
+        }
+
+        // 31. 비빔밥, 돌솥비빔밥
+        if (/(비빔밥|돌솥)/.test(n)) {
+          return pickUnique("images/bibimbap.jpg", "https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 32. 간장계란밥 (명확한 계란밥일 때만)
+        if (/(간장계란|계란밥|타마고카케)/.test(n)) {
+          return pickUnique("images/egg-rice.jpg", "images/bibimbap.jpg");
+        }
+
+        // 33. 김치볶음밥
+        if (/(김치볶음밥|김치 볶음밥)/.test(n)) {
+          return pickUnique("https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=900&q=80", "images/egg-rice.jpg");
+        }
+
+        // 34. 볶음밥, 필라프, 잡채밥, 리조또, 유산슬
+        if (/(볶음밥|필라프|잡채밥|유산슬|오므라이스|김밥|나시고랭|리조또|도리아)/.test(n)) {
+          return pickUnique("https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=900&q=80", "images/bibimbap.jpg");
+        }
+
+        // 35. 규동, 소고기덮밥, 부타동, 돈부리
+        if (/(규동|소고기덮밥|부타동|오야코동|돈부리)/.test(n)) {
+          return pickUnique("images/gyudon.jpg", "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 36. 마파두부
+        if (/마파두부/.test(n)) {
+          return pickUnique("images/mapo-tofu.jpg", "https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 37. 카레, 커리
+        if (/(카레|커리|하이라이스)/.test(n)) {
+          return pickUnique("https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=900&q=80", "images/gyudon.jpg");
+        }
+
+        // 38. 짜장면, 간짜장
+        if (/(짜장|자장|간짜장|쟁반짜장|유니짜장)/.test(n)) {
+          return pickUnique("https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=900&q=80", "images/jjambbong.jpg");
+        }
+
+        // 39. 짬뽕
+        if (/(짬뽕|백짬뽕|나가사키|차돌짬뽕)/.test(n)) {
+          return pickUnique("images/jjambbong.jpg", "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 40. 탕수육, 꿔바로우, 유린기, 깐풍기
+        if (/(탕수육|꿔바로우|유린기|깐풍기|칠리새우|크림새우)/.test(n)) {
+          return pickUnique("https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=900&q=80", "images/tonkatsu.jpg");
+        }
+
+        // 41. 마라탕, 마라샹궈
+        if (/마라/.test(n)) {
+          return pickUnique("images/malatang.jpg", "https://images.unsplash.com/photo-1582878826629-29b7ad1cdc43?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 42. 라멘, 돈코츠, 탄탄멘
+        if (/(라멘|돈코츠|탄탄|단단면)/.test(n)) {
+          return pickUnique("images/tonkotsu-ramen.jpg", "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 43. 칼국수, 수제비
+        if (/(칼국수|수제비)/.test(n)) {
+          return pickUnique("images/kalguksu.jpg", "https://images.unsplash.com/photo-1618841557871-b4664fbf0cb3?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 44. 우동
+        if (/우동/.test(n)) {
+          return pickUnique("https://images.unsplash.com/photo-1618841557871-b4664fbf0cb3?auto=format&fit=crop&w=900&q=80", "images/janchi-guksu.jpg");
+        }
+
+        // 45. 냉면, 막국수
+        if (/(냉면|막국수|물냉면|비빔냉면)/.test(n)) {
+          return pickUnique("images/bibim-naeng.jpg", "images/kalguksu.jpg");
+        }
+
+        // 46. 비빔국수, 잔치국수, 쫄면
+        if (/(비빔국수|잔치국수|쫄면|온면|비빔면)/.test(n)) {
+          return pickUnique("images/bibim-noodle.jpg", "images/janchi-guksu.jpg");
+        }
+
+        // 47. 쌀국수, 분짜, 팟타이
+        if (/(쌀국수|분짜|팟타이|포)/.test(n)) {
+          return pickUnique("images/pho.jpg", "https://images.unsplash.com/photo-1618841557871-b4664fbf0cb3?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 48. 파스타, 스파게티
+        if (/(파스타|스파게티|투움바|까르보나라|라자냐|알리오)/.test(n)) {
+          return pickUnique("images/carbonara.jpg", "https://images.unsplash.com/photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 49. 피자
+        if (/피자/.test(n)) {
+          return pickUnique("https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80", "images/sandwich.jpg");
+        }
+
+        // 50. 버거, 햄버거
+        if (/(버거|햄버거)/.test(n)) {
+          return pickUnique("images/spicy-burger.jpg", "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 51. 샌드위치, 토스트
+        if (/(샌드위치|토스트|파니니|베이글)/.test(n)) {
+          return pickUnique("images/sandwich.jpg", "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 52. 샐러드, 포케
+        if (/(샐러드|포케|다이어트|보울)/.test(n)) {
+          return pickUnique("https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=900&q=80", "images/sandwich.jpg");
+        }
+
+        // 53. 떡볶이, 분식
+        if (/(떡볶이|라볶이|떡순튀)/.test(n)) {
+          return pickUnique("images/tteokbokki.jpg", "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 54. 만두, 딤섬
+        if (/(만두|딤섬|교자|샤오롱바오)/.test(n)) {
+          return pickUnique("https://images.unsplash.com/photo-1496116218417-1a781b1c416c?auto=format&fit=crop&w=900&q=80", "https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // [오매칭/중복 방지 필터] 만약 넘어온 currentImage가 오매칭된 칼국수나 계란밥인데 실제 메뉴명과 맞지 않는 경우 교정
+        const hasNoodleInName = /(면|국수|우동|라멘|파스타|소바|스파게티|짜장|짬뽕|칼국수|수제비)/.test(n);
+        const isKalguksuImg = currentImage && (currentImage.includes("kalguksu") || currentImage.includes("Bajirak"));
+        if (isKalguksuImg && !hasNoodleInName) {
+          const feastPool = [
+            { image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80", fallbackImage: "https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=900&q=80" },
+            { image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80", fallbackImage: "images/tonkatsu.jpg" },
+            { image: "https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=900&q=80", fallbackImage: "images/bibimbap.jpg" }
+          ];
+          const item = feastPool[Math.abs(itemIndex) % feastPool.length];
+          return pickUnique(item.image, item.fallbackImage);
+        }
+
+        const isEggRiceImg = currentImage && (currentImage.includes("egg-rice") || currentImage.includes("Tamago"));
+        if (isEggRiceImg && !/(계란|달걀|간장)/.test(n)) {
+          return pickUnique("images/bibimbap.jpg", "https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=900&q=80");
+        }
+
+        // 기존 이미지가 있고 위 오매칭 필터를 통과했다면 그 이미지 유지
+        if (currentImage && currentImage.trim().length > 0) {
+          return pickUnique(currentImage, currentFallback || currentImage);
+        }
+
+        // 아무런 이미지 정보가 없을 때: 3개 추천 카드가 절대 동일하지 않도록 itemIndex별 다채로운 미식 사진 제공
+        const distinctDefaults = [
+          { image: "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80", fallbackImage: "https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=900&q=80" },
+          { image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=900&q=80", fallbackImage: "images/tonkatsu.jpg" },
+          { image: "https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=900&q=80", fallbackImage: "images/bibimbap.jpg" }
+        ];
+        const chosen = distinctDefaults[Math.abs(itemIndex) % distinctDefaults.length];
+        return pickUnique(chosen.image, chosen.fallbackImage);
+      }
+
+      // 검색창 입력 이벤트 핸들러 (지우기 버튼 토글)
+      function handleMenuSearchInput(input) {
+        const clearBtn = document.getElementById('btn-clear-search');
+        if (clearBtn) {
+          clearBtn.style.display = (input.value && input.value.trim().length > 0) ? 'flex' : 'none';
+        }
+      }
+
+      // 메뉴 키워드 직접 검색 실행 함수 (항상 TOP 3 추천 메뉴 반환 및 연속 다음 메뉴 탐색)
+      async function executeMenuSearch(isNext = false) {
+        const input = document.getElementById('input-menu-search');
+        if (!input) return;
+        const keyword = input.value.trim() || (isNext ? (appState.lastSearchKeyword || '') : '');
+        if (!keyword) {
+          showToast('🔍 검색할 메뉴명을 입력해주세요! (예: 초밥, 삼겹살, 마라탕, 김치볶음밥)');
+          input.focus();
+          return;
+        }
+
+        appState.isSearchMode = true;
+        appState.lastSearchKeyword = keyword;
+        if (!isNext) {
+          appState.searchExcludedMenus = [];
+        }
+
+        const btnSearch = document.getElementById('btn-menu-search');
+        const originalBtnContent = btnSearch ? btnSearch.innerHTML : '<span>검색</span>';
+        if (btnSearch) {
+          btnSearch.disabled = true;
+          btnSearch.innerHTML = '<span>⏳</span> 검색중...';
+        }
+
+        showToast(`🔍 "${keyword}" 메뉴 및 추천 TOP 3를 탐색 중입니다...`);
+
+        try {
+          const res = await fetch('/api/search-menu', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+              keyword,
+              excludedMenus: appState.searchExcludedMenus
+            })
+          });
+
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.success) {
+              let rawList = [];
+              if (Array.isArray(data.recommendations) && data.recommendations.length > 0) {
+                rawList = data.recommendations;
+              } else if (data.menu) {
+                rawList = [data.menu];
+              }
+
+              // 3개 미만인 경우 로컬 DB에서 같은 카테고리/대중 메뉴로 안전 보충
+              const allLocal = Object.values(MENU_DATABASE).flat();
+              const badges = ['🥇 검색 일치 1위', '🥈 인기 연관 2위', '🥉 별미 추천 3위'];
+
+              while (rawList.length < 3) {
+                const existingNames = rawList.map(r => r.name);
+                const filler = allLocal.find(m => !existingNames.includes(m.name) && !appState.searchExcludedMenus.includes(m.name.toLowerCase())) || allLocal[rawList.length % allLocal.length];
+                rawList.push({
+                  ...filler,
+                  badge: badges[rawList.length] || `${rawList.length + 1}위 추천`,
+                  rank: rawList.length + 1
+                });
+              }
+
+              const usedImagesInSearch = new Set();
+              const processedList = rawList.slice(0, 3).map((item, idx) => {
+                const resolved = clientResolveFoodImage(item.name, item.image, item.fallbackImage, idx, usedImagesInSearch);
+                return {
+                  ...item,
+                  rank: idx + 1,
+                  badge: item.badge || badges[idx],
+                  image: resolved.image || item.image,
+                  fallbackImage: resolved.fallbackImage || item.fallbackImage,
+                  isAi: data.source ? data.source.includes('gemini') : true,
+                  searchKeyword: item.searchKeyword || item.name.replace(/덮밥|정식|세트|찌개|볶음탕/g, '').trim() || item.name
+                };
+              });
+
+              // 제외 목록에 이번 추천 3가지 추가하여 계속 다음 메뉴 탐색 시 중복 방지
+              processedList.forEach(item => {
+                if (!appState.searchExcludedMenus.includes(item.name.toLowerCase())) {
+                  appState.searchExcludedMenus.push(item.name.toLowerCase());
+                }
+              });
+
+              appState.recommendations = processedList;
+              appState.selectedMenuIndex = 0;
+              const chosen = processedList[0];
+              appState.currentMenu = chosen;
+
+              // 히스토리 추가
+              if (!appState.history.includes(chosen.name)) {
+                appState.history.unshift(chosen.name);
+                if (appState.history.length > 8) appState.history.pop();
+                renderHistory();
+              }
+
+              // 후보 카드 3개 렌더링
+              renderCandidatesGrid();
+
+              // 선택된 1위 메뉴 상세 렌더링
+              displayResult(chosen);
+
+              resultWrapper.classList.add('active');
+              resultWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+              showToast(`✨ "${keyword}" 추천 TOP 3 메뉴를 준비했습니다! (오른쪽 화살표로 계속 다음 메뉴 탐색)`);
+              return;
+            }
+          }
+        } catch (err) {
+          console.warn('검색 API 오류, 로컬 검색으로 안전 전환:', err);
+        } finally {
+          if (btnSearch) {
+            btnSearch.disabled = false;
+            btnSearch.innerHTML = originalBtnContent;
+          }
+        }
+
+        // 로컬 데이터베이스 순회 검색 폴백 (3개 보장)
+        const allLocal = Object.values(MENU_DATABASE).flat();
+        const matched = allLocal.filter(m => 
+          !appState.searchExcludedMenus.includes(m.name.toLowerCase()) && (
+            m.name.toLowerCase().includes(keyword.toLowerCase()) || 
+            keyword.toLowerCase().includes(m.name.toLowerCase()) ||
+            (m.category && m.category.toLowerCase().includes(keyword.toLowerCase()))
+          )
+        );
+
+        const matchCat = matched[0]?.category || '한식';
+        const sameCat = allLocal.filter(m => 
+          m.category === matchCat && 
+          !appState.searchExcludedMenus.includes(m.name.toLowerCase()) &&
+          !matched.some(x => x.name === m.name)
+        );
+        const others = allLocal.filter(m => 
+          !appState.searchExcludedMenus.includes(m.name.toLowerCase()) &&
+          !matched.some(x => x.name === m.name) && 
+          !sameCat.some(x => x.name === m.name)
+        );
+
+        const localPool = [...matched, ...sameCat, ...others];
+        const badges = ['🥇 검색 일치 1위', '🥈 인기 연관 2위', '🥉 별미 추천 3위'];
+
+        const processedList = localPool.slice(0, 3).map((item, idx) => {
+          const resolved = clientResolveFoodImage(item.name, item.image, item.fallbackImage, idx);
+          return {
+            ...item,
+            rank: idx + 1,
+            badge: badges[idx],
+            image: resolved.image || item.image,
+            fallbackImage: resolved.fallbackImage || item.fallbackImage,
+            isAi: false,
+            searchKeyword: item.name.replace(/덮밥|정식|세트|찌개|볶음탕/g, '').trim() || item.name
+          };
+        });
+
+        if (processedList.length > 0) {
+          processedList.forEach(item => {
+            if (!appState.searchExcludedMenus.includes(item.name.toLowerCase())) {
+              appState.searchExcludedMenus.push(item.name.toLowerCase());
+            }
+          });
+
+          appState.recommendations = processedList;
+          appState.selectedMenuIndex = 0;
+          const chosen = processedList[0];
+          appState.currentMenu = chosen;
+
+          renderCandidatesGrid();
+          displayResult(chosen);
+
+          resultWrapper.classList.add('active');
+          resultWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          showToast(`✨ "${keyword}" 추천 TOP 3 메뉴를 찾았습니다! (오른쪽 화살표로 계속 다음 메뉴 탐색)`);
+        } else {
+          showToast(`"${keyword}"에 대한 메뉴 정보를 찾지 못했습니다. 다른 키워드로 검색해보세요.`);
+        }
+      }
+
+      // 인기 추천 키워드 칩 클릭 시 즉시 검색
+      function quickSearchKeyword(keyword) {
+        const input = document.getElementById('input-menu-search');
+        if (input) {
+          input.value = keyword;
+          const clearBtn = document.getElementById('btn-clear-search');
+          if (clearBtn) clearBtn.style.display = 'flex';
+          executeMenuSearch();
+        }
+      }
+
+      // 검색창 지우기
+      function clearMenuSearch() {
+        const input = document.getElementById('input-menu-search');
+        if (input) {
+          input.value = '';
+          input.focus();
+        }
+        const clearBtn = document.getElementById('btn-clear-search');
+        if (clearBtn) clearBtn.style.display = 'none';
+      }
+
+      // 7. 추천 알고리즘 및 결과 표시 (Gemini AI 실시간 API 연동 + 이전 추천 제외 + 사용자 취향 우선순위)
       async function getRecommendation(isReroll = false) {
         if (!appState.flavor || !appState.staple) return;
+
+        appState.isSearchMode = false;
 
         // 실시간 처리 중 및 타이머 시작 (지연시간 동안 사용자에게 처리 중 표시)
         startAiProcessing(isReroll);
 
+        // 이전 세트를 히스토리에 보관 (새로운 조건으로 추천 요청 시에도 이전 세트 복원 지원)
+        if (!isReroll && Array.isArray(appState.recommendations) && appState.recommendations.length > 0) {
+          if (!appState.recommendationBatchesHistory) appState.recommendationBatchesHistory = [];
+          appState.recommendationBatchesHistory.push({
+            recommendations: JSON.parse(JSON.stringify(appState.recommendations)),
+            selectedMenuIndex: appState.selectedMenuIndex,
+            sourceKeyword: '',
+            isSearchMode: false
+          });
+          if (appState.recommendationBatchesHistory.length > 10) {
+            appState.recommendationBatchesHistory.shift();
+          }
+        }
+
         let receivedList = null;
+
+        // 이전 추천 메뉴 3가지 및 히스토리를 제외 목록으로 수집하여 중복 방지
+        const prevRecommendedNames = (appState.recommendations || []).map(r => r.name);
 
         try {
           const payload = {
             flavor: appState.flavor,
             staple: appState.staple,
+            cuisine: appState.cuisine || 'all',
             recentHistory: appState.history,
+            excludedMenus: isReroll ? prevRecommendedNames : [],
             situation: appState.situation || ''
           };
 
@@ -3414,9 +5221,10 @@
           if (res.ok) {
             const data = await res.json();
             if (data && data.success) {
+              const usedImagesInRecommend = new Set();
               if (Array.isArray(data.recommendations) && data.recommendations.length > 0) {
-                receivedList = data.recommendations.map(item => {
-                  const resolved = clientResolveFoodImage(item.name, item.image, item.fallbackImage);
+                receivedList = data.recommendations.map((item, idx) => {
+                  const resolved = clientResolveFoodImage(item.name, item.image, item.fallbackImage, idx, usedImagesInRecommend);
                   return {
                     ...item,
                     image: resolved.image || item.image,
@@ -3425,7 +5233,7 @@
                   };
                 });
               } else if (data.menu) {
-                const resolved = clientResolveFoodImage(data.menu.name, data.menu.image, data.menu.fallbackImage);
+                const resolved = clientResolveFoodImage(data.menu.name, data.menu.image, data.menu.fallbackImage, 0, usedImagesInRecommend);
                 receivedList = [{
                   ...data.menu,
                   image: resolved.image || data.menu.image,
@@ -3442,20 +5250,61 @@
         // AI 응답이 없거나 불완전할 때 로컬 데이터베이스 폴백 (3가지 메뉴 보장)
         if (!receivedList || receivedList.length < 3) {
           const key = `${appState.flavor}-${appState.staple}`;
-          const candidatePool = (MENU_DATABASE[key] || MENU_DATABASE['spicy-rice']).slice();
+          const basePool = (MENU_DATABASE[key] || MENU_DATABASE['spicy-rice']).slice();
+          let candidatePool = basePool;
+
+          if (appState.cuisine && appState.cuisine !== 'all') {
+            const cuisineTagMap = {
+              korean: '한식',
+              chinese: '중식',
+              japanese: '일식',
+              western: '양식',
+              snack: '분식'
+            };
+            const targetTag = cuisineTagMap[appState.cuisine];
+            if (targetTag) {
+              const filtered = basePool.filter(item => item.category === targetTag);
+              if (filtered.length > 0) {
+                candidatePool = filtered;
+              }
+            }
+          }
+
+          // 재추천 시 이전 추천 메뉴 및 히스토리 제외하여 완전히 새로운 메뉴 추천
+          if (isReroll && prevRecommendedNames.length > 0) {
+            const excludedSet = new Set([...appState.history, ...prevRecommendedNames]);
+            const freshPool = candidatePool.filter(item => !excludedSet.has(item.name));
+            if (freshPool.length >= 3) {
+              candidatePool = freshPool;
+            }
+          }
+
           // 무작위 셔플
           for (let i = candidatePool.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [candidatePool[i], candidatePool[j]] = [candidatePool[j], candidatePool[i]];
           }
-          const defaultBadges = ['🥇 강력 추천', '🥈 실속 만족', '🥉 별미 선택'];
-          receivedList = candidatePool.slice(0, 3).map((item, idx) => ({
-            ...item,
-            rank: idx + 1,
-            badge: defaultBadges[idx] || `${idx + 1}위 추천`,
-            isAi: false,
-            searchKeyword: item.name.replace(/덮밥|정식|세트|찌개|볶음탕/g, '').trim() || item.name
-          }));
+
+          // 사용자 일반 취향을 반영한 체계적인 3가지 우선순위 뱃지 부여
+          const defaultBadges = [
+            '🥇 강력 추천 (대중 선호 1위)', 
+            '🥈 실속 만족 (가성비 & 든든함)', 
+            '🥉 별미 선택 (색다른 맛과 기분 전환)'
+          ];
+
+          const usedImagesInFallback = new Set();
+          receivedList = candidatePool.slice(0, 3).map((item, idx) => {
+            const resolved = clientResolveFoodImage(item.name, item.image, item.fallbackImage, idx, usedImagesInFallback);
+            return {
+              ...item,
+              rank: idx + 1,
+              badge: defaultBadges[idx] || `${idx + 1}위 추천`,
+              image: resolved.image || item.image,
+              fallbackImage: resolved.fallbackImage || item.fallbackImage,
+              isAi: false,
+              searchKeyword: item.name.replace(/덮밥|정식|세트|찌개|볶음탕/g, '').trim() || item.name
+            };
+          });
         }
 
         await stopAiProcessing(true);
@@ -3506,7 +5355,7 @@
         }
 
         if (resultImage) {
-          const resolved = clientResolveFoodImage(menu.name, menu.image, menu.fallbackImage);
+          const resolved = clientResolveFoodImage(menu.name, menu.image, menu.fallbackImage, appState.selectedCandidateIndex || 0);
           const resolvedImg = resolved.image || menu.image;
           const resolvedFallback = resolved.fallbackImage || menu.fallbackImage;
           let hasTriedFallback = false;
@@ -3517,23 +5366,16 @@
               return;
             }
             this.onerror = null;
-            // 사용자 선택 조건(담백 vs 매콤, 밥 vs 면)에 정확히 부합하는 안전 로컬 이미지
-            if (appState.flavor === 'mild') {
-              this.src = (appState.staple === 'rice') ? 'images/galbi-soup.jpg' : 'images/kalguksu.jpg';
-            } else {
-              this.src = (appState.staple === 'rice') ? 'images/jeyuk.jpg' : 'images/jjambbong.jpg';
-            }
+            this.src = "images/bibimbap.jpg";
           };
-          const initialSrc = resolvedImg || (appState.flavor === 'mild' 
-            ? (appState.staple === 'rice' ? 'images/galbi-soup.jpg' : 'images/kalguksu.jpg') 
-            : (appState.staple === 'rice' ? 'images/jeyuk.jpg' : 'images/jjambbong.jpg'));
+          const initialSrc = resolvedImg || resolvedFallback || "images/bibimbap.jpg";
           resultImage.src = initialSrc;
           resultImage.alt = `${menu.name} 실제 사진`;
         }
-        resultEmoji.textContent = menu.emoji || '🍽️';
-        resultName.textContent = menu.name;
-        resultReason.textContent = menu.reason;
-        resultTipText.textContent = menu.tip;
+        if (resultEmoji) resultEmoji.textContent = menu.emoji || '🍽️';
+        if (resultName) resultName.textContent = menu.name;
+        if (resultReason) resultReason.textContent = menu.reason;
+        if (resultTipText) resultTipText.textContent = menu.tip;
 
         // 태그 라벨 설정
         if (appState.flavor === 'spicy') {
@@ -3593,11 +5435,14 @@
       function quickRandomRecommendation() {
         const flavors = ['spicy', 'mild'];
         const staples = ['rice', 'noodle'];
+        const cuisines = ['all', 'korean', 'chinese', 'japanese', 'western', 'snack'];
         const chosenFlavor = flavors[Math.floor(Math.random() * flavors.length)];
         const chosenStaple = staples[Math.floor(Math.random() * staples.length)];
+        const chosenCuisine = cuisines[Math.floor(Math.random() * cuisines.length)];
 
         handleFlavorSelect(chosenFlavor);
         handleStapleSelect(chosenStaple);
+        handleCuisineSelect(chosenCuisine);
         getRecommendation(false);
 
         showToast('🎲 Gemini AI가 새로운 메뉴와 맛집을 바로 찾았습니다!');
@@ -3607,6 +5452,7 @@
       function resetAll() {
         appState.flavor = null;
         appState.staple = null;
+        appState.cuisine = 'all';
         appState.situation = null;
         appState.recommendations = [];
         appState.selectedMenuIndex = 0;
@@ -3624,10 +5470,12 @@
         btnStapleNoodle.classList.remove('selected-noodle');
         btnStapleNoodle.setAttribute('aria-pressed', 'false');
 
+        handleCuisineSelect('all');
+
         document.querySelectorAll('.mood-chip').forEach(btn => btn.classList.remove('active'));
-        if (step3Status) {
-          step3Status.textContent = '선택 안 함 (전체 추천)';
-          step3Status.style.color = 'var(--text-muted)';
+        if (step4Status) {
+          step4Status.textContent = '선택 안 함 (전체 추천)';
+          step4Status.style.color = 'var(--text-muted)';
         }
 
         step1Status.textContent = '필수 선택';
@@ -4601,10 +6449,26 @@
         searchRestaurants('점심 인기', placesState.currentLocation, true);
       }
 
-      // ESC 키로 모달 닫기
+      // 키보드 단축키: ESC로 모달 닫기, 좌/우 화살표 키로 추천 메뉴 연속 탐색
       window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
           closePlaceModal();
+          closeFoodImageLightbox();
+          return;
+        }
+
+        // 입력 필드에 포커스되어 타이핑 중일 때는 화살표 메뉴 탐색 방지
+        const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+        if (activeTag === 'input' || activeTag === 'textarea' || (document.activeElement && document.activeElement.isContentEditable)) {
+          return;
+        }
+
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          showNextMenuSequence();
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          showPrevMenuSequence();
         }
       });
 
