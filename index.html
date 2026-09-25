@@ -22,6 +22,19 @@
     <script>
       (g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
       ({key: (window.__GOOGLE_MAPS_API_KEY__ || 'AIzaSyCJxLbuyGJKyBfTLCLA-MMmmGwSzQrfQ6E'), v: "weekly", language: "ko", region: "KR"});
+
+      // Tier 1 Google Maps Platform Quota Defense
+      window.gm_authFailure = () => {
+        window.dispatchEvent(new CustomEvent('gmp-quota-exceeded'));
+      };
+      const origConsoleError = console.error;
+      console.error = (...args) => {
+        origConsoleError.apply(console, args);
+        const msg = args.map(a => String(a)).join(' ');
+        if (msg.includes('OverQuotaMapError') || msg.includes('QuotaExceededError')) {
+          window.dispatchEvent(new CustomEvent('gmp-quota-exceeded'));
+        }
+      };
     </script>
     <style>
       :root {
@@ -2306,6 +2319,138 @@
         border: 1px solid rgba(0,0,0,0.08);
       }
 
+      /* Places Map Standby (할당량 절약 모드 대기 UI) */
+      .places-map-standby {
+        width: 100%;
+        height: 100%;
+        min-height: 360px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 24px;
+        background: radial-gradient(circle at 50% 30%, #f8fafc 0%, #edf2f7 100%);
+        border-radius: var(--radius-md);
+        box-sizing: border-box;
+      }
+
+      .standby-icon-wrap {
+        position: relative;
+        width: 64px;
+        height: 64px;
+        background: #ffffff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+        margin-bottom: 12px;
+      }
+
+      .standby-map-icon {
+        font-size: 30px;
+      }
+
+      .standby-pin-badge {
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        font-size: 16px;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+      }
+
+      .standby-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        background: #ecfdf5;
+        color: #047857;
+        border: 1px solid #a7f3d0;
+        font-size: 12px;
+        font-weight: 700;
+        padding: 3px 10px;
+        border-radius: 9999px;
+        margin-bottom: 10px;
+      }
+
+      .standby-title {
+        font-size: 16px;
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 6px;
+      }
+
+      .standby-desc {
+        font-size: 13px;
+        color: #64748b;
+        line-height: 1.5;
+        margin-bottom: 18px;
+        max-width: 320px;
+      }
+
+      .btn-activate-standby {
+        background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+        color: #ffffff;
+        border: none;
+        border-radius: 9999px;
+        padding: 11px 22px;
+        font-size: 14px;
+        font-weight: 800;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35);
+        transition: all 0.18s ease;
+      }
+
+      .btn-activate-standby:hover {
+        background: linear-gradient(135deg, #c2410c 0%, #ea580c 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(234, 88, 12, 0.45);
+      }
+
+      .btn-activate-standby:active {
+        transform: translateY(0);
+      }
+
+      .places-list-standby {
+        padding: 36px 20px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: #ffffff;
+        border: 1px dashed var(--border-color);
+        border-radius: var(--radius-md);
+        gap: 8px;
+        min-height: 240px;
+      }
+
+      .list-standby-icon {
+        font-size: 34px;
+      }
+
+      .list-standby-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: #1e293b;
+      }
+
+      .list-standby-desc {
+        font-size: 13px;
+        color: #64748b;
+        line-height: 1.5;
+      }
+
+      .list-standby-hint {
+        font-size: 11px;
+        color: #94a3b8;
+        margin-top: 6px;
+      }
+
       /* Custom Map Markers & Leaflet Popups */
       .custom-map-pin {
         display: flex !important;
@@ -3309,7 +3454,7 @@
               type="button"
               class="btn-find-places"
               id="btn-find-places"
-              onclick="scrollToPlacesCard()"
+              onclick="activatePlacesMap()"
             >
               <span>📍</span> <span id="btn-find-places-label">근처 맛집 지도 & 식당 보기</span>
             </button>
@@ -3339,14 +3484,14 @@
           </div>
           <div class="places-menu-badge" id="places-target-badge">
             <span id="places-target-emoji">🍽️</span>
-            <span id="places-target-menu">오늘의 인기 점심 맛집</span>
+            <span id="places-target-menu">오늘의 인기 점심 맛집 (대기)</span>
           </div>
         </div>
 
-        <!-- Helpful live guidance notice -->
+        <!-- Helpful live guidance notice (할당량 절약 모드 안내) -->
         <div class="places-intro-notice" id="places-intro-notice">
-          <span>💡</span>
-          <span>위의 맛/식사를 선택하여 <strong>[메뉴 추천받기]</strong>를 누르시면, 선택한 메뉴의 전문 식당으로 지도가 실시간 자동 변경됩니다!</span>
+          <span>⚡</span>
+          <span><strong>구글 맵스 할당량 절약 모드:</strong> 메뉴를 추천받거나 선택하신 후 <strong>[내 주변 맛집 지도]</strong> 버튼을 누르셨을 때만 구글 지도 및 주변 식당이 실시간으로 로드됩니다.</span>
         </div>
 
         <!-- Location Control Bar -->
@@ -3405,15 +3550,40 @@
         <div class="places-content-layout layout-both" id="places-content-layout">
           <!-- Interactive Map Wrapper -->
           <div class="places-map-wrapper" id="places-map-wrapper">
-            <div id="places-map"></div>
-            <div class="places-map-overlay-msg" id="places-map-status">
+            <!-- Standby Overlay (온디맨드 절약 대기) -->
+            <div id="places-map-standby" class="places-map-standby">
+              <div class="standby-icon-wrap">
+                <span class="standby-map-icon">🗺️</span>
+                <span class="standby-pin-badge">📍</span>
+              </div>
+              <div class="standby-badge">⚡ 구글 맵스 할당량 절약 모드</div>
+              <h3 class="standby-title" id="standby-title">메뉴 선택 후 맛집 지도가 가동됩니다</h3>
+              <p class="standby-desc" id="standby-desc">
+                불필요한 API 호출 및 데이터 소모를 방지하기 위해<br />
+                <strong>[내 주변 맛집 지도]</strong> 버튼을 클릭했을 때만 지도가 로드됩니다.
+              </p>
+              <button type="button" class="btn-activate-standby" id="btn-activate-standby" onclick="activatePlacesMap()">
+                <span>🗺️</span> <span id="standby-btn-text">내 주변 맛집 지도 열기</span>
+              </button>
+            </div>
+            <div id="places-map" style="display: none;"></div>
+            <div class="places-map-overlay-msg" id="places-map-status" style="display: none;">
               🗺️ 지도 로딩 완료 (주변 식당 5곳)
             </div>
           </div>
 
           <!-- Restaurant Cards List -->
           <div class="places-list-container" id="places-list-container">
-            <!-- Dynamically populated restaurant cards -->
+            <div class="places-list-standby" id="places-list-standby">
+              <div class="list-standby-icon">🍽️</div>
+              <div class="list-standby-title" id="list-standby-title">식당 목록 대기 중</div>
+              <p class="list-standby-desc" id="list-standby-desc">
+                원하는 메뉴를 선택하신 후 <strong>'내 주변 맛집 지도'</strong>를 누르시면 엄선된 주변 식당 정보가 여기에 표시됩니다.
+              </p>
+              <div class="list-standby-hint">
+                💡 네이버 지도, 카카오맵 바로가기는 아래에서 언제든 즉시 이용하실 수 있습니다.
+              </div>
+            </div>
           </div>
         </div>
 
@@ -4202,8 +4372,22 @@
         console.warn('초기 대표 이미지 무작위 설정 오류:', e);
       }
 
-      // 3. 기능: 맛 선택
+      // 3. 기능: 맛 선택 (선택된 항목 재클릭 시 선택 취소/해제)
       function handleFlavorSelect(type) {
+        // 이미 선택된 맛을 다시 클릭한 경우 -> 선택 취소 (토글)
+        if (appState.flavor === type) {
+          appState.flavor = null;
+          btnFlavorSpicy.classList.remove('selected-spicy');
+          btnFlavorSpicy.setAttribute('aria-pressed', 'false');
+          btnFlavorMild.classList.remove('selected-mild');
+          btnFlavorMild.setAttribute('aria-pressed', 'false');
+          step1Status.textContent = '필수 선택';
+          step1Status.style.color = 'var(--text-muted)';
+          showToast('맛 선택이 취소되었습니다.');
+          checkReadyToRecommend();
+          return;
+        }
+
         appState.flavor = type;
 
         // 클릭할 때마다 해당 맛 영역의 대표 이미지를 다른 메뉴 사진으로 변경!
@@ -4231,8 +4415,22 @@
       const selectFlavor = handleFlavorSelect;
       window.handleFlavorSelect = handleFlavorSelect;
 
-      // 4. 기능: 주식 선택
+      // 4. 기능: 주식 선택 (선택된 항목 재클릭 시 선택 취소/해제)
       function handleStapleSelect(type) {
+        // 이미 선택된 식사를 다시 클릭한 경우 -> 선택 취소 (토글)
+        if (appState.staple === type) {
+          appState.staple = null;
+          btnStapleRice.classList.remove('selected-rice');
+          btnStapleRice.setAttribute('aria-pressed', 'false');
+          btnStapleNoodle.classList.remove('selected-noodle');
+          btnStapleNoodle.setAttribute('aria-pressed', 'false');
+          step2Status.textContent = '필수 선택';
+          step2Status.style.color = 'var(--text-muted)';
+          showToast('식사 종류 선택이 취소되었습니다.');
+          checkReadyToRecommend();
+          return;
+        }
+
         appState.staple = type;
 
         // 클릭할 때마다 해당 식사 영역의 대표 이미지를 다른 메뉴 사진으로 변경!
@@ -4609,10 +4807,7 @@
       function findPlacesFromLightbox() {
         if (!currentLightboxItem) return;
         selectFromLightbox();
-        const placesSection = document.getElementById('places-section');
-        if (placesSection) {
-          placesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        activatePlacesMap();
       }
 
       // TOP 3 후보 카드 렌더링 (동시 3개 메뉴 비교 & 선택, 더블클릭 시 확대)
@@ -5696,7 +5891,7 @@
 
         const btnFindPlacesLabel = document.getElementById('btn-find-places-label');
         if (btnFindPlacesLabel) {
-          btnFindPlacesLabel.textContent = `근처 ${menu.name} 맛집 지도 & 식당 보기`;
+          btnFindPlacesLabel.textContent = `📍 근처 '${menu.name}' 맛집 지도 & 식당 보기 (지도 가동)`;
         }
 
         if (resultImage) {
@@ -5765,9 +5960,9 @@
           resultCard.classList.remove('shuffling');
         }, 150);
 
-        // 추천 메뉴 맛집 탐색 연동 (최적화 검색 키워드 사용)
+        // 추천 메뉴 맛집 탐색 대기 준비 (버튼 클릭 시에만 실제 구글 맵스를 가동하여 할당량 낭비 100% 방지)
         const searchKeyword = menu.searchKeyword || menu.name;
-        loadNearbyRestaurantsForMenu(searchKeyword, menu.emoji);
+        prepareNearbyRestaurantsForMenu(searchKeyword, menu.emoji);
       }
 
       // 9. 다른 메뉴 추천받기 (같은 조건으로 재추천, 지연시간 동안 실시간 타이머 작동)
@@ -5910,7 +6105,9 @@
         activeView: 'both', // 'both' | 'map' | 'list'
         selectedPlace: null,
         selectedPlaceId: null,
-        isLoading: false
+        isLoading: false,
+        isMapActivated: false, // 사용자가 [내 주변 맛집 지도] 버튼을 눌렀을 때만 true 전환
+        lastLoadedMenu: ''
       };
 
       // DOM 요소 캐시
@@ -6202,21 +6399,120 @@
       };
 
       // -------------------------------------------------------------------------
-      // 식당 검색 및 데이터 로직
+      // 식당 검색 및 데이터 로직 (온디맨드 절약형: 버튼 선택 시에만 지도 가동)
       // -------------------------------------------------------------------------
 
-      // 메뉴 추천 시 맛집 탐색 시작
-      function loadNearbyRestaurantsForMenu(menuName, emoji) {
+      // 대기 UI 렌더링 (할당량 절약 모드)
+      function renderStandbyMapUI() {
+        const standbyEl = document.getElementById('places-map-standby');
+        const mapEl = document.getElementById('places-map');
+        const statusEl = document.getElementById('places-map-status');
+        if (standbyEl) standbyEl.style.display = 'flex';
+        if (mapEl) mapEl.style.display = 'none';
+        if (statusEl) statusEl.style.display = 'none';
+
+        const currentMenuName = placesState.currentMenuName || (appState.currentMenu && appState.currentMenu.name);
+        const standbyTitle = document.getElementById('standby-title');
+        const standbyBtnText = document.getElementById('standby-btn-text');
+        const listStandbyTitle = document.getElementById('list-standby-title');
+
+        if (currentMenuName) {
+          if (standbyTitle) standbyTitle.textContent = `'${currentMenuName}' 맛집 지도 가동 준비 완료`;
+          if (standbyBtnText) standbyBtnText.textContent = `'${currentMenuName}' 주변 맛집 지도 열기`;
+          if (listStandbyTitle) listStandbyTitle.textContent = `'${currentMenuName}' 식당 목록 대기 중`;
+        } else {
+          if (standbyTitle) standbyTitle.textContent = '메뉴 선택 후 맛집 지도가 가동됩니다';
+          if (standbyBtnText) standbyBtnText.textContent = '내 주변 맛집 지도 열기';
+          if (listStandbyTitle) listStandbyTitle.textContent = '식당 목록 대기 중';
+        }
+
+        if (placesListContainer && !placesState.isMapActivated) {
+          placesListContainer.innerHTML = `
+            <div class="places-list-standby" id="places-list-standby">
+              <div class="list-standby-icon">🍽️</div>
+              <div class="list-standby-title" id="list-standby-title">${currentMenuName ? `'${currentMenuName}' 식당 목록 대기 중` : '식당 목록 대기 중'}</div>
+              <p class="list-standby-desc" id="list-standby-desc">
+                원하는 메뉴를 선택하신 후 <strong>'내 주변 맛집 지도'</strong>를 누르시면 엄선된 주변 식당 정보가 여기에 표시됩니다.
+              </p>
+              <div class="list-standby-hint">
+                💡 네이버 지도, 카카오맵 바로가기는 아래에서 언제든 즉시 이용하실 수 있습니다.
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      // 메뉴 추천 시 맛집 탐색 정보 대기 준비 (실제 호출은 버튼 클릭 시만 실행)
+      function prepareNearbyRestaurantsForMenu(menuName, emoji) {
         placesState.currentMenuName = menuName;
         placesState.currentMenuEmoji = emoji || '🍽️';
 
-        if (placesTargetMenu) placesTargetMenu.textContent = `${menuName} 맛집`;
+        if (placesTargetMenu) {
+          placesTargetMenu.textContent = placesState.isMapActivated ? `${menuName} 맛집` : `${menuName} 맛집 (대기)`;
+        }
         if (placesTargetEmoji) placesTargetEmoji.textContent = emoji || '🍽️';
-        if (placesSectionTitle) placesSectionTitle.textContent = `${placesState.locationName} 근처 '${menuName}' 맛집`;
-        if (placesSectionSubtitle) placesSectionSubtitle.textContent = `선택하신 '${menuName}'을(를) 맛있게 즐길 수 있는 추천 식당입니다.`;
+        if (placesSectionTitle) placesSectionTitle.textContent = `${placesState.locationName} 근처 '${menuName}' 맛집 지도`;
+        if (placesSectionSubtitle) {
+          placesSectionSubtitle.textContent = placesState.isMapActivated 
+            ? `선택하신 '${menuName}'을(를) 맛있게 즐길 수 있는 추천 식당입니다.`
+            : `선택하신 '${menuName}' 맛집을 확인하시려면 아래 [내 주변 맛집 지도] 버튼을 눌러주세요.`;
+        }
+
+        const standbyTitle = document.getElementById('standby-title');
+        if (standbyTitle) standbyTitle.textContent = `'${menuName}' 맛집 지도 가동 준비 완료`;
+        const standbyBtnText = document.getElementById('standby-btn-text');
+        if (standbyBtnText) standbyBtnText.textContent = `'${menuName}' 주변 맛집 지도 열기`;
 
         renderExternalSearchLinks(menuName, placesState.locationName);
-        searchRestaurants(menuName, placesState.currentLocation);
+
+        // 이미 지도가 열려 있는 상태에서 다른 메뉴 카드로 변경한 경우, 불필요한 자동 호출 대신 지도 상태창에 안내 표시
+        if (placesState.isMapActivated && placesState.lastLoadedMenu !== menuName) {
+          if (placesMapStatus) {
+            placesMapStatus.style.display = 'block';
+            placesMapStatus.innerHTML = `💡 '${menuName}'(으)로 메뉴 변경됨 · <a href="javascript:void(0)" onclick="activatePlacesMap()" style="color:#ea580c; font-weight:800; text-decoration:underline;">[이 메뉴로 지도 갱신]</a>`;
+          }
+        } else if (!placesState.isMapActivated) {
+          renderStandbyMapUI();
+        }
+      }
+
+      // 구버전 호환용 래퍼
+      function loadNearbyRestaurantsForMenu(menuName, emoji) {
+        prepareNearbyRestaurantsForMenu(menuName, emoji);
+      }
+
+      // [핵심] 메뉴 선택 후 '내 주변 맛집 지도' 버튼을 선택했을 때만 구글 맵스 및 식당 탐색 가동
+      async function activatePlacesMap() {
+        const currentMenu = appState.currentMenu;
+        const menuName = (currentMenu && currentMenu.name) || placesState.currentMenuName;
+
+        if (!menuName) {
+          showToast('🍽️ 먼저 위에서 원하는 메뉴를 추천받거나 선택해주세요!');
+          const stepCard = document.getElementById('step-flavor-card');
+          if (stepCard) stepCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          return;
+        }
+
+        const searchKeyword = (currentMenu && currentMenu.searchKeyword) || menuName;
+        placesState.currentMenuName = searchKeyword;
+        placesState.isMapActivated = true;
+        placesState.lastLoadedMenu = searchKeyword;
+
+        // 대기 UI 숨기고 실제 지도 표시
+        const standbyEl = document.getElementById('places-map-standby');
+        const mapEl = document.getElementById('places-map');
+        if (standbyEl) standbyEl.style.display = 'none';
+        if (mapEl) mapEl.style.display = 'block';
+
+        if (placesTargetMenu) placesTargetMenu.textContent = `${searchKeyword} 맛집`;
+        if (placesSectionTitle) placesSectionTitle.textContent = `${placesState.locationName} 근처 '${searchKeyword}' 맛집 지도`;
+        if (placesSectionSubtitle) placesSectionSubtitle.textContent = `선택하신 '${searchKeyword}'을(를) 맛있게 즐길 수 있는 추천 식당입니다.`;
+
+        // 지도 카드로 스크롤 이동
+        scrollToPlacesCard();
+
+        showToast(`🗺️ '${searchKeyword}' 주변 맛집 지도를 불러옵니다...`);
+        await searchRestaurants(searchKeyword, placesState.currentLocation);
       }
 
       // 스크롤 이동
@@ -6503,8 +6799,16 @@
         placesState.locationName = name;
         if (currentLocationText) currentLocationText.textContent = name;
 
-        const targetMenu = placesState.currentMenuName || '점심 인기';
-        loadNearbyRestaurantsForMenu(targetMenu, placesState.currentMenuEmoji);
+        const targetMenu = placesState.currentMenuName || (appState.currentMenu && appState.currentMenu.name) || '';
+        renderExternalSearchLinks(targetMenu || '점심 맛집', placesState.locationName);
+
+        if (placesState.isMapActivated && targetMenu) {
+          showToast(`📍 '${name}' 지역 '${targetMenu}' 맛집을 검색합니다.`);
+          searchRestaurants(targetMenu, placesState.currentLocation);
+        } else {
+          showToast(`📍 '${name}' 지역으로 설정되었습니다. [내 주변 맛집 지도]를 누르면 이 위치로 열립니다.`);
+          prepareNearbyRestaurantsForMenu(targetMenu || '점심 맛집', placesState.currentMenuEmoji);
+        }
       }
 
       // 브라우저 Geolocation API로 사용자 현재 위치 획득
@@ -6529,15 +6833,22 @@
             if (currentLocationText) currentLocationText.textContent = '내 현재 GPS 위치';
 
             document.querySelectorAll('.loc-chip').forEach(c => c.classList.remove('active'));
-            showToast('🎯 현재 위치를 반영하여 맛집을 탐색합니다!');
 
             if (btnGps) {
               btnGps.disabled = false;
               btnGps.innerHTML = '<span>🎯</span> 내 현재 GPS 위치로 찾기';
             }
 
-            const targetMenu = placesState.currentMenuName || '점심 인기';
-            loadNearbyRestaurantsForMenu(targetMenu, placesState.currentMenuEmoji);
+            const targetMenu = placesState.currentMenuName || (appState.currentMenu && appState.currentMenu.name) || '';
+            renderExternalSearchLinks(targetMenu || '점심 맛집', placesState.locationName);
+
+            if (placesState.isMapActivated && targetMenu) {
+              showToast('🎯 현재 위치를 반영하여 맛집을 탐색합니다!');
+              searchRestaurants(targetMenu, placesState.currentLocation);
+            } else {
+              showToast('🎯 현재 위치가 설정되었습니다. [내 주변 맛집 지도]를 누르면 이 위치로 열립니다.');
+              prepareNearbyRestaurantsForMenu(targetMenu || '점심 맛집', placesState.currentMenuEmoji);
+            }
           },
           (err) => {
             console.warn('GPS 위치 획득 실패:', err);
@@ -6561,69 +6872,62 @@
           return;
         }
 
-        let found = false;
-        try {
-          if (typeof google !== 'undefined' && google.maps && typeof google.maps.importLibrary === 'function') {
-            const { Geocoder } = await google.maps.importLibrary('geocoding');
-            const geocoder = new Geocoder();
-            geocoder.geocode({ address: query, region: 'kr' }, (results, status) => {
-              if (status === 'OK' && results && results[0]) {
-                const loc = results[0].geometry.location;
-                const lat = loc.lat();
-                const lng = loc.lng();
-                placesState.currentLocation = { lat, lng };
-                placesState.locationName = query;
-                if (currentLocationText) currentLocationText.textContent = query;
-                document.querySelectorAll('.loc-chip').forEach(c => c.classList.remove('active'));
-                input.value = '';
-                showToast(`'${query}' 지역으로 이동합니다.`);
-                const targetMenu = placesState.currentMenuName || '점심 인기';
-                loadNearbyRestaurantsForMenu(targetMenu, placesState.currentMenuEmoji);
-                found = true;
-              }
-            });
+        const regionalPresets = {
+          '시청': { lat: 37.5665, lng: 126.9780 },
+          '광화문': { lat: 37.5714, lng: 126.9768 },
+          '종로': { lat: 37.5704, lng: 126.9922 },
+          '종로3가': { lat: 37.5704, lng: 126.9922 },
+          '강남': { lat: 37.4979, lng: 127.0276 },
+          '강남역': { lat: 37.4979, lng: 127.0276 },
+          '역삼': { lat: 37.5006, lng: 127.0365 },
+          '선릉': { lat: 37.5045, lng: 127.0490 },
+          '삼성': { lat: 37.5088, lng: 127.0631 },
+          '홍대': { lat: 37.5568, lng: 126.9238 },
+          '신촌': { lat: 37.5552, lng: 126.9368 },
+          '여의도': { lat: 37.5218, lng: 126.9242 },
+          '성수': { lat: 37.5445, lng: 127.0560 },
+          '건대': { lat: 37.5404, lng: 127.0692 },
+          '잠실': { lat: 37.5133, lng: 127.1001 },
+          '잠실역': { lat: 37.5133, lng: 127.1001 },
+          '송파': { lat: 37.5048, lng: 127.1145 },
+          '판교': { lat: 37.3948, lng: 127.1112 },
+          '분당': { lat: 37.3827, lng: 127.1189 },
+          '서현': { lat: 37.3850, lng: 127.1235 },
+          '수원': { lat: 37.2636, lng: 127.0286 },
+          '인천': { lat: 37.4563, lng: 126.7052 },
+          '대전': { lat: 36.3504, lng: 127.3845 },
+          '대구': { lat: 35.8714, lng: 128.6014 },
+          '부산': { lat: 35.1580, lng: 129.0594 },
+          '서면': { lat: 35.1580, lng: 129.0594 },
+          '해운대': { lat: 35.1631, lng: 129.1636 },
+          '광주': { lat: 35.1595, lng: 126.8526 }
+        };
+
+        let targetCoords = null;
+        for (const [key, coords] of Object.entries(regionalPresets)) {
+          if (query.includes(key)) {
+            targetCoords = coords;
+            break;
           }
-        } catch (e) {
-          console.warn('Google Geocoder 에러:', e);
         }
 
-        if (!found) {
-          // 알려진 주요 지역 대조 폴백
-          const regionalPresets = {
-            '종로': { lat: 37.5704, lng: 126.9922 },
-            '종로3가': { lat: 37.5704, lng: 126.9922 },
-            '잠실': { lat: 37.5133, lng: 127.1001 },
-            '잠실역': { lat: 37.5133, lng: 127.1001 },
-            '수원': { lat: 37.2636, lng: 127.0286 },
-            '수원역': { lat: 37.2636, lng: 127.0286 },
-            '분당': { lat: 37.3827, lng: 127.1189 },
-            '서현': { lat: 37.3850, lng: 127.1235 },
-            '대전': { lat: 36.3504, lng: 127.3845 },
-            '대구': { lat: 35.8714, lng: 128.6014 },
-            '광주': { lat: 35.1595, lng: 126.8526 },
-            '인천': { lat: 37.4563, lng: 126.7052 }
-          };
+        if (targetCoords) {
+          placesState.currentLocation = targetCoords;
+        }
+        placesState.locationName = query;
+        if (currentLocationText) currentLocationText.textContent = query;
+        document.querySelectorAll('.loc-chip').forEach(c => c.classList.remove('active'));
+        input.value = '';
 
-          for (const [key, coords] of Object.entries(regionalPresets)) {
-            if (query.includes(key)) {
-              placesState.currentLocation = coords;
-              placesState.locationName = query;
-              if (currentLocationText) currentLocationText.textContent = query;
-              document.querySelectorAll('.loc-chip').forEach(c => c.classList.remove('active'));
-              input.value = '';
-              showToast(`'${query}' 지역으로 이동합니다.`);
-              const targetMenu = placesState.currentMenuName || '점심 인기';
-              loadNearbyRestaurantsForMenu(targetMenu, placesState.currentMenuEmoji);
-              return;
-            }
-          }
+        const targetMenu = placesState.currentMenuName || (appState.currentMenu && appState.currentMenu.name) || '';
+        renderExternalSearchLinks(targetMenu || '점심 맛집', placesState.locationName);
 
-          showToast(`'${query}' 지역으로 탐색합니다.`);
-          placesState.locationName = query;
-          if (currentLocationText) currentLocationText.textContent = query;
-          input.value = '';
-          const targetMenu = placesState.currentMenuName || '점심 인기';
-          loadNearbyRestaurantsForMenu(targetMenu, placesState.currentMenuEmoji);
+        if (placesState.isMapActivated && targetMenu) {
+          showToast(`📍 '${query}' 지역 '${targetMenu}' 맛집으로 이동합니다.`);
+          searchRestaurants(targetMenu, placesState.currentLocation);
+        } else {
+          showToast(`📍 '${query}' 지역으로 설정되었습니다. [내 주변 맛집 지도]를 누르면 이 위치로 열립니다.`);
+          prepareNearbyRestaurantsForMenu(targetMenu || '점심 맛집', placesState.currentMenuEmoji);
         }
       }
 
@@ -6779,19 +7083,21 @@
           .replace(/'/g, '&#039;');
       }
 
-      // 맛집 탐색기 초기화 (기본 인기 점심 맛집으로 복귀)
+      // 맛집 탐색기 초기화 (할당량 절약 대기 모드로 복귀)
       function resetPlacesExplorer() {
         placesState.currentMenuName = '';
         placesState.selectedPlaceId = null;
+        placesState.isMapActivated = false;
+        placesState.lastLoadedMenu = '';
         if (placesTargetEmoji) placesTargetEmoji.textContent = '🍽️';
-        if (placesTargetMenu) placesTargetMenu.textContent = '오늘의 인기 점심 맛집';
+        if (placesTargetMenu) placesTargetMenu.textContent = '오늘의 인기 점심 맛집 (대기)';
         if (placesSectionTitle) {
           placesSectionTitle.textContent = '내 주변 맛집 지도';
         }
         if (placesSectionSubtitle) {
-          placesSectionSubtitle.textContent = '추천받은 메뉴를 파는 근처 식당을 지도에서 바로 확인해보세요!';
+          placesSectionSubtitle.textContent = '메뉴를 추천받고 [내 주변 맛집 지도 보기]를 누르면 실시간 지도가 가동됩니다.';
         }
-        searchRestaurants('점심 인기', placesState.currentLocation, true);
+        renderStandbyMapUI();
       }
 
       // 키보드 단축키: ESC로 모달 닫기, 좌/우 화살표 키로 추천 메뉴 연속 탐색
@@ -6823,7 +7129,7 @@
       });
 
       // -------------------------------------------------------------------------
-      // 최초 실행: 페이지 로드 즉시 지도 및 주변 맛집 자동 로딩
+      // 최초 실행: 페이지 로드 시 지연 로딩 준비 (버튼 클릭 전까지 API 호출 0건)
       // -------------------------------------------------------------------------
       function initPlacesExplorer() {
         try {
@@ -6832,7 +7138,7 @@
           // ignore
         }
         renderExternalSearchLinks('점심 맛집', placesState.locationName);
-        searchRestaurants('점심 인기', placesState.currentLocation, true);
+        renderStandbyMapUI();
       }
 
       if (document.readyState === 'loading') {
