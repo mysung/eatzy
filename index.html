@@ -370,7 +370,7 @@
 
       .option-thumb-wrap {
         width: 100%;
-        height: 64px;
+        height: 68px;
         border-radius: 8px;
         overflow: hidden;
         position: relative;
@@ -383,7 +383,12 @@
         height: 100%;
         object-fit: cover;
         display: block;
-        transition: transform 0.3s ease;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.22s ease;
+      }
+
+      .option-thumb-img.img-switching {
+        opacity: 0.2;
+        transform: scale(0.95);
       }
 
       .option-btn:hover .option-thumb-img {
@@ -394,11 +399,63 @@
         position: absolute;
         top: 4px;
         left: 4px;
-        background-color: rgba(15, 23, 42, 0.7);
+        background-color: rgba(15, 23, 42, 0.72);
+        color: #ffffff;
         border-radius: 9999px;
         padding: 2px 6px;
         font-size: 11px;
         line-height: 1;
+        font-weight: 700;
+        backdrop-filter: blur(2px);
+        z-index: 2;
+      }
+
+      .option-thumb-shuffle {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        background-color: rgba(15, 23, 42, 0.65);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 9999px;
+        width: 22px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        cursor: pointer;
+        opacity: 0.85;
+        transition: all 0.2s ease;
+        backdrop-filter: blur(2px);
+        z-index: 3;
+        user-select: none;
+      }
+
+      .option-thumb-shuffle:hover {
+        opacity: 1;
+        transform: rotate(60deg) scale(1.12);
+        background-color: rgba(15, 23, 42, 0.9);
+      }
+
+      .option-thumb-food-name {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.82) 100%);
+        color: #ffffff;
+        font-size: 10.5px;
+        font-weight: 600;
+        line-height: 1.2;
+        padding: 8px 6px 3px;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        pointer-events: none;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85);
+        z-index: 2;
       }
 
       .option-label {
@@ -2875,16 +2932,19 @@
           >
             <div class="option-thumb-wrap">
               <img
+                id="img-flavor-spicy"
                 src="images/opt-spicy.jpg"
                 onerror="this.onerror=null; this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Korean.snacks-Tteokbokki-08.jpg/960px-Korean.snacks-Tteokbokki-08.jpg';"
                 alt="매콤한 요리"
                 class="option-thumb-img"
                 referrerpolicy="no-referrer"
               />
-              <span class="option-thumb-badge">🔥 매콤</span>
+              <span class="option-thumb-badge" id="badge-flavor-spicy">🔥 매콤</span>
+              <span class="option-thumb-food-name" id="name-flavor-spicy">매콤 떡볶이</span>
+              <span class="option-thumb-shuffle" title="다른 매콤 요리 사진 보기 (클릭)" onclick="event.stopPropagation(); rotateOptionImage('spicy', true);" aria-label="다른 매콤 요리 사진 보기">🔄</span>
             </div>
             <span class="option-label">매콤한 맛</span>
-            <span class="option-desc">칼칼하고 스트레스 풀리는</span>
+            <span class="option-desc" id="desc-flavor-spicy">칼칼하고 스트레스 풀리는</span>
           </button>
           <button
             type="button"
@@ -2895,16 +2955,19 @@
           >
             <div class="option-thumb-wrap">
               <img
+                id="img-flavor-mild"
                 src="images/opt-mild.jpg"
                 onerror="this.onerror=null; this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/Salmon_don_of_Nakau.jpg/960px-Salmon_don_of_Nakau.jpg';"
                 alt="담백한 요리"
                 class="option-thumb-img"
                 referrerpolicy="no-referrer"
               />
-              <span class="option-thumb-badge">🥗 담백</span>
+              <span class="option-thumb-badge" id="badge-flavor-mild">🥗 담백</span>
+              <span class="option-thumb-food-name" id="name-flavor-mild">생연어 덮밥</span>
+              <span class="option-thumb-shuffle" title="다른 담백 요리 사진 보기 (클릭)" onclick="event.stopPropagation(); rotateOptionImage('mild', true);" aria-label="다른 담백 요리 사진 보기">🔄</span>
             </div>
             <span class="option-label">담백한 맛</span>
-            <span class="option-desc">속 편하고 깔끔한</span>
+            <span class="option-desc" id="desc-flavor-mild">속 편하고 깔끔한</span>
           </button>
         </div>
       </section>
@@ -2926,16 +2989,19 @@
           >
             <div class="option-thumb-wrap">
               <img
+                id="img-staple-rice"
                 src="images/opt-rice.jpg"
                 onerror="this.onerror=null; this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/Jeyuk-bokkeum_2.jpg/960px-Jeyuk-bokkeum_2.jpg';"
                 alt="든든한 밥"
                 class="option-thumb-img"
                 referrerpolicy="no-referrer"
               />
-              <span class="option-thumb-badge">🍚 밥심</span>
+              <span class="option-thumb-badge" id="badge-staple-rice">🍚 밥심</span>
+              <span class="option-thumb-food-name" id="name-staple-rice">불맛 제육덮밥</span>
+              <span class="option-thumb-shuffle" title="다른 밥 요리 사진 보기 (클릭)" onclick="event.stopPropagation(); rotateOptionImage('rice', true);" aria-label="다른 밥 요리 사진 보기">🔄</span>
             </div>
             <span class="option-label">든든한 밥</span>
-            <span class="option-desc">한국인은 밥심! 덮밥/찌개</span>
+            <span class="option-desc" id="desc-staple-rice">한국인은 밥심! 덮밥/찌개</span>
           </button>
           <button
             type="button"
@@ -2946,16 +3012,19 @@
           >
             <div class="option-thumb-wrap">
               <img
+                id="img-staple-noodle"
                 src="images/opt-noodle.jpg"
                 onerror="this.onerror=null; this.src='https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Bajirak-kalguksu.jpg/960px-Bajirak-kalguksu.jpg';"
                 alt="면 요리와 빵"
                 class="option-thumb-img"
                 referrerpolicy="no-referrer"
               />
-              <span class="option-thumb-badge">🍜 면·빵</span>
+              <span class="option-thumb-badge" id="badge-staple-noodle">🍜 면·빵</span>
+              <span class="option-thumb-food-name" id="name-staple-noodle">바지락 칼국수</span>
+              <span class="option-thumb-shuffle" title="다른 면·빵 요리 사진 보기 (클릭)" onclick="event.stopPropagation(); rotateOptionImage('noodle', true);" aria-label="다른 면·빵 요리 사진 보기">🔄</span>
             </div>
             <span class="option-label">면 · 빵</span>
-            <span class="option-desc">호로록 면 요리 & 샌드위치</span>
+            <span class="option-desc" id="desc-staple-noodle">호로록 면 요리 & 샌드위치</span>
           </button>
         </div>
       </section>
@@ -3994,9 +4063,151 @@
       const historyList = document.getElementById('history-list');
       const toast = document.getElementById('toast');
 
+      // -------------------------------------------------------------------------
+      // 대표 이미지 컬렉션 (매콤한 맛, 담백한 맛, 든든한 밥, 면·빵)
+      // 사용자가 새로고침하거나 클릭, 재추천할 때마다 매번 고정이 아닌 다양한 대표 메뉴 사진이 표시됨
+      // -------------------------------------------------------------------------
+      const OPTION_IMAGE_COLLECTIONS = {
+        spicy: [
+          { src: 'images/opt-spicy.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Korean.snacks-Tteokbokki-08.jpg/960px-Korean.snacks-Tteokbokki-08.jpg', name: '매콤 떡볶이', desc: '칼칼하고 스트레스 풀리는' },
+          { src: 'images/spicy-chicken.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Buldak_1.jpg/960px-Buldak_1.jpg', name: '화끈한 불닭', desc: '입안 가득 얼얼하고 중독적인' },
+          { src: 'images/spicy-octopus.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7b/Nakji-bokkeum.jpg/960px-Nakji-bokkeum.jpg', name: '불맛 낙지볶음', desc: '쫄깃한 낙지와 화끈한 양념' },
+          { src: 'images/jjambbong.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/Jjamppong_with_crab.jpg/960px-Jjamppong_with_crab.jpg', name: '얼큰 해물짬뽕', desc: '불맛 가득 진하고 칼칼한' },
+          { src: 'images/kimchi-stew.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Kimchi_chigae_by_stu_spivack.jpg/960px-Kimchi_chigae_by_stu_spivack.jpg', name: '얼큰 김치찌개', desc: '잘 익은 김치와 깊은 감칠맛' },
+          { src: 'images/malatang.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/0/07/Malatang_in_Seoul.jpg/960px-Malatang_in_Seoul.jpg', name: '알싸한 마라탕', desc: '중독성 넘치는 알싸한 국물' },
+          { src: 'images/mapo-tofu.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Mapo_tofu_by_stuart_spivack.jpg/960px-Mapo_tofu_by_stuart_spivack.jpg', name: '사천 마파두부', desc: '매콤달콤 부드러운 두부' },
+          { src: 'images/bibim-naeng.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Hamheung-naengmyeon.jpg/960px-Hamheung-naengmyeon.jpg', name: '매콤 비빔냉면', desc: '매콤새콤 입맛 돋우는' },
+          { src: 'images/spicy-burger.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Fried_chicken_burger_.jpg/960px-Fried_chicken_burger_.jpg', name: '스파이시 버거', desc: '바삭하고 화끈한 치킨패티' }
+        ],
+        mild: [
+          { src: 'images/opt-mild.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/Salmon_don_of_Nakau.jpg/960px-Salmon_don_of_Nakau.jpg', name: '생연어 덮밥', desc: '속 편하고 깔끔한' },
+          { src: 'images/galbi-soup.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Galbitang_%EA%B0%88%EB%B9%84%ED%83%95_beeniru.jpg/960px-Galbitang_%EA%B0%88%EB%B9%84%ED%83%95_beeniru.jpg', name: '소고기 왕갈비탕', desc: '맑고 깊은 국물의 보양 한 끼' },
+          { src: 'images/seolleongtang.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Seolleongtang.jpg/960px-Seolleongtang.jpg', name: '진한 사골 설렁탕', desc: '구수하고 뽀얀 사골 육수' },
+          { src: 'images/naju-gomtang.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Gomguk_2.jpg/960px-Gomguk_2.jpg', name: '맑은 나주곰탕', desc: '기름기 걷어낸 깔끔한 고기 육수' },
+          { src: 'images/bossam.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Bossam.jpg/960px-Bossam.jpg', name: '촉촉한 보쌈 정식', desc: '야들야들 수육과 신선한 쌈' },
+          { src: 'images/miyeokguk.jpg', fallback: 'https://upload.wikimedia.org/wikipedia/commons/0/09/Korea.food-Miyeok.guk-01.jpg', name: '소고기 미역국', desc: '속을 부드럽게 감싸주는 맛' },
+          { src: 'images/tonkatsu.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Tonkatsu_by_cattias.jpg/960px-Tonkatsu_by_cattias.jpg', name: '바삭 등심 돈카츠', desc: '바삭한 튀김옷과 촉촉한 육즙' },
+          { src: 'images/cheese-tonkatsu.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/9/91/Cheese_donkatsu.jpg/960px-Cheese_donkatsu.jpg', name: '골드 치즈 돈카츠', desc: '고소한 치즈가 듬뿍 늘어나는' },
+          { src: 'images/beef-porridge.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/Sogogi-yachae-juk.jpg/960px-Sogogi-yachae-juk.jpg', name: '영양 소고기죽', desc: '자극 없이 속 편한 영양식' },
+          { src: 'images/egg-rice.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/Tamago_kake_gohan_by_masayuki_%28japao%29.jpg/960px-Tamago_kake_gohan_by_masayuki_%28japao%29.jpg', name: '달걀 간장 버터밥', desc: '고소하고 담백한 추억의 맛' }
+        ],
+        rice: [
+          { src: 'images/opt-rice.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e5/Jeyuk-bokkeum_2.jpg/960px-Jeyuk-bokkeum_2.jpg', name: '불맛 제육덮밥', desc: '한국인은 밥심! 덮밥/찌개' },
+          { src: 'images/bibimbap.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/44/Dolsot-bibimbap.jpg/960px-Dolsot-bibimbap.jpg', name: '전주 돌솥비빔밥', desc: '신선한 나물과 고소한 참기름' },
+          { src: 'images/gyudon.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/3/36/Gyudon_by_miya.jpg/960px-Gyudon_by_miya.jpg', name: '소고기 규동 덮밥', desc: '단짠 소고기와 밥의 완벽 조화' },
+          { src: 'images/sake-don.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a8/Salmon_don_of_Nakau.jpg/960px-Salmon_don_of_Nakau.jpg', name: '생연어 덮밥 (사케동)', desc: '도톰한 연어와 고슬고슬한 밥' },
+          { src: 'images/beef-bbq.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/2/29/Korean_bulgogi_beef.jpg/960px-Korean_bulgogi_beef.jpg', name: '소불고기 백반', desc: '달콤 짭조름한 밥도둑 불고기' },
+          { src: 'images/kimchi-stew.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Kimchi_chigae_by_stu_spivack.jpg/960px-Kimchi_chigae_by_stu_spivack.jpg', name: '돼지고기 김치찌개', desc: '뜨끈한 찌개에 밥 한 공기 뚝딱' },
+          { src: 'images/galbi-soup.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Galbitang_%EA%B0%88%EB%B9%84%ED%83%95_beeniru.jpg/960px-Galbitang_%EA%B0%88%EB%B9%84%ED%83%95_beeniru.jpg', name: '푸짐한 왕갈비탕', desc: '푸짐한 소갈비와 든든한 쌀밥' },
+          { src: 'images/seolleongtang.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/87/Seolleongtang.jpg/960px-Seolleongtang.jpg', name: '사골 설렁탕 국밥', desc: '뽀얀 국물에 밥 말아 깍두기 한 점' },
+          { src: 'images/naju-gomtang.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Gomguk_2.jpg/960px-Gomguk_2.jpg', name: '맑은 나주곰탕 정식', desc: '맑고 깊은 육수에 밥 말아 한 그릇' },
+          { src: 'images/beef-soup.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b3/Yukgaejang_2.jpg/960px-Yukgaejang_2.jpg', name: '얼큰 소고기 육개장', desc: '진하고 얼큰한 해장 밥상' }
+        ],
+        noodle: [
+          { src: 'images/opt-noodle.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Bajirak-kalguksu.jpg/960px-Bajirak-kalguksu.jpg', name: '시원한 바지락 칼국수', desc: '호로록 면 요리 & 샌드위치' },
+          { src: 'images/ramen.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ec/Shoyu_ramen%2C_at_Kasukabe_Station_%282014-05-05_12.18.06_by_Nemo%27s_great_uncle%29.jpg/960px-Shoyu_ramen%2C_at_Kasukabe_Station_%282014-05-05_12.18.06_by_Nemo%27s_great_uncle%29.jpg', name: '진한 일본식 쇼유라멘', desc: '진하고 깊은 국물 면 요리' },
+          { src: 'images/tonkotsu-ramen.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/Tonkotsu_ramen_by_wallyg_in_New_York.jpg/960px-Tonkotsu_ramen_by_wallyg_in_New_York.jpg', name: '돈코츠 차슈 라멘', desc: '고소하고 묵직한 돈코츠 육수' },
+          { src: 'images/jjambbong.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ae/Jjamppong_with_crab.jpg/960px-Jjamppong_with_crab.jpg', name: '얼큰 해물 불짬뽕', desc: '칼칼한 불맛 짬뽕 면' },
+          { src: 'images/janchi-guksu.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Janchi-guksu.jpg/960px-Janchi-guksu.jpg', name: '따뜻한 잔치국수', desc: '멸치 육수에 부드러운 소면' },
+          { src: 'images/bibim-naeng.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6d/Hamheung-naengmyeon.jpg/960px-Hamheung-naengmyeon.jpg', name: '함흥 비빔냉면', desc: '쫄깃한 면발과 매콤새콤 양념' },
+          { src: 'images/naengmomi.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Zaru_soba_by_pelican_in_Tokyo.jpg/960px-Zaru_soba_by_pelican_in_Tokyo.jpg', name: '시원한 냉모밀 판소바', desc: '시원한 쯔유에 적셔 먹는 메밀면' },
+          { src: 'images/pho.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Pho-Beef-Noodles-2008.jpg/960px-Pho-Beef-Noodles-2008.jpg', name: '베트남 양지 쌀국수', desc: '맑고 담백한 고기 육수 쌀국수' },
+          { src: 'images/toowoomba.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/af/Liat_Portal_for_Foodie_Disorder_-_Creamy_Tomato_Seafood_Pasta.jpg/960px-Liat_Portal_for_Foodie_Disorder_-_Creamy_Tomato_Seafood_Pasta.jpg', name: '매콤 투움바 파스타', desc: '꾸덕하고 중독적인 크림 파스타' },
+          { src: 'images/carbonara.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/3/33/Espaguetis_carbonara.jpg/960px-Espaguetis_carbonara.jpg', name: '베이컨 까르보나라', desc: '베이컨 가득 고소한 파스타' },
+          { src: 'images/sandwich.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/6/64/Club_sandwich.jpg/960px-Club_sandwich.jpg', name: '신선한 클럽 샌드위치', desc: '아삭한 채소와 햄치즈 샌드위치' },
+          { src: 'images/spicy-burger.jpg', fallback: 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Fried_chicken_burger_.jpg/960px-Fried_chicken_burger_.jpg', name: '수제 치킨 버거', desc: '바삭한 치킨 패티와 부드러운 번' }
+        ]
+      };
+
+      const optionElementsMap = {
+        spicy: { img: 'img-flavor-spicy', name: 'name-flavor-spicy', desc: 'desc-flavor-spicy' },
+        mild: { img: 'img-flavor-mild', name: 'name-flavor-mild', desc: 'desc-flavor-mild' },
+        rice: { img: 'img-staple-rice', name: 'name-staple-rice', desc: 'desc-staple-rice' },
+        noodle: { img: 'img-staple-noodle', name: 'name-staple-noodle', desc: 'desc-staple-noodle' }
+      };
+
+      const optionCurrentIndices = {
+        spicy: -1,
+        mild: -1,
+        rice: -1,
+        noodle: -1
+      };
+
+      // 개별 영역 대표 이미지 회전 (다음 대표 메뉴 사진 표시)
+      function rotateOptionImage(category, animate = true) {
+        const pool = OPTION_IMAGE_COLLECTIONS[category];
+        const elements = optionElementsMap[category];
+        if (!pool || !elements || pool.length === 0) return;
+
+        let nextIdx;
+        const currentIdx = optionCurrentIndices[category];
+        if (pool.length > 1) {
+          do {
+            nextIdx = Math.floor(Math.random() * pool.length);
+          } while (nextIdx === currentIdx);
+        } else {
+          nextIdx = 0;
+        }
+
+        optionCurrentIndices[category] = nextIdx;
+        const item = pool[nextIdx];
+
+        const imgEl = document.getElementById(elements.img);
+        const nameEl = document.getElementById(elements.name);
+        const descEl = document.getElementById(elements.desc);
+
+        if (imgEl) {
+          if (animate) {
+            imgEl.classList.add('img-switching');
+            setTimeout(() => {
+              imgEl.src = item.src;
+              imgEl.onerror = function() {
+                this.onerror = null;
+                this.src = item.fallback;
+              };
+              imgEl.alt = `${item.name} (${category === 'spicy' ? '매콤한 맛' : category === 'mild' ? '담백한 맛' : category === 'rice' ? '든든한 밥' : '면·빵'})`;
+              setTimeout(() => {
+                imgEl.classList.remove('img-switching');
+              }, 40);
+            }, 100);
+          } else {
+            imgEl.src = item.src;
+            imgEl.onerror = function() {
+              this.onerror = null;
+              this.src = item.fallback;
+            };
+            imgEl.alt = item.name;
+          }
+        }
+
+        if (nameEl) {
+          nameEl.textContent = item.name;
+        }
+        if (descEl && item.desc) {
+          descEl.textContent = item.desc;
+        }
+      }
+      window.rotateOptionImage = rotateOptionImage;
+
+      // 4개 영역 전체 대표 이미지 무작위 갱신
+      function randomizeAllOptionImages(animate = false) {
+        ['spicy', 'mild', 'rice', 'noodle'].forEach(cat => rotateOptionImage(cat, animate));
+      }
+      window.randomizeAllOptionImages = randomizeAllOptionImages;
+
+      // 페이지 로드 시 즉시 4개 영역의 대표 이미지를 고정이 아닌 랜덤 음식 사진으로 초기화
+      try {
+        randomizeAllOptionImages(false);
+      } catch (e) {
+        console.warn('초기 대표 이미지 무작위 설정 오류:', e);
+      }
+
       // 3. 기능: 맛 선택
       function handleFlavorSelect(type) {
         appState.flavor = type;
+
+        // 클릭할 때마다 해당 맛 영역의 대표 이미지를 다른 메뉴 사진으로 변경!
+        rotateOptionImage(type, true);
 
         // UI 갱신: 버튼 스타일
         if (type === 'spicy') {
@@ -4018,10 +4229,14 @@
         checkReadyToRecommend();
       }
       const selectFlavor = handleFlavorSelect;
+      window.handleFlavorSelect = handleFlavorSelect;
 
       // 4. 기능: 주식 선택
       function handleStapleSelect(type) {
         appState.staple = type;
+
+        // 클릭할 때마다 해당 식사 영역의 대표 이미지를 다른 메뉴 사진으로 변경!
+        rotateOptionImage(type, true);
 
         // UI 갱신: 버튼 스타일
         if (type === 'rice') {
@@ -4043,6 +4258,7 @@
         checkReadyToRecommend();
       }
       const selectStaple = handleStapleSelect;
+      window.handleStapleSelect = handleStapleSelect;
 
       // 4.1 기능: 요리 종류 선택 (한식, 중식, 일식, 양식, 분식 & 기타)
       function handleCuisineSelect(type) {
@@ -5439,6 +5655,10 @@
         const chosenMenu = receivedList[0];
         appState.currentMenu = chosenMenu;
 
+        // 추천 결과를 받을 때마다 해당 영역의 대표 이미지도 신선하게 새 음식으로 갱신
+        if (appState.flavor) rotateOptionImage(appState.flavor, true);
+        if (appState.staple) rotateOptionImage(appState.staple, true);
+
         // 히스토리 추가 (중복 방지)
         if (!appState.history.includes(chosenMenu.name)) {
           appState.history.unshift(chosenMenu.name);
@@ -6606,6 +6826,11 @@
       // 최초 실행: 페이지 로드 즉시 지도 및 주변 맛집 자동 로딩
       // -------------------------------------------------------------------------
       function initPlacesExplorer() {
+        try {
+          randomizeAllOptionImages(false);
+        } catch (e) {
+          // ignore
+        }
         renderExternalSearchLinks('점심 맛집', placesState.locationName);
         searchRestaurants('점심 인기', placesState.currentLocation, true);
       }
