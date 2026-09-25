@@ -719,10 +719,9 @@ ${finalAllowed.join(", ")}
 각 메뉴별로 군침 도는 1~2줄의 추천 이유와 실용적인 꿀팁을 작성하여 JSON으로 응답해주세요.`;
 
       const candidateModels = [
-        "gemini-3.1-flash-lite",
-        "gemini-2.5-flash",
-        "gemini-3.5-flash-lite",
-        "gemini-3.8-flash"
+        "gemini-3.8-flash",
+        "gemini-flash-latest",
+        "gemini-3.1-flash-lite"
       ];
       let responseText: string | null = null;
 
@@ -766,8 +765,9 @@ ${finalAllowed.join(", ")}
             responseText = response.text.trim();
             break;
           }
-        } catch (modelErr) {
-          console.warn(`Model ${modelName} failed, trying next candidate:`, modelErr);
+        } catch (modelErr: any) {
+          const status = modelErr?.status || modelErr?.code || (String(modelErr?.message || "").includes("503") ? 503 : "err");
+          console.info(`Model ${modelName} unavailable (${status}), trying fallback candidate.`);
         }
       }
 
@@ -903,7 +903,7 @@ ${excludedList.length > 0 ? `제외해야 할 이전 추천 메뉴: ${excludedLi
 - 2위: 이 키워드와 찰떡궁합이거나 같은 계통의 인기 연관 메뉴
 - 3위: 색다른 별미나 조합으로 기분 전환하기 좋은 추천 메뉴`;
 
-      const candidateModels = ["gemini-3.1-flash-lite", "gemini-2.5-flash", "gemini-3.5-flash-lite"];
+      const candidateModels = ["gemini-3.8-flash", "gemini-flash-latest", "gemini-3.1-flash-lite"];
       for (const model of candidateModels) {
         try {
           const resp = await ai.models.generateContent({
@@ -965,8 +965,9 @@ ${excludedList.length > 0 ? `제외해야 할 이전 추천 메뉴: ${excludedLi
               });
             }
           }
-        } catch (err) {
-          console.warn(`Search model ${model} error:`, err);
+        } catch (err: any) {
+          const status = err?.status || err?.code || (String(err?.message || "").includes("503") ? 503 : "err");
+          console.info(`Search model ${model} unavailable (${status}), trying fallback candidate.`);
         }
       }
     }
